@@ -26,3 +26,5 @@ test:
 
 install-libs-mac:
 	brew install boost
+	cd ./lib/fltk-1.3.4-2 && make && sudo make install && make clean
+
