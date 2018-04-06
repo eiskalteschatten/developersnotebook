@@ -24,7 +24,7 @@ void MainWindow::setupMenuBar() {
     menu_bar = new Fl_Sys_Menu_Bar(0, 0, 640, 30);
 
     // File menu
-    menu_bar->add("&File/&New", FL_COMMAND + 'n', (Fl_Callback *)quit_cb, 0);
+    menu_bar->add("&File/&New", FL_COMMAND + 'n', (Fl_Callback *)quit_cb, 0, FL_MENU_DIVIDER);
 
     #ifndef __APPLE__
         menu_bar->add("&File/E&xit", FL_COMMAND + 'q', (Fl_Callback *)quit_cb, 0);
