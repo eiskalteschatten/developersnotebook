@@ -5,14 +5,18 @@ CXXFLAGS=-Wall
 BUILD_DIR=build
 O_DIR=$(BUILD_DIR)/o
 SRC_DIR=src
-EXE_NAME=developersnotebook.o
+TARGET=developersnotebook.o
 
 all:
 	$(CXX) \
 		./$(SRC_DIR)/*.cpp \
 		`fltk-config --ldflags` \
-		-o ./$(BUILD_DIR)/$(EXE_NAME)
-	chmod u+x ./$(BUILD_DIR)/$(EXE_NAME)
+		-o ./$(BUILD_DIR)/$(TARGET)
+	chmod u+x ./$(BUILD_DIR)/$(TARGET)
+
+clean:
+	rm -f *.o 2> /dev/null
+	rm -f ./$(BUILD_DIR)/$(TARGET) 2> /dev/null
 
 test:
 	$(CXX) \
