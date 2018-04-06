@@ -13,6 +13,10 @@
 // #include <FL/Fl_Text_Buffer.H>
 
 class MainWindow: public Fl_Double_Window {
+private:
+
+    void setupMenuBar();
+
 public:
     MainWindow(int width, int height, const char* title);
     virtual ~MainWindow() {};
