@@ -11,6 +11,9 @@ void quit_cb(Fl_Widget*, void*) {
 }
 
 MainWindow::MainWindow(int width, int height, const char* title): Fl_Double_Window(width, height, title) {
+    // Default window settings
+    this->size_range(1, 1);
+
     setupMenuBar();
 }
 
