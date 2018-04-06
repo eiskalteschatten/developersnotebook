@@ -3,7 +3,7 @@
 #include "windows/MainWindow.hpp"
 
 int main(int argc, char **argv) {
-    MainWindow *window = new MainWindow(500, 300, "Develoepr's Notebook");
+    MainWindow *window = new MainWindow(500, 300, "Developer's Notebook");
     window->show(argc, argv);
     return Fl::run();
 }
