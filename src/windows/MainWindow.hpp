@@ -13,7 +13,7 @@
 class MainWindow: public Fl_Double_Window {
 public:
     MainWindow(int width, int height, const char* title);
-    ~MainWindow();
+    virtual ~MainWindow() {};
 
     // Fl_Window        *replace_dlg;
     // Fl_Input         *replace_find;
