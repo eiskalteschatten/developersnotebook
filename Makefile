@@ -32,3 +32,6 @@ test:
 install-libs-mac:
 	brew install boost fltk
 
+install-libs-ubuntu:
+	sudo apt install fltk1.3-dev libxft-dev libxinerama-dev
+
