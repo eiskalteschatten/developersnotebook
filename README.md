@@ -10,6 +10,4 @@
 
 ### Create application bundles
 
-    ```
     make create-mac-bundle
-    ```
