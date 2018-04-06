@@ -1,22 +1,17 @@
 .PHONY: test clean build
 
 CXX=g++
-CXXFLAGS=-c -Wall
+CXXFLAGS=
 BUILD_DIR=build
 O_DIR=$(BUILD_DIR)/o
 SRC_DIR=src
-LIB_NAME=scratchpadcore.a
+EXE_NAME=developersnotebook.o
 
-$(O_DIR)/%.o: $(SRC_DIR)/%.cpp $(SRC_DIR)/%.h
-	$(CXX) $(CXXFLAGS) $*.cpp -o $@
-
-$(BUILD_DIR)/$(LIB_NAME): $(patsubst %.cpp, %.o, $(wildcard $(SRC_DIR)/*.cpp))
-	ar rcs $@ $^
-
-clean:
-	find . -type f -name '*.o' -delete
-
-all: $(BUILD_DIR)/$(LIB_NAME) clean
+all:
+	$(CXX) \
+		./$(SRC_DIR)/*.cpp \
+		-o ./$(BUILD_DIR)/$(EXE_NAME)
+	chmod u+x ./$(BUILD_DIR)/$(EXE_NAME)
 
 test:
 	$(CXX) \
