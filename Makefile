@@ -19,6 +19,9 @@ clean:
 	rm -f *.o 2> /dev/null
 	rm -f ./$(BUILD_DIR)/$(TARGET) 2> /dev/null
 
+build-run: all
+	./$(BUILD_DIR)/$(TARGET)
+
 test:
 	$(CXX) \
 		-lboost_unit_test_framework \
