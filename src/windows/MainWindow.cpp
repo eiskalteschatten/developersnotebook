@@ -33,4 +33,9 @@ void MainWindow::setupMenuBar() {
     #ifndef __APPLE__
         menu_bar->add("&File/E&xit", FL_COMMAND + 'q', (Fl_Callback *)quit_cb, 0);
     #endif
+
+    // Help Menu
+    #ifndef __APPLE__
+        menu_bar->add("&Help/About", 0, (Fl_Callback *)quit_cb, 0);
+    #endif
 }
