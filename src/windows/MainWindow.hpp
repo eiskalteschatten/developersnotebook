@@ -3,6 +3,8 @@
 
 #include <FL/Fl.H>
 #include <FL/Fl_Double_Window.H>
+#include <FL/Fl_Menu_Bar.H>
+// FOR MAC: #include <FL/Fl_Sys_Menu_Bar.H>
 // #include <FL/Fl_Window.H>
 // #include <FL/Fl_Input.H>
 // #include <FL/Fl_Button.H>
@@ -14,6 +16,8 @@ class MainWindow: public Fl_Double_Window {
 public:
     MainWindow(int width, int height, const char* title);
     virtual ~MainWindow() {};
+
+    Fl_Menu_Bar *menu_bar;
 
     // Fl_Window        *replace_dlg;
     // Fl_Input         *replace_find;
