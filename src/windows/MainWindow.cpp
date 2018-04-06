@@ -17,6 +17,7 @@ MainWindow::MainWindow(int width, int height, const char* title): Fl_Double_Wind
 void MainWindow::setupMenuBar() {
     #ifdef __APPLE__
         Fl_Mac_App_Menu::print = "";
+        Fl_Mac_App_Menu::about = "About Developer's Notebook";
     #endif
 
     Fl_Sys_Menu_Bar *menu_bar;
@@ -31,6 +32,6 @@ void MainWindow::setupMenuBar() {
 
     // Help Menu
     #ifndef __APPLE__
-        menu_bar->add("&Help/About", 0, (Fl_Callback *)quit_cb, 0);
+        menu_bar->add("&Help/About Developer's Notebook", 0, (Fl_Callback *)quit_cb, 0);
     #endif
 }
