@@ -1,7 +1,7 @@
 .PHONY: test clean build
 
 CXX=g++
-CXXFLAGS=
+CXXFLAGS=-Wall
 BUILD_DIR=build
 O_DIR=$(BUILD_DIR)/o
 SRC_DIR=src
@@ -10,6 +10,7 @@ EXE_NAME=developersnotebook.o
 all:
 	$(CXX) \
 		./$(SRC_DIR)/*.cpp \
+		`fltk-config --ldflags` \
 		-o ./$(BUILD_DIR)/$(EXE_NAME)
 	chmod u+x ./$(BUILD_DIR)/$(EXE_NAME)
 
