@@ -1,8 +1,5 @@
 #include <FL/Fl.H>
-
-#ifdef __APPLE__
-    #include <FL/Fl_Sys_Menu_Bar.H>
-#endif
+#include <FL/Fl_Sys_Menu_Bar.H>
 
 #include "MainWindow.hpp"
 
@@ -20,12 +17,10 @@ MainWindow::MainWindow(int width, int height, const char* title): Fl_Double_Wind
 void MainWindow::setupMenuBar() {
     #ifdef __APPLE__
         Fl_Mac_App_Menu::print = "";
-
-        Fl_Sys_Menu_Bar *menu_bar;
-        menu_bar = new Fl_Sys_Menu_Bar(0, 0, 640, 30);
-    #else
-        menu_bar = new Fl_Menu_Bar(0, 0, 640, 30);
     #endif
+
+    Fl_Sys_Menu_Bar *menu_bar;
+    menu_bar = new Fl_Sys_Menu_Bar(0, 0, 640, 30);
 
     // File menu
     menu_bar->add("&File/&New", FL_COMMAND + 'n', (Fl_Callback *)quit_cb, 0);
