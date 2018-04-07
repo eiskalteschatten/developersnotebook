@@ -11,8 +11,10 @@ MAC_BUNDLE=Developer\'s\ Notebook.app
 
 ifeq ($(OS_TYPE), Darwin)
 CXXINCLUDES=-I/usr/local/Cellar/gtk-mac-integration/2.0.8_2/include/gtkmacintegration/
+CXXLINKED=-lgtkmacintegration-gtk3.2
 else
 CXXINCLUDES=
+CXXLINKED=
 endif
 
 all:
@@ -21,6 +23,7 @@ all:
 		`pkg-config --cflags gtk+-3.0` \
 		$(SOURCE) \
 		$(CXXINCLUDES) \
+		$(CXXLINKED) \
 		`pkg-config --libs gtk+-3.0` \
 		-o ./$(BUILD_DIR)/$(TARGET)
 	chmod u+x ./$(BUILD_DIR)/$(TARGET)

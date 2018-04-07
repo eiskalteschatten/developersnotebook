@@ -1,5 +1,9 @@
 #include <gtk/gtk.h>
 
+#ifdef __APPLE__
+    #include <gtkosxapplication.h>
+#endif
+
 #include "MainWindow.hpp"
 
 static void print_hello(GtkWidget *widget, gpointer data) {
@@ -52,9 +56,12 @@ void MainWindow::setupMenuBar(GtkWidget *window) {
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), fileMi);
     gtk_box_pack_start(GTK_BOX(box), menubar, FALSE, FALSE, 0);
 
-    // #ifdef __APPLE__
-    //     gtk_widget_hide(menubar);
-    //     gtk_mac_menu_set_menu_bar(GTK_MENU_SHELL (menubar));
-    //     gtk_mac_menu_set_quit_menu_item(GTK_MENU_ITEM (quit_item));
-    // #endif
+    #ifdef __APPLE__
+        GtkosxApplication *osx_app = gtkosx_application_get();
+
+        gtk_widget_hide(menubar);
+
+        gtkosx_application_set_menu_bar(osx_app, GTK_MENU_SHELL(menubar));
+//        gtk_mac_menu_set_quit_menu_item(GTK_MENU_ITEM(quit_item));
+    #endif
 }
