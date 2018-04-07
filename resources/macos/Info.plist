@@ -6,19 +6,27 @@
     <string>developersnotebook</string>
     <key>CFBundleName</key>
     <string>Developer's Notebook</string>
+
     <key>CFBundleIconFile</key>
     <string>tempicon.icns</string>
     <key>CFBundleIdentifier</key>
     <string>com.developersnotebook.1</string>
+
     <key>CFBundlePackageType</key>
     <string>APPL</string>
+    <key>CFBundleSignature</key>
+    <string>none</string>
+
     <key>NSHumanReadableCopyright</key>
     <string>Copyright © 2018 Alex Seifert</string>
+
     <key>CFBundleVersion</key>
     <string>1</string>
     <key>CFBundleShortVersionString</key>
     <string>1.0</string>
-    <key>CFBundleSignature</key>
-    <string>none</string>
+
+
+    <key>NSPrincipalClass</key>
+    <string>NSApplication</string>
 </dict>
 </plist>
