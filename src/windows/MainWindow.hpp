@@ -5,12 +5,13 @@
 
 class MainWindow: public GtkWidget {
 private:
-
-    //void setupMenuBar();
+    void setupMenuBar();
 
 public:
-    // MainWindow(int width, int height, const char* title);
-    // virtual ~MainWindow() {};
+    MainWindow();
+    virtual ~MainWindow() {};
+
+    GtkWidget *window;
 };
 
 #endif /* MainWindow_hpp */
