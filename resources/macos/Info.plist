@@ -10,7 +10,7 @@
     <key>CFBundleIconFile</key>
     <string>tempicon.icns</string>
     <key>CFBundleIdentifier</key>
-    <string>com.developersnotebook.1</string>
+    <string>com.alexseifert.developersnotebook</string>
 
     <key>CFBundlePackageType</key>
     <string>APPL</string>

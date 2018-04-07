@@ -11,8 +11,9 @@ MAC_BUNDLE=Developer\'s\ Notebook.app
 
 all:
 	$(CXX) \
-		$(SOURCE) \
-		`fltk-config --ldflags` \
+		`pkg-config --cflags gtk+-3.0` \
+		./src/main.cpp \
+		`pkg-config --libs gtk+-3.0` \
 		-o ./$(BUILD_DIR)/$(TARGET)
 	chmod u+x ./$(BUILD_DIR)/$(TARGET)
 
@@ -35,11 +36,10 @@ test:
 
 
 install-libs-ubuntu:
-	sudo apt install fltk1.3-dev libxft-dev libxinerama-dev
+	sudo apt install gtk+-3.0
 
 install-libs-mac:
-	brew install boost fltk
-
+	brew install gtk+3
 
 # Mac Application Bundles
 create-mac-bundle: clean all
