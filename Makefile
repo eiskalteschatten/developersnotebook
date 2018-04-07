@@ -9,6 +9,7 @@ TARGET=developersnotebook
 MAC_BUNDLE=Developer\'s\ Notebook.app
 
 all:
+	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/ && \
 	$(CXX) \
 		`pkg-config --cflags gtk+-3.0` \
 		./src/main.cpp \
