@@ -14,6 +14,10 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
     window = gtk_application_window_new(app);
     gtk_window_set_title(GTK_WINDOW(window), "Developer's Notebook");
     gtk_window_set_default_size(GTK_WINDOW(window), 1000, 700);
+    gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+
+    setupMenuBar(window);
+
 
     button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
     gtk_container_add(GTK_CONTAINER(window), button_box);
@@ -24,4 +28,33 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
     gtk_container_add(GTK_CONTAINER(button_box), button);
 
     gtk_widget_show_all(window);
+}
+
+void MainWindow::setupMenuBar(GtkWidget *window) {
+    GtkWidget *vbox;
+
+    GtkWidget *menubar;
+    GtkWidget *fileMenu;
+    GtkWidget *fileMi;
+    GtkWidget *quitMi;
+
+    vbox = gtk_vbox_new(FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(window), vbox);
+
+    menubar = gtk_menu_bar_new();
+    fileMenu = gtk_menu_new();
+
+    fileMi = gtk_menu_item_new_with_label("File");
+    quitMi = gtk_menu_item_new_with_label("Quit");
+
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(fileMi), fileMenu);
+    gtk_menu_shell_append(GTK_MENU_SHELL(fileMenu), quitMi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menubar), fileMi);
+    gtk_box_pack_start(GTK_BOX(vbox), menubar, FALSE, FALSE, 0);
+
+    // #ifdef __APPLE__
+    //     gtk_widget_hide(menubar);
+    //     gtk_mac_menu_set_menu_bar(GTK_MENU_SHELL (menubar));
+    //     gtk_mac_menu_set_quit_menu_item(GTK_MENU_ITEM (quit_item));
+    // #endif
 }
