@@ -12,7 +12,7 @@ all:
 	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/ && \
 	$(CXX) \
 		`pkg-config --cflags gtk+-3.0` \
-		./src/main.cpp \
+		$(SOURCE) \
 		`pkg-config --libs gtk+-3.0` \
 		-o ./$(BUILD_DIR)/$(TARGET)
 	chmod u+x ./$(BUILD_DIR)/$(TARGET)
