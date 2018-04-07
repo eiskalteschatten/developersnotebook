@@ -42,27 +42,29 @@ GtkWidget* MainWindow::setupMenuBar(GtkWidget *window) {
     GtkWidget *box;
 
     GtkWidget *menubar;
-    GtkWidget *fileMenu;
-    GtkWidget *fileMi;
-    GtkWidget *quitMi;
+    GtkWidget *file_menu;
+    GtkWidget *file_mi;
+    GtkWidget *quit_mi;
 
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add(GTK_CONTAINER(window), box);
 
     menubar = gtk_menu_bar_new();
-    fileMenu = gtk_menu_new();
+    file_menu = gtk_menu_new();
 
-    fileMi = gtk_menu_item_new_with_label("File");
-    quitMi = gtk_menu_item_new_with_label("Quit");
+    file_mi = gtk_menu_item_new_with_label("File");
+    quit_mi = gtk_menu_item_new_with_label("Quit");
 
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(fileMi), fileMenu);
-    gtk_menu_shell_append(GTK_MENU_SHELL(fileMenu), quitMi);
-    gtk_menu_shell_append(GTK_MENU_SHELL(menubar), fileMi);
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(file_mi), file_menu);
+    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), quit_mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menubar), file_mi);
     gtk_box_pack_start(GTK_BOX(box), menubar, FALSE, FALSE, 0);
 
     #ifdef __APPLE__
         GtkosxApplication *osx_app = gtkosx_application_get();
+
         gtkosx_application_set_menu_bar(osx_app, GTK_MENU_SHELL(menubar));
+        gtkosx_application_set_window_menu(osx_app, NULL);
 //        gtk_mac_menu_set_quit_menu_item(GTK_MENU_ITEM(quit_item));
     #endif
 
