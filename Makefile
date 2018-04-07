@@ -3,7 +3,6 @@
 CXX=g++
 CXXFLAGS=-Wall
 BUILD_DIR=build
-O_DIR=$(BUILD_DIR)/o
 SRC_DIR=src
 SOURCE:=$(shell find $(SRC_DIR) -name *.cpp)
 TARGET=developersnotebook
