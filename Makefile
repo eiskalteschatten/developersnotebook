@@ -50,7 +50,7 @@ install-libs-ubuntu:
 	sudo apt install gtk+-3.0
 
 install-libs-mac:
-	brew install gtk+3
+	brew install gtk+3 gtk-mac-integration
 
 # Mac Application Bundles
 create-mac-bundle: clean all
