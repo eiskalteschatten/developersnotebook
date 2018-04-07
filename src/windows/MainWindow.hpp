@@ -3,15 +3,12 @@
 
 #include <gtk/gtk.h>
 
-class MainWindow: public GtkWidget {
+class MainWindow {
 private:
-    void setupMenuBar();
+    MainWindow();
 
 public:
-    MainWindow();
-    virtual ~MainWindow() {};
-
-    GtkWidget *window;
+    static void activate(GtkApplication *app, gpointer user_data);
 };
 
 #endif /* MainWindow_hpp */
