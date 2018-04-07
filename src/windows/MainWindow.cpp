@@ -20,7 +20,7 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
     gtk_window_set_default_size(GTK_WINDOW(window), 1000, 700);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 
-    setupMenuBar(window);
+    GtkWidget *menubar = setupMenuBar(window);
 
 
     // button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
@@ -32,9 +32,13 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
     // gtk_container_add(GTK_CONTAINER(button_box), button);
 
     gtk_widget_show_all(window);
+
+    #ifdef __APPLE__
+        gtk_widget_hide(menubar);
+    #endif
 }
 
-void MainWindow::setupMenuBar(GtkWidget *window) {
+GtkWidget* MainWindow::setupMenuBar(GtkWidget *window) {
     GtkWidget *box;
 
     GtkWidget *menubar;
@@ -58,10 +62,9 @@ void MainWindow::setupMenuBar(GtkWidget *window) {
 
     #ifdef __APPLE__
         GtkosxApplication *osx_app = gtkosx_application_get();
-
-        gtk_widget_hide(menubar);
-
         gtkosx_application_set_menu_bar(osx_app, GTK_MENU_SHELL(menubar));
 //        gtk_mac_menu_set_quit_menu_item(GTK_MENU_ITEM(quit_item));
     #endif
+
+    return menubar;
 }
