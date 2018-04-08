@@ -25,7 +25,6 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
 
     setupMenuBar(window);
 
-
     // button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
     // gtk_container_add(GTK_CONTAINER(window), button_box);
 
@@ -37,9 +36,7 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
     gtk_widget_show_all(window);
 
     #ifdef __APPLE__
-        //GtkWidget *file_quit_menu_item = lookup_widget(GTK_WIDGET(menubar), "/menubar/File/Quit");
         gtk_widget_hide(GTK_WIDGET(file_quit_menu_item));
-
         gtk_widget_hide(menubar);
     #endif
 }
