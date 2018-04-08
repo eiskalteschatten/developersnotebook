@@ -1,3 +1,4 @@
+#include <cstdlib>
 #include <gtk/gtk.h>
 
 #ifdef __APPLE__
@@ -6,15 +7,19 @@
 
 #include "MainWindow.hpp"
 
+GtkWidget *window;
 GtkWidget *menubar;
-GtkWidget *file_quit_menu_item;
+GtkWidget *file_quit_mi;
 
 static void print_hello(GtkWidget *widget, gpointer data) {
     g_print("Hello World\n");
 }
 
+static void quit_activated(GSimpleAction *action, GVariant *parameter, gpointer app) {
+    exit(0);
+}
+
 void MainWindow::activate(GtkApplication *app, gpointer user_data) {
-    GtkWidget *window;
     // GtkWidget *button;
     // GtkWidget *button_box;
 
@@ -23,7 +28,7 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
     gtk_window_set_default_size(GTK_WINDOW(window), 1000, 700);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 
-    setupMenuBar(window);
+    setupMenuBar();
 
     // button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
     // gtk_container_add(GTK_CONTAINER(window), button_box);
@@ -36,12 +41,12 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
     gtk_widget_show_all(window);
 
     #ifdef __APPLE__
-        gtk_widget_hide(GTK_WIDGET(file_quit_menu_item));
+        gtk_widget_hide(GTK_WIDGET(file_quit_mi));
         gtk_widget_hide(menubar);
     #endif
 }
 
-void MainWindow::setupMenuBar(GtkWidget *window) {
+void MainWindow::setupMenuBar() {
     GtkWidget *box;
 
     GtkWidget *file_menu;
@@ -56,13 +61,15 @@ void MainWindow::setupMenuBar(GtkWidget *window) {
 
     file_mi  = gtk_menu_item_new_with_label("File");
     close_mi = gtk_menu_item_new_with_label("Close");
-    file_quit_menu_item  = gtk_menu_item_new_with_label("Quit");
+    file_quit_mi  = gtk_menu_item_new_with_label("Quit");
 
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(file_mi), file_menu);
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), close_mi);
-    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), file_quit_menu_item);
+    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), file_quit_mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), file_mi);
     gtk_box_pack_start(GTK_BOX(box), menubar, FALSE, FALSE, 0);
+
+    g_signal_connect(G_OBJECT(file_quit_mi), "activate", G_CALLBACK(quit_activated), NULL);
 
     #ifdef __APPLE__
         GtkosxApplication *osx_app = gtkosx_application_get();

@@ -9,7 +9,7 @@ private:
 
 public:
     static void activate(GtkApplication *app, gpointer user_data);
-    static void setupMenuBar(GtkWidget *window);
+    static void setupMenuBar();
 };
 
 #endif /* MainWindow_hpp */
