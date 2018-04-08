@@ -19,8 +19,8 @@ int main(int argc, char **argv) {
 
     #ifdef __APPLE__
         GtkosxApplication *osx_app = gtkosx_application_get();
-        gtkosx_application_ready(osx_app);
         gtkosx_application_set_use_quartz_accelerators(osx_app, true);
+        gtkosx_application_ready(osx_app);
     #endif
 
     return status;
