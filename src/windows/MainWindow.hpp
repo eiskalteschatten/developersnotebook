@@ -10,6 +10,7 @@ private:
     static void close_window(GSimpleAction *action, GVariant *parameter, gpointer app);
     static void quit_app(GSimpleAction *action, GVariant *parameter, gpointer app);
 
+    static void setup_grid();
     static void setup_stack();
 
     static void setup_menu_bar();
