@@ -133,11 +133,8 @@ void MainWindow::setup_macos_menu_bar() {
 void MainWindow::setup_main_tabs() {
     GtkWidget *button;
 
-    gtk_container_add(GTK_CONTAINER(window), main_box);
-
     button = gtk_button_new_with_label("Hello World");
     g_signal_connect(button, "clicked", G_CALLBACK(print_hello), NULL);
     g_signal_connect_swapped(button, "clicked", G_CALLBACK(gtk_widget_destroy), window);
     gtk_box_pack_start(GTK_BOX(main_box), button, FALSE, FALSE, 0);
-    //gtk_container_add(GTK_CONTAINER(main_box), button);
 }
