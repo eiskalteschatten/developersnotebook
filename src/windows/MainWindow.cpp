@@ -6,6 +6,7 @@
 #endif
 
 #include "MainWindow.hpp"
+#include "AboutDialog.hpp"
 
 GtkWidget *window;
 GtkWidget *main_box;
@@ -103,6 +104,7 @@ void MainWindow::setup_menu_bar() {
 
     // Setup Help menu
     gtk_menu_shell_append(GTK_MENU_SHELL(help_menu), about_mi);
+    g_signal_connect(G_OBJECT(about_mi), "activate", G_CALLBACK(AboutDialog::activate), NULL);
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), help_mi);
 
 
