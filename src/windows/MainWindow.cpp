@@ -17,11 +17,11 @@ GtkWidget *about_mi;
 GtkWidget *help_mi;
 
 
-static void print_hello(GtkWidget *widget, gpointer data) {
-    g_print("Hello World\n");
-}
+// static void print_hello(GtkWidget *widget, gpointer data) {
+//     g_print("Hello World\n");
+// }
 
-static void quit_activated(GSimpleAction *action, GVariant *parameter, gpointer app) {
+void MainWindow::quit_activated(GSimpleAction *action, GVariant *parameter, gpointer app) {
     exit(0);
 }
 
@@ -34,7 +34,7 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
     gtk_window_set_default_size(GTK_WINDOW(window), 1000, 700);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 
-    setupMenuBar();
+    setup_menu_bar();
 
     // button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
     // gtk_container_add(GTK_CONTAINER(window), button_box);
@@ -66,7 +66,7 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
     #endif
 }
 
-void MainWindow::setupMenuBar() {
+void MainWindow::setup_menu_bar() {
     GtkWidget *box;
 
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
