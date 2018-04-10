@@ -133,7 +133,6 @@ void MainWindow::setup_macos_menu_bar() {
 
 
 void MainWindow::setup_stack() {
-
     // Stack
     GtkWidget *stack = gtk_stack_new();
     gtk_stack_set_homogeneous(GTK_STACK(stack), TRUE);
