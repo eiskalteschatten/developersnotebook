@@ -11,9 +11,6 @@
 GtkWidget *window;
 GtkWidget *main_box;
 
-GtkWidget *main_table;
-GtkWidget *halign;
-
 // The menu items that should be hidden in macOS
 GtkWidget *menubar;
 GtkWidget *file_quit_mi;
@@ -42,7 +39,7 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
 
     main_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 
-    setup_window_layout();
+    setup_stack();
     setup_menu_bar();
 
     gtk_widget_show_all(window);
@@ -135,22 +132,7 @@ void MainWindow::setup_macos_menu_bar() {
 }
 
 
-void MainWindow::setup_window_layout() {
-    GtkWidget * templeft = gtk_label_new("left");
-    GtkWidget * tempright = gtk_label_new("right");
-
-    main_table = gtk_table_new(6, 4, FALSE);
-    gtk_table_set_col_spacings(GTK_TABLE(main_table), 3);
-    gtk_table_set_row_spacing(GTK_TABLE(main_table), 0, 3);
-
-    halign = gtk_alignment_new(0, 0, 0, 0);
-    gtk_container_add(GTK_CONTAINER(halign), templeft);
-    gtk_table_attach(GTK_TABLE(main_table), halign, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
-
-    gtk_table_attach(GTK_TABLE(main_table), tempright, 3, 4, 0, 1, GTK_FILL, GTK_SHRINK, 0, 0);
-
-    gtk_box_pack_start(GTK_BOX(main_box), main_table, true, true, 0);
-
+void MainWindow::setup_stack() {
     // GtkWidget *button;
 
     // button = gtk_button_new_with_label("Hello World");

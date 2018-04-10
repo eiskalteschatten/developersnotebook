@@ -9,10 +9,11 @@ private:
 
     static void close_window(GSimpleAction *action, GVariant *parameter, gpointer app);
     static void quit_app(GSimpleAction *action, GVariant *parameter, gpointer app);
+
+    static void setup_stack();
+
     static void setup_menu_bar();
     static void setup_macos_menu_bar();
-
-    static void setup_window_layout();
 
 public:
     static void activate(GtkApplication *app, gpointer user_data);
