@@ -12,6 +12,9 @@ GtkWidget *window;
 // The menu items that should be hidden in macOS
 GtkWidget *menubar;
 GtkWidget *file_quit_mi;
+GtkWidget *preferences_mi;
+GtkWidget *about_mi;
+GtkWidget *help_mi;
 
 
 static void print_hello(GtkWidget *widget, gpointer data) {
@@ -46,6 +49,18 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
     #ifdef __APPLE__
         gtk_widget_hide(GTK_WIDGET(file_quit_mi));
         gtk_widget_hide(menubar);
+
+        GtkosxApplication *osx_app = gtkosx_application_get();
+        gtkosx_application_set_menu_bar(osx_app, GTK_MENU_SHELL(menubar));
+        gtkosx_application_set_help_menu(osx_app, GTK_MENU_ITEM(help_mi));
+        gtkosx_application_set_window_menu(osx_app, NULL);
+
+        // Application Menu
+        GtkWidget *separator_mi_app_menu_1 = gtk_separator_menu_item_new();
+
+        gtkosx_application_insert_app_menu_item(osx_app, about_mi, 0);
+        gtkosx_application_insert_app_menu_item(osx_app, separator_mi_app_menu_1, 1);
+        gtkosx_application_insert_app_menu_item(osx_app, preferences_mi, 2);
     #endif
 }
 
@@ -73,12 +88,12 @@ void MainWindow::setupMenuBar() {
     file_quit_mi              = gtk_menu_item_new_with_label("Quit");
 
     // Define Edit menu
-    GtkWidget *preferences_mi = gtk_menu_item_new_with_label("Preferences");
+    preferences_mi = gtk_menu_item_new_with_label("Preferences");
     GtkWidget *edit_mi        = gtk_menu_item_new_with_label("Edit");
 
     // Define Help menu
-    GtkWidget *about_mi = gtk_menu_item_new_with_label("About");
-    GtkWidget *help_mi  = gtk_menu_item_new_with_label("Help");
+    about_mi = gtk_menu_item_new_with_label("About");
+    help_mi  = gtk_menu_item_new_with_label("Help");
 
     // Setup submenus
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(file_mi), file_menu);
@@ -106,18 +121,4 @@ void MainWindow::setupMenuBar() {
     gtk_box_pack_start(GTK_BOX(box), menubar, FALSE, FALSE, 0);
 
     g_signal_connect(G_OBJECT(file_quit_mi), "activate", G_CALLBACK(quit_activated), NULL);
-
-    #ifdef __APPLE__
-        GtkosxApplication *osx_app = gtkosx_application_get();
-        gtkosx_application_set_menu_bar(osx_app, GTK_MENU_SHELL(menubar));
-        gtkosx_application_set_help_menu(osx_app, GTK_MENU_ITEM(help_mi));
-        gtkosx_application_set_window_menu(osx_app, NULL);
-
-        // Application Menu
-        GtkWidget *separator_mi_app_menu_1 = gtk_separator_menu_item_new();
-
-        gtkosx_application_insert_app_menu_item(osx_app, about_mi, 0);
-        gtkosx_application_insert_app_menu_item(osx_app, separator_mi_app_menu_1, 1);
-        gtkosx_application_insert_app_menu_item(osx_app, preferences_mi, 2);
-    #endif
 }
