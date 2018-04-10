@@ -15,6 +15,8 @@ void AboutDialog::activate() {
 
     dialog = gtk_about_dialog_new();
 
+    gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
+
     gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(dialog), name);
     gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), version);
     gtk_about_dialog_set_copyright(GTK_ABOUT_DIALOG(dialog), copyright);
