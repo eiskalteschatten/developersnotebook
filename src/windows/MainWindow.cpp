@@ -50,6 +50,13 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
 }
 
 void MainWindow::setup_menu_bar() {
+    GdkModifierType primary_mask_key = GDK_CONTROL_MASK;
+
+    // Override the primary modifier key for macOS
+    #ifdef __APPLE__
+        primary_mask_key = GDK_META_MASK;
+    #endif
+
     GtkWidget *box;
 
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -89,13 +96,13 @@ void MainWindow::setup_menu_bar() {
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), close_mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi_1);
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), file_quit_mi);
-    gtk_widget_add_accelerator(close_mi, "activate", accel_group, GDK_KEY_w, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
-    gtk_widget_add_accelerator(file_quit_mi, "activate", accel_group, GDK_KEY_q, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+    gtk_widget_add_accelerator(close_mi, "activate", accel_group, GDK_KEY_w, primary_mask_key, GTK_ACCEL_VISIBLE);
+    gtk_widget_add_accelerator(file_quit_mi, "activate", accel_group, GDK_KEY_q, primary_mask_key, GTK_ACCEL_VISIBLE);
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), file_mi);
 
     // Setup Edit menu
     gtk_menu_shell_append(GTK_MENU_SHELL(edit_menu), preferences_mi);
-    gtk_widget_add_accelerator(preferences_mi, "activate", accel_group, GDK_KEY_comma, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+    gtk_widget_add_accelerator(preferences_mi, "activate", accel_group, GDK_KEY_comma, primary_mask_key, GTK_ACCEL_VISIBLE);
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), edit_mi);
 
     // Setup Help menu
@@ -124,7 +131,5 @@ void MainWindow::setup_macos_menu_bar() {
         gtkosx_application_insert_app_menu_item(osx_app, about_mi, 0);
         gtkosx_application_insert_app_menu_item(osx_app, separator_mi_app_menu_1, 1);
         gtkosx_application_insert_app_menu_item(osx_app, preferences_mi, 2);
-
-        gtkosx_application_set_use_quartz_accelerators(osx_app, true);
     #endif
 }
