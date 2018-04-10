@@ -12,9 +12,13 @@ MAC_BUNDLE=Developer\'s\ Notebook.app
 ifeq ($(OS_TYPE), Darwin)
 CXXINCLUDES=-I/usr/local/Cellar/gtk-mac-integration/2.0.8_2/include/gtkmacintegration/
 CXXLINKED=-lgtkmacintegration-gtk3.2
+BUILD_RUN_TARGET=create-mac-bundle
+BUILD_RUN_OPEN=open ./$(BUILD_DIR)/$(MAC_BUNDLE)
 else
 CXXINCLUDES=
 CXXLINKED=
+BUILD_RUN_TARGET=clean all
+BUILD_RUN_OPEN=./$(BUILD_DIR)/$(TARGET)
 endif
 
 all:
@@ -32,8 +36,8 @@ clean:
 	rm -f ./$(BUILD_DIR)/$(TARGET) 2> /dev/null
 	rm -rf ./$(BUILD_DIR)/$(MAC_BUNDLE) 2> /dev/null
 
-build-run: all
-	./$(BUILD_DIR)/$(TARGET)
+build-run: $(BUILD_RUN_TARGET)
+	$(BUILD_RUN_OPEN)
 
 test:
 	$(CXX) \
