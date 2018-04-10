@@ -7,9 +7,12 @@ class MainWindow {
 private:
     MainWindow();
 
-    static void quit_activated(GSimpleAction *action, GVariant *parameter, gpointer app);
+    static void close_window(GSimpleAction *action, GVariant *parameter, gpointer app);
+    static void quit_app(GSimpleAction *action, GVariant *parameter, gpointer app);
     static void setup_menu_bar();
     static void setup_macos_menu_bar();
+
+    static void setup_main_tabs();
 
 public:
     static void activate(GtkApplication *app, gpointer user_data);

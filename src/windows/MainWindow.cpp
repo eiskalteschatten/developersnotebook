@@ -17,32 +17,26 @@ GtkWidget *about_mi;
 GtkWidget *help_mi;
 
 
-// static void print_hello(GtkWidget *widget, gpointer data) {
-//     g_print("Hello World\n");
-// }
+static void print_hello(GtkWidget *widget, gpointer data) {
+    g_print("Hello World\n");
+}
 
-void MainWindow::quit_activated(GSimpleAction *action, GVariant *parameter, gpointer app) {
+void MainWindow::close_window(GSimpleAction *action, GVariant *parameter, gpointer app) {
+    gtk_widget_destroy(GTK_WIDGET(window));
+}
+
+void MainWindow::quit_app(GSimpleAction *action, GVariant *parameter, gpointer app) {
     exit(0);
 }
 
 void MainWindow::activate(GtkApplication *app, gpointer user_data) {
-    // GtkWidget *button;
-    // GtkWidget *button_box;
-
     window = gtk_application_window_new(app);
     gtk_window_set_title(GTK_WINDOW(window), "Developer's Notebook");
     gtk_window_set_default_size(GTK_WINDOW(window), 1000, 700);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 
     setup_menu_bar();
-
-    // button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
-    // gtk_container_add(GTK_CONTAINER(window), button_box);
-
-    // button = gtk_button_new_with_label("Hello World");
-    // g_signal_connect(button, "clicked", G_CALLBACK(print_hello), NULL);
-    // g_signal_connect_swapped(button, "clicked", G_CALLBACK(gtk_widget_destroy), window);
-    // gtk_container_add(GTK_CONTAINER(button_box), button);
+    setup_main_tabs();
 
     gtk_widget_show_all(window);
 
@@ -96,7 +90,9 @@ void MainWindow::setup_menu_bar() {
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), close_mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi_1);
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), file_quit_mi);
+    g_signal_connect(G_OBJECT(close_mi), "activate", G_CALLBACK(close_window), NULL);
     gtk_widget_add_accelerator(close_mi, "activate", accel_group, GDK_KEY_w, primary_mask_key, GTK_ACCEL_VISIBLE);
+    g_signal_connect(G_OBJECT(file_quit_mi), "activate", G_CALLBACK(quit_app), NULL);
     gtk_widget_add_accelerator(file_quit_mi, "activate", accel_group, GDK_KEY_q, primary_mask_key, GTK_ACCEL_VISIBLE);
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), file_mi);
 
@@ -112,7 +108,6 @@ void MainWindow::setup_menu_bar() {
 
     gtk_box_pack_start(GTK_BOX(box), menubar, FALSE, FALSE, 0);
 
-    g_signal_connect(G_OBJECT(file_quit_mi), "activate", G_CALLBACK(quit_activated), NULL);
 }
 
 void MainWindow::setup_macos_menu_bar() {
@@ -132,4 +127,21 @@ void MainWindow::setup_macos_menu_bar() {
         gtkosx_application_insert_app_menu_item(osx_app, separator_mi_app_menu_1, 1);
         gtkosx_application_insert_app_menu_item(osx_app, preferences_mi, 2);
     #endif
+}
+
+
+void MainWindow::setup_main_tabs() {
+    GtkWidget *button;
+    GtkWidget *button_box;
+
+    button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
+    gtk_container_add(GTK_CONTAINER(window), button_box);
+
+    button = gtk_button_new_with_label("Hello World");
+    g_signal_connect(button, "clicked", G_CALLBACK(print_hello), NULL);
+    g_signal_connect_swapped(button, "clicked", G_CALLBACK(gtk_widget_destroy), window);
+    gtk_box_pack_start(GTK_BOX(button_box), button, FALSE, FALSE, 0);
+    //gtk_container_add(GTK_CONTAINER(button_box), button);
+
+    gtk_widget_show(button_box);
 }
