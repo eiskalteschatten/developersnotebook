@@ -57,6 +57,10 @@ void MainWindow::setupMenuBar() {
 
     menubar = gtk_menu_bar_new();
 
+    // Accelerators
+    GtkAccelGroup *accel_group = gtk_accel_group_new();
+    gtk_window_add_accel_group(GTK_WINDOW(window), accel_group);
+
     // Define Submenus
     GtkWidget *file_menu = gtk_menu_new();
     GtkWidget *edit_menu = gtk_menu_new();
@@ -85,10 +89,13 @@ void MainWindow::setupMenuBar() {
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), close_mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi_1);
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), file_quit_mi);
+    gtk_widget_add_accelerator(close_mi, "activate", accel_group, GDK_KEY_w, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
+    gtk_widget_add_accelerator(file_quit_mi, "activate", accel_group, GDK_KEY_q, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), file_mi);
 
     // Setup Edit menu
     gtk_menu_shell_append(GTK_MENU_SHELL(edit_menu), preferences_mi);
+    gtk_widget_add_accelerator(preferences_mi, "activate", accel_group, GDK_KEY_comma, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), edit_mi);
 
     // Setup Help menu
