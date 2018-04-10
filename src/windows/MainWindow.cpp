@@ -12,8 +12,7 @@ GtkWidget *window;
 // The menu items that should be hidden in macOS
 GtkWidget *menubar;
 GtkWidget *file_quit_mi;
-GtkWidget *preferences_mi;
-GtkWidget *about_mi;
+
 
 static void print_hello(GtkWidget *widget, gpointer data) {
     g_print("Hello World\n");
@@ -46,14 +45,11 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
 
     #ifdef __APPLE__
         gtk_widget_hide(GTK_WIDGET(file_quit_mi));
-        gtk_widget_hide(GTK_WIDGET(preferences_mi));
-        gtk_widget_hide(GTK_WIDGET(about_mi));
         gtk_widget_hide(menubar);
     #endif
 }
 
 void MainWindow::setupMenuBar() {
-    GtkWidget *separator_mi = gtk_separator_menu_item_new();
     GtkWidget *box;
 
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -67,16 +63,17 @@ void MainWindow::setupMenuBar() {
     GtkWidget *help_menu = gtk_menu_new();
 
     // Define File menu
-    GtkWidget *file_mi  = gtk_menu_item_new_with_label("File");
-    GtkWidget *close_mi = gtk_menu_item_new_with_label("Close");
-    file_quit_mi        = gtk_menu_item_new_with_label("Quit");
+    GtkWidget *file_mi        = gtk_menu_item_new_with_label("File");
+    GtkWidget *close_mi       = gtk_menu_item_new_with_label("Close");
+    GtkWidget *separator_mi_1 = gtk_separator_menu_item_new();
+    file_quit_mi              = gtk_menu_item_new_with_label("Quit");
 
     // Define Edit menu
-    preferences_mi = gtk_menu_item_new_with_label("Preferences");
+    GtkWidget *preferences_mi = gtk_menu_item_new_with_label("Preferences");
     GtkWidget *edit_mi        = gtk_menu_item_new_with_label("Edit");
 
     // Define Help menu
-    about_mi = gtk_menu_item_new_with_label("About");
+    GtkWidget *about_mi = gtk_menu_item_new_with_label("About");
     GtkWidget *help_mi  = gtk_menu_item_new_with_label("Help");
 
     // Setup submenus
@@ -86,7 +83,7 @@ void MainWindow::setupMenuBar() {
 
     // Setup file menu
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), close_mi);
-    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi_1);
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), file_quit_mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), file_mi);
 
@@ -108,5 +105,12 @@ void MainWindow::setupMenuBar() {
         gtkosx_application_set_menu_bar(osx_app, GTK_MENU_SHELL(menubar));
         gtkosx_application_set_help_menu(osx_app, GTK_MENU_ITEM(help_mi));
         gtkosx_application_set_window_menu(osx_app, NULL);
+
+        // Application Menu
+        GtkWidget *separator_mi_app_menu_1 = gtk_separator_menu_item_new();
+
+        gtkosx_application_insert_app_menu_item(osx_app, about_mi, 0);
+        gtkosx_application_insert_app_menu_item(osx_app, separator_mi_app_menu_1, 1);
+        gtkosx_application_insert_app_menu_item(osx_app, preferences_mi, 2);
     #endif
 }
