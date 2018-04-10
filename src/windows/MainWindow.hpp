@@ -12,7 +12,7 @@ private:
     static void setup_menu_bar();
     static void setup_macos_menu_bar();
 
-    static void setup_main_tabs();
+    static void setup_window_layout();
 
 public:
     static void activate(GtkApplication *app, gpointer user_data);
