@@ -61,6 +61,8 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
         gtkosx_application_insert_app_menu_item(osx_app, about_mi, 0);
         gtkosx_application_insert_app_menu_item(osx_app, separator_mi_app_menu_1, 1);
         gtkosx_application_insert_app_menu_item(osx_app, preferences_mi, 2);
+
+        gtkosx_application_set_use_quartz_accelerators(osx_app, true);
     #endif
 }
 
