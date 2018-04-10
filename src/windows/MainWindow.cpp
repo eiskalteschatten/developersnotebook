@@ -106,6 +106,7 @@ void MainWindow::setupMenuBar() {
     #ifdef __APPLE__
         GtkosxApplication *osx_app = gtkosx_application_get();
         gtkosx_application_set_menu_bar(osx_app, GTK_MENU_SHELL(menubar));
+        gtkosx_application_set_help_menu(osx_app, GTK_MENU_ITEM(help_mi));
         gtkosx_application_set_window_menu(osx_app, NULL);
     #endif
 }
