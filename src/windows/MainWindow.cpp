@@ -133,10 +133,32 @@ void MainWindow::setup_macos_menu_bar() {
 
 
 void MainWindow::setup_stack() {
-    // GtkWidget *button;
 
-    // button = gtk_button_new_with_label("Hello World");
-    // g_signal_connect(button, "clicked", G_CALLBACK(print_hello), NULL);
-    // g_signal_connect_swapped(button, "clicked", G_CALLBACK(gtk_widget_destroy), window);
-    // gtk_box_pack_start(GTK_BOX(main_box), button, FALSE, FALSE, 0);
+    // Stack
+    GtkWidget *stack = gtk_stack_new();
+    gtk_stack_set_homogeneous(GTK_STACK(stack), TRUE);
+    gtk_widget_set_hexpand(stack, TRUE);
+
+    // Sidebar
+    GtkWidget *sidebar = gtk_stack_sidebar_new();
+    gtk_stack_sidebar_set_stack(GTK_STACK_SIDEBAR(sidebar), GTK_STACK(stack));
+    gtk_widget_set_size_request(sidebar, 128, -1);
+
+    GtkWidget *stack1 = gtk_label_new("stack1");
+    GtkWidget *stack2 = gtk_label_new("stack2");
+
+    // Add the elements to the stack
+    gtk_stack_add_titled(GTK_STACK(stack), stack1, "home", "Home");
+    gtk_stack_add_titled(GTK_STACK(stack), stack2, "projects", "Projects");
+
+    // Grid
+    GtkWidget *grid = gtk_grid_new();
+    gtk_grid_set_row_homogeneous(GTK_GRID(grid), TRUE);
+    gtk_grid_insert_row(GTK_GRID(grid), 0);
+    gtk_grid_insert_column(GTK_GRID(grid), 0);
+    gtk_grid_insert_column(GTK_GRID(grid), 1);
+    gtk_grid_attach(GTK_GRID(grid), sidebar, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(grid), stack, 1, 0, 1, 1);
+
+    gtk_box_pack_start(GTK_BOX(main_box), grid, TRUE, TRUE, 0);
 }
