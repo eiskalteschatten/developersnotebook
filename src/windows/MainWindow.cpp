@@ -8,8 +8,12 @@
 #include "MainWindow.hpp"
 
 GtkWidget *window;
+
+// The menu items that should be hidden in macOS
 GtkWidget *menubar;
 GtkWidget *file_quit_mi;
+GtkWidget *preferences_mi;
+GtkWidget *about_mi;
 
 static void print_hello(GtkWidget *widget, gpointer data) {
     g_print("Hello World\n");
@@ -42,6 +46,8 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
 
     #ifdef __APPLE__
         gtk_widget_hide(GTK_WIDGET(file_quit_mi));
+        gtk_widget_hide(GTK_WIDGET(preferences_mi));
+        gtk_widget_hide(GTK_WIDGET(about_mi));
         gtk_widget_hide(menubar);
     #endif
 }
@@ -66,9 +72,11 @@ void MainWindow::setupMenuBar() {
     file_quit_mi        = gtk_menu_item_new_with_label("Quit");
 
     // Define Edit menu
-    GtkWidget *edit_mi  = gtk_menu_item_new_with_label("Edit");
+    preferences_mi = gtk_menu_item_new_with_label("Preferences");
+    GtkWidget *edit_mi        = gtk_menu_item_new_with_label("Edit");
 
     // Define Help menu
+    about_mi = gtk_menu_item_new_with_label("About");
     GtkWidget *help_mi  = gtk_menu_item_new_with_label("Help");
 
     // Setup submenus
@@ -83,9 +91,11 @@ void MainWindow::setupMenuBar() {
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), file_mi);
 
     // Setup Edit menu
+    gtk_menu_shell_append(GTK_MENU_SHELL(edit_menu), preferences_mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), edit_mi);
 
     // Setup Help menu
+    gtk_menu_shell_append(GTK_MENU_SHELL(help_menu), about_mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), help_mi);
 
 
