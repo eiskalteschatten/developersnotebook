@@ -8,6 +8,7 @@
 #include "MainWindow.hpp"
 
 GtkWidget *window;
+GtkWidget *main_box;
 
 // The menu items that should be hidden in macOS
 GtkWidget *menubar;
@@ -35,6 +36,8 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
     gtk_window_set_default_size(GTK_WINDOW(window), 1000, 700);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 
+    main_box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+
     setup_menu_bar();
     setup_main_tabs();
 
@@ -51,10 +54,7 @@ void MainWindow::setup_menu_bar() {
         primary_mask_key = GDK_META_MASK;
     #endif
 
-    GtkWidget *box;
-
-    box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_container_add(GTK_CONTAINER(window), box);
+    gtk_container_add(GTK_CONTAINER(window), main_box);
 
     menubar = gtk_menu_bar_new();
 
@@ -106,7 +106,7 @@ void MainWindow::setup_menu_bar() {
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), help_mi);
 
 
-    gtk_box_pack_start(GTK_BOX(box), menubar, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(main_box), menubar, FALSE, FALSE, 0);
 
 }
 
@@ -132,16 +132,12 @@ void MainWindow::setup_macos_menu_bar() {
 
 void MainWindow::setup_main_tabs() {
     GtkWidget *button;
-    GtkWidget *button_box;
 
-    button_box = gtk_button_box_new(GTK_ORIENTATION_HORIZONTAL);
-    gtk_container_add(GTK_CONTAINER(window), button_box);
+    gtk_container_add(GTK_CONTAINER(window), main_box);
 
     button = gtk_button_new_with_label("Hello World");
     g_signal_connect(button, "clicked", G_CALLBACK(print_hello), NULL);
     g_signal_connect_swapped(button, "clicked", G_CALLBACK(gtk_widget_destroy), window);
-    gtk_box_pack_start(GTK_BOX(button_box), button, FALSE, FALSE, 0);
-    //gtk_container_add(GTK_CONTAINER(button_box), button);
-
-    gtk_widget_show(button_box);
+    gtk_box_pack_start(GTK_BOX(main_box), button, FALSE, FALSE, 0);
+    //gtk_container_add(GTK_CONTAINER(main_box), button);
 }
