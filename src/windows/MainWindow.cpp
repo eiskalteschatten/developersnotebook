@@ -47,26 +47,48 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
 }
 
 void MainWindow::setupMenuBar() {
+    GtkWidget *separator_mi = gtk_separator_menu_item_new();
     GtkWidget *box;
-
-    GtkWidget *file_menu;
-    GtkWidget *file_mi;
-    GtkWidget *close_mi;
 
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_container_add(GTK_CONTAINER(window), box);
 
-    menubar   = gtk_menu_bar_new();
-    file_menu = gtk_menu_new();
+    menubar = gtk_menu_bar_new();
 
-    file_mi  = gtk_menu_item_new_with_label("File");
-    close_mi = gtk_menu_item_new_with_label("Close");
-    file_quit_mi  = gtk_menu_item_new_with_label("Quit");
+    // Define Submenus
+    GtkWidget *file_menu = gtk_menu_new();
+    GtkWidget *edit_menu = gtk_menu_new();
+    GtkWidget *help_menu = gtk_menu_new();
 
+    // Define File menu
+    GtkWidget *file_mi  = gtk_menu_item_new_with_label("File");
+    GtkWidget *close_mi = gtk_menu_item_new_with_label("Close");
+    file_quit_mi        = gtk_menu_item_new_with_label("Quit");
+
+    // Define Edit menu
+    GtkWidget *edit_mi  = gtk_menu_item_new_with_label("Edit");
+
+    // Define Help menu
+    GtkWidget *help_mi  = gtk_menu_item_new_with_label("Help");
+
+    // Setup submenus
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(file_mi), file_menu);
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(edit_mi), edit_menu);
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(help_mi), help_menu);
+
+    // Setup file menu
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), close_mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), file_quit_mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), file_mi);
+
+    // Setup Edit menu
+    gtk_menu_shell_append(GTK_MENU_SHELL(menubar), edit_mi);
+
+    // Setup Help menu
+    gtk_menu_shell_append(GTK_MENU_SHELL(menubar), help_mi);
+
+
     gtk_box_pack_start(GTK_BOX(box), menubar, FALSE, FALSE, 0);
 
     g_signal_connect(G_OBJECT(file_quit_mi), "activate", G_CALLBACK(quit_activated), NULL);
