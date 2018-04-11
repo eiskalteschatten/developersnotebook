@@ -16,6 +16,7 @@ public:
     ProjectsView();
     ~ProjectsView();
 
+    GtkWidget *get_list_view() {return list_view;}
     GtkWidget *get_form_grid() {return form_grid;}
 };
 
