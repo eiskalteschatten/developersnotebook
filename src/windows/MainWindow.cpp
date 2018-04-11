@@ -7,6 +7,7 @@
 
 #include "MainWindow.hpp"
 #include "AboutDialog.hpp"
+#include "../views/ProjectsView.hpp"
 
 GtkWidget *window;
 GtkWidget *grid;
@@ -18,10 +19,6 @@ GtkWidget *preferences_mi;
 GtkWidget *about_mi;
 GtkWidget *help_mi;
 
-
-static void print_hello(GtkWidget *widget, gpointer data) {
-    g_print("Hello World\n");
-}
 
 void MainWindow::close_window(GSimpleAction *action, GVariant *parameter, gpointer app) {
     gtk_widget_destroy(GTK_WIDGET(window));
@@ -143,6 +140,10 @@ void MainWindow::setup_grid() {
 
 
 void MainWindow::setup_stack() {
+    // Views for the stack
+    ProjectsView *projects_view = new ProjectsView();
+    GtkWidget *projects_view_widget = projects_view->get_widget();
+
     // Stack
     GtkWidget *stack = gtk_stack_new();
     gtk_stack_set_homogeneous(GTK_STACK(stack), TRUE);
@@ -155,12 +156,11 @@ void MainWindow::setup_stack() {
     gtk_widget_set_size_request(sidebar, 128, -1);
     gtk_widget_set_vexpand(sidebar, TRUE);
 
-    GtkWidget *stack1 = gtk_label_new("stack1");
-    GtkWidget *stack2 = gtk_label_new("stack2");
+    GtkWidget *home = gtk_label_new("Home");
 
     // Add the elements to the stack
-    gtk_stack_add_titled(GTK_STACK(stack), stack1, "home", "Home");
-    gtk_stack_add_titled(GTK_STACK(stack), stack2, "projects", "Projects");
+    gtk_stack_add_titled(GTK_STACK(stack), home, "home", "Home");
+    gtk_stack_add_titled(GTK_STACK(stack), projects_view_widget, "projects", "Projects");
 
     gtk_grid_attach(GTK_GRID(grid), sidebar, 0, 1, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), stack, 1, 1, 1, 1);
