@@ -7,6 +7,7 @@
 
 #include "MainWindow.hpp"
 #include "AboutDialog.hpp"
+#include "../views/HomeView.hpp"
 #include "../views/ProjectsView.hpp"
 
 GtkWidget *window;
@@ -141,6 +142,9 @@ void MainWindow::setup_grid() {
 
 void MainWindow::setup_stack() {
     // Views for the stack
+    HomeView *home_view = new HomeView();
+    GtkWidget *home_view_widget = home_view->get_widget();
+
     ProjectsView *projects_view = new ProjectsView();
     GtkWidget *projects_view_widget = projects_view->get_widget();
 
@@ -156,10 +160,8 @@ void MainWindow::setup_stack() {
     gtk_widget_set_size_request(sidebar, 128, -1);
     gtk_widget_set_vexpand(sidebar, TRUE);
 
-    GtkWidget *home = gtk_label_new("Home");
-
     // Add the elements to the stack
-    gtk_stack_add_titled(GTK_STACK(stack), home, "home", "Home");
+    gtk_stack_add_titled(GTK_STACK(stack), home_view_widget, "home", "Home");
     gtk_stack_add_titled(GTK_STACK(stack), projects_view_widget, "projects", "Projects");
 
     gtk_grid_attach(GTK_GRID(grid), sidebar, 0, 1, 1, 1);
