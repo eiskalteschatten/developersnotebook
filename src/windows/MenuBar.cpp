@@ -20,7 +20,7 @@ void MenuBar::quit_app(GSimpleAction *action, GVariant *parameter, gpointer app)
 
 MenuBar::MenuBar(GtkWidget *main_window) {
     window = main_window;
-    GdkModifierType primary_mask_key = GDK_CONTROL_MASK;
+    primary_mask_key = GDK_CONTROL_MASK;
 
     // Override the primary modifier key for macOS
     #ifdef __APPLE__
@@ -30,16 +30,17 @@ MenuBar::MenuBar(GtkWidget *main_window) {
     menubar = gtk_menu_bar_new();
 
     // Accelerators
-    GtkAccelGroup *accel_group = gtk_accel_group_new();
+    accel_group = gtk_accel_group_new();
     gtk_window_add_accel_group(GTK_WINDOW(window), accel_group);
 
-    // Define Submenus
-    GtkWidget *file_menu     = gtk_menu_new();
-    GtkWidget *edit_menu     = gtk_menu_new();
-    GtkWidget *projects_menu = gtk_menu_new();
-    GtkWidget *help_menu     = gtk_menu_new();
+    setup_file_menu();
+    setup_edit_menu();
+    setup_projects_menu();
+    setup_help_menu();
+}
 
-    // Define File menu
+void MenuBar::setup_file_menu() {
+    GtkWidget *file_menu      = gtk_menu_new();
     GtkWidget *file_mi        = gtk_menu_item_new_with_label("File");
     GtkWidget *save_mi        = gtk_menu_item_new_with_label("Save");
     GtkWidget *separator_mi_1 = gtk_separator_menu_item_new();
@@ -47,49 +48,72 @@ MenuBar::MenuBar(GtkWidget *main_window) {
     GtkWidget *separator_mi_2 = gtk_separator_menu_item_new();
     file_quit_mi              = gtk_menu_item_new_with_label("Quit");
 
-    // Define Edit menu
-    preferences_mi     = gtk_menu_item_new_with_label("Preferences");
-    GtkWidget *edit_mi = gtk_menu_item_new_with_label("Edit");
-
-    // Define Projects menu
-    GtkWidget *projects_new_project_mi = gtk_menu_item_new_with_label("New Project");
-    GtkWidget *projects_mi             = gtk_menu_item_new_with_label("Projects");
-
-    // Define Help menu
-    about_mi = gtk_menu_item_new_with_label("About");
-    help_mi  = gtk_menu_item_new_with_label("Help");
-
-    // Setup submenus
+    // Setup submenu
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(file_mi), file_menu);
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(edit_mi), edit_menu);
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(projects_mi), projects_menu);
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(help_mi), help_menu);
 
-    // Setup file menu
+    // Setup menu items
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), save_mi);
     gtk_widget_add_accelerator(save_mi, "activate", accel_group, GDK_KEY_s, primary_mask_key, GTK_ACCEL_VISIBLE);
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi_1);
+
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), close_mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi_2);
+
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), file_quit_mi);
     g_signal_connect(G_OBJECT(close_mi), "activate", G_CALLBACK(close_window), NULL);
     gtk_widget_add_accelerator(close_mi, "activate", accel_group, GDK_KEY_w, primary_mask_key, GTK_ACCEL_VISIBLE);
+
     g_signal_connect(G_OBJECT(file_quit_mi), "activate", G_CALLBACK(quit_app), NULL);
     gtk_widget_add_accelerator(file_quit_mi, "activate", accel_group, GDK_KEY_q, primary_mask_key, GTK_ACCEL_VISIBLE);
-    gtk_menu_shell_append(GTK_MENU_SHELL(menubar), file_mi);
 
-    // Setup Edit menu
+    // Add the menu to the menu shell
+    gtk_menu_shell_append(GTK_MENU_SHELL(menubar), file_mi);
+}
+
+void MenuBar::setup_edit_menu() {
+    GtkWidget *edit_menu = gtk_menu_new();
+    preferences_mi       = gtk_menu_item_new_with_label("Preferences");
+    GtkWidget *edit_mi   = gtk_menu_item_new_with_label("Edit");
+
+    // Setup submenu
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(edit_mi), edit_menu);
+
+    // Setup menu items
     gtk_menu_shell_append(GTK_MENU_SHELL(edit_menu), preferences_mi);
     gtk_widget_add_accelerator(preferences_mi, "activate", accel_group, GDK_KEY_comma, primary_mask_key, GTK_ACCEL_VISIBLE);
+
+    // Add the menu to the menu shell
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), edit_mi);
+}
 
-    // Setup Projects menu
+void MenuBar::setup_projects_menu() {
+    GtkWidget *projects_menu           = gtk_menu_new();
+    GtkWidget *projects_new_project_mi = gtk_menu_item_new_with_label("New Project");
+    GtkWidget *projects_mi             = gtk_menu_item_new_with_label("Projects");
+
+    // Setup submenu
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(projects_mi), projects_menu);
+
+    // Setup menu items
     gtk_menu_shell_append(GTK_MENU_SHELL(projects_menu), projects_new_project_mi);
-    gtk_menu_shell_append(GTK_MENU_SHELL(menubar), projects_mi);
 
-    // Setup Help menu
+    // Add the menu to the menu shell
+    gtk_menu_shell_append(GTK_MENU_SHELL(menubar), projects_mi);
+}
+
+void MenuBar::setup_help_menu() {
+    GtkWidget *help_menu = gtk_menu_new();
+    about_mi             = gtk_menu_item_new_with_label("About");
+    help_mi              = gtk_menu_item_new_with_label("Help");
+
+    // Setup submenu
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(help_mi), help_menu);
+
+    // Setup menu items
     gtk_menu_shell_append(GTK_MENU_SHELL(help_menu), about_mi);
     g_signal_connect(G_OBJECT(about_mi), "activate", G_CALLBACK(AboutDialog::activate), NULL);
+
+    // Add the menu to the menu shell
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), help_mi);
 }
 

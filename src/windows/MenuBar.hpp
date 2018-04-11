@@ -6,6 +6,8 @@
 class MenuBar {
 private:
     GtkWidget *window;
+    GdkModifierType primary_mask_key;
+    GtkAccelGroup *accel_group;
 
     // The menu items that should be hidden in macOS
     GtkWidget *menubar;
@@ -16,6 +18,11 @@ private:
 
     static void close_window(GSimpleAction *action, GVariant *parameter, gpointer app);
     static void quit_app(GSimpleAction *action, GVariant *parameter, gpointer app);
+
+    void setup_file_menu();
+    void setup_edit_menu();
+    void setup_projects_menu();
+    void setup_help_menu();
 
 public:
     MenuBar(GtkWidget *main_window);
