@@ -18,8 +18,7 @@ void MenuBar::quit_app(GSimpleAction *action, GVariant *parameter, gpointer app)
     exit(0);
 }
 
-MenuBar::MenuBar(GtkWidget *main_window) {
-    window = main_window;
+MenuBar::MenuBar(GtkWidget *window) : window(window) {
     primary_mask_key = GDK_CONTROL_MASK;
 
     // Override the primary modifier key for macOS

@@ -25,7 +25,7 @@ private:
     void setup_help_menu();
 
 public:
-    MenuBar(GtkWidget *main_window);
+    MenuBar(GtkWidget *window);
     ~MenuBar();
 
     GtkWidget *get_menu_bar() {return menubar;}
