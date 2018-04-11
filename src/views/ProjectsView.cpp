@@ -2,13 +2,13 @@
 
 #include "ProjectsView.hpp"
 
-
 enum {
    TITLE_COLUMN,
    START_DATE_COLUMN,
    END_DATE_COLUMN,
    N_COLUMNS
 };
+
 
 ProjectsView::ProjectsView() {
     main_widget = gtk_paned_new(GTK_ORIENTATION_HORIZONTAL);
