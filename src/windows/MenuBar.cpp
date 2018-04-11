@@ -39,6 +39,16 @@ MenuBar::MenuBar(GtkWidget *main_window) {
     setup_help_menu();
 }
 
+MenuBar::~MenuBar() {
+    delete window;
+    delete accel_group;
+    delete menubar;
+    delete file_quit_mi;
+    delete preferences_mi;
+    delete about_mi;
+    delete help_mi;
+}
+
 void MenuBar::setup_file_menu() {
     GtkWidget *file_menu      = gtk_menu_new();
     GtkWidget *file_mi        = gtk_menu_item_new_with_label("File");
