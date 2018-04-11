@@ -59,19 +59,26 @@ void MainWindow::setup_menu_bar() {
     gtk_window_add_accel_group(GTK_WINDOW(window), accel_group);
 
     // Define Submenus
-    GtkWidget *file_menu = gtk_menu_new();
-    GtkWidget *edit_menu = gtk_menu_new();
-    GtkWidget *help_menu = gtk_menu_new();
+    GtkWidget *file_menu     = gtk_menu_new();
+    GtkWidget *edit_menu     = gtk_menu_new();
+    GtkWidget *projects_menu = gtk_menu_new();
+    GtkWidget *help_menu     = gtk_menu_new();
 
     // Define File menu
     GtkWidget *file_mi        = gtk_menu_item_new_with_label("File");
-    GtkWidget *close_mi       = gtk_menu_item_new_with_label("Close");
+    GtkWidget *save_mi        = gtk_menu_item_new_with_label("Save");
     GtkWidget *separator_mi_1 = gtk_separator_menu_item_new();
+    GtkWidget *close_mi       = gtk_menu_item_new_with_label("Close");
+    GtkWidget *separator_mi_2 = gtk_separator_menu_item_new();
     file_quit_mi              = gtk_menu_item_new_with_label("Quit");
 
     // Define Edit menu
-    preferences_mi = gtk_menu_item_new_with_label("Preferences");
-    GtkWidget *edit_mi        = gtk_menu_item_new_with_label("Edit");
+    preferences_mi     = gtk_menu_item_new_with_label("Preferences");
+    GtkWidget *edit_mi = gtk_menu_item_new_with_label("Edit");
+
+    // Define Projects menu
+    GtkWidget *projects_new_project_mi = gtk_menu_item_new_with_label("New Project");
+    GtkWidget *projects_mi             = gtk_menu_item_new_with_label("Projects");
 
     // Define Help menu
     about_mi = gtk_menu_item_new_with_label("About");
@@ -80,11 +87,15 @@ void MainWindow::setup_menu_bar() {
     // Setup submenus
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(file_mi), file_menu);
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(edit_mi), edit_menu);
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(projects_mi), projects_menu);
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(help_mi), help_menu);
 
     // Setup file menu
-    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), close_mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), save_mi);
+    gtk_widget_add_accelerator(save_mi, "activate", accel_group, GDK_KEY_s, primary_mask_key, GTK_ACCEL_VISIBLE);
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi_1);
+    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), close_mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi_2);
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), file_quit_mi);
     g_signal_connect(G_OBJECT(close_mi), "activate", G_CALLBACK(close_window), NULL);
     gtk_widget_add_accelerator(close_mi, "activate", accel_group, GDK_KEY_w, primary_mask_key, GTK_ACCEL_VISIBLE);
@@ -96,6 +107,10 @@ void MainWindow::setup_menu_bar() {
     gtk_menu_shell_append(GTK_MENU_SHELL(edit_menu), preferences_mi);
     gtk_widget_add_accelerator(preferences_mi, "activate", accel_group, GDK_KEY_comma, primary_mask_key, GTK_ACCEL_VISIBLE);
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), edit_mi);
+
+    // Setup Projects menu
+    gtk_menu_shell_append(GTK_MENU_SHELL(projects_menu), projects_new_project_mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menubar), projects_mi);
 
     // Setup Help menu
     gtk_menu_shell_append(GTK_MENU_SHELL(help_menu), about_mi);
@@ -139,13 +154,12 @@ void MainWindow::setup_grid() {
     gtk_container_add(GTK_CONTAINER(window), grid);
 }
 
-
 void MainWindow::setup_stack() {
     // Views for the stack
-    HomeView *home_view = new HomeView();
+    HomeView *home_view         = new HomeView();
     GtkWidget *home_view_widget = home_view->get_widget();
 
-    ProjectsView *projects_view = new ProjectsView();
+    ProjectsView *projects_view     = new ProjectsView();
     GtkWidget *projects_view_widget = projects_view->get_widget();
 
     // Stack
