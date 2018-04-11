@@ -51,16 +51,24 @@ MenuBar::~MenuBar() {
 void MenuBar::setup_file_menu() {
     GtkWidget *file_menu      = gtk_menu_new();
     GtkWidget *file_mi        = gtk_menu_item_new_with_label("File");
+    GtkWidget *new_menu       = gtk_menu_new();
+    GtkWidget *new_mi         = gtk_menu_item_new_with_label("New");
+    GtkWidget *new_project_mi = gtk_menu_item_new_with_label("New Project");
     GtkWidget *save_mi        = gtk_menu_item_new_with_label("Save");
     GtkWidget *separator_mi_1 = gtk_separator_menu_item_new();
     GtkWidget *close_mi       = gtk_menu_item_new_with_label("Close");
     GtkWidget *separator_mi_2 = gtk_separator_menu_item_new();
     file_quit_mi              = gtk_menu_item_new_with_label("Quit");
 
-    // Setup submenu
+    // Setup submenus
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(file_mi), file_menu);
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(new_mi), new_menu);
+
+    // Setup New submenu
+    gtk_menu_shell_append(GTK_MENU_SHELL(new_menu), new_project_mi);
 
     // Setup menu items
+    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), new_mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), save_mi);
     gtk_widget_add_accelerator(save_mi, "activate", accel_group, GDK_KEY_s, primary_mask_key, GTK_ACCEL_VISIBLE);
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi_1);
@@ -96,15 +104,15 @@ void MenuBar::setup_edit_menu() {
 }
 
 void MenuBar::setup_projects_menu() {
-    GtkWidget *projects_menu           = gtk_menu_new();
-    GtkWidget *projects_new_project_mi = gtk_menu_item_new_with_label("New Project");
-    GtkWidget *projects_mi             = gtk_menu_item_new_with_label("Projects");
+    GtkWidget *projects_menu  = gtk_menu_new();
+    GtkWidget *projects_mi    = gtk_menu_item_new_with_label("Projects");
+    GtkWidget *new_project_mi = gtk_menu_item_new_with_label("New Project");
 
     // Setup submenu
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(projects_mi), projects_menu);
 
     // Setup menu items
-    gtk_menu_shell_append(GTK_MENU_SHELL(projects_menu), projects_new_project_mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(projects_menu), new_project_mi);
 
     // Add the menu to the menu shell
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), projects_mi);
