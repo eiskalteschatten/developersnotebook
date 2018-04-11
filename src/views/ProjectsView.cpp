@@ -14,7 +14,3 @@ ProjectsView::ProjectsView() {
 
     gtk_grid_attach(GTK_GRID(main_widget), pv, 0, 1, 1, 1);
 }
-
-ProjectsView::~ProjectsView() {
-    delete main_widget;
-}

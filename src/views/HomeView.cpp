@@ -14,7 +14,3 @@ HomeView::HomeView() {
 
     gtk_grid_attach(GTK_GRID(main_widget), pv, 0, 1, 1, 1);
 }
-
-HomeView::~HomeView() {
-    delete main_widget;
-}

@@ -1,17 +1,14 @@
 #ifndef ProjectsView_hpp
 #define ProjectsView_hpp
 
-#include <gtk/gtk.h>
+#include "AbstractView.hpp"
 
-class ProjectsView {
+class ProjectsView : public AbstractView {
 private:
-    GtkWidget *main_widget;
 
 public:
     ProjectsView();
     ~ProjectsView();
-
-    GtkWidget *get_widget() {return main_widget;}
 };
 
 #endif /* ProjectsView_hpp */
