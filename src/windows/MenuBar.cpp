@@ -142,5 +142,7 @@ void MenuBar::setup_macos_menu_bar() {
         gtkosx_application_insert_app_menu_item(osx_app, about_mi, 0);
         gtkosx_application_insert_app_menu_item(osx_app, separator_mi_app_menu_1, 1);
         gtkosx_application_insert_app_menu_item(osx_app, preferences_mi, 2);
+
+        g_object_unref(osx_app);
     #endif
 }

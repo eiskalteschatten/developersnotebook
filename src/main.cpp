@@ -20,6 +20,7 @@ int main(int argc, char **argv) {
     #ifdef __APPLE__
         GtkosxApplication *osx_app = gtkosx_application_get();
         gtkosx_application_ready(osx_app);
+        g_object_unref(osx_app);
     #endif
 
     return status;
