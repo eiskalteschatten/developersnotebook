@@ -119,14 +119,16 @@ void MenuBar::setup_projects_menu() {
 }
 
 void MenuBar::setup_help_menu() {
-    GtkWidget *help_menu = gtk_menu_new();
-    about_mi             = gtk_menu_item_new_with_label("About");
-    help_mi              = gtk_menu_item_new_with_label("Help");
+    GtkWidget *help_menu            = gtk_menu_new();
+    about_mi                        = gtk_menu_item_new_with_label("About");
+    GtkWidget *check_for_updates_mi = gtk_menu_item_new_with_label("Check for Updates");
+    help_mi                         = gtk_menu_item_new_with_label("Help");
 
     // Setup submenu
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(help_mi), help_menu);
 
     // Setup menu items
+    gtk_menu_shell_append(GTK_MENU_SHELL(help_menu), check_for_updates_mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(help_menu), about_mi);
     g_signal_connect(G_OBJECT(about_mi), "activate", G_CALLBACK(AboutDialog::activate), NULL);
 
