@@ -11,7 +11,7 @@ ProjectsView::ProjectsView() {
     GtkWidget *pv2 = gtk_label_new("projects form view");
 
     // Setup form grid
-    GtkWidget *form_grid = gtk_grid_new();
+    form_grid = gtk_grid_new();
     gtk_widget_set_halign(main_widget, GTK_ALIGN_FILL);
     gtk_widget_set_valign(main_widget, GTK_ALIGN_FILL);
 
@@ -24,4 +24,8 @@ ProjectsView::ProjectsView() {
     // Attach everything to the panes
     gtk_paned_add1(GTK_PANED(main_widget), pv);
     gtk_paned_pack2(GTK_PANED(main_widget), form_grid, FALSE, FALSE);
+}
+
+ProjectsView::~ProjectsView() {
+    delete form_grid;
 }
