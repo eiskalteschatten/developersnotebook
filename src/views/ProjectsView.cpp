@@ -3,10 +3,14 @@
 #include "ProjectsView.hpp"
 
 enum {
-   TITLE_COLUMN,
-   START_DATE_COLUMN,
-   END_DATE_COLUMN,
-   N_COLUMNS
+    ID_COLUMN,
+    NAME_COLUMN,
+    START_DATE_COLUMN,
+    END_DATE_COLUMN,
+    IS_COMPLETE_COLUMN,
+    DATE_COMPLETED_COLUMN,
+    DATE_CREATED_COLUMN,
+    N_COLUMNS
 };
 
 
@@ -35,11 +39,25 @@ ProjectsView::ProjectsView() {
 }
 
 void ProjectsView::setup_list_store() {
-    list_store = gtk_list_store_new(N_COLUMNS, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+    list_store = gtk_list_store_new(N_COLUMNS,
+                                    G_TYPE_STRING,
+                                    G_TYPE_STRING,
+                                    G_TYPE_STRING,
+                                    G_TYPE_STRING,
+                                    G_TYPE_BOOLEAN,
+                                    G_TYPE_STRING,
+                                    G_TYPE_STRING);
 
     GtkTreeIter iter1;
     gtk_list_store_append(list_store, &iter1);
-    gtk_list_store_set(list_store, &iter1, TITLE_COLUMN, "Project X", START_DATE_COLUMN, "start date", END_DATE_COLUMN, "end date", -1);
+    gtk_list_store_set(list_store, &iter1,
+                        NAME_COLUMN, "Project X",
+                        START_DATE_COLUMN, "start date",
+                        END_DATE_COLUMN, "end date",
+                        IS_COMPLETE_COLUMN, TRUE,
+                        DATE_COMPLETED_COLUMN, "completion date",
+                        DATE_CREATED_COLUMN, "created date",
+                        -1);
 }
 
 void ProjectsView::setup_list_view() {
@@ -47,14 +65,23 @@ void ProjectsView::setup_list_view() {
 
     list_view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(list_store));
 
-    GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
+    GtkCellRenderer *text_renderer = gtk_cell_renderer_text_new();
+    GtkCellRenderer *toggle_renderer = gtk_cell_renderer_toggle_new();
 
-    GtkTreeViewColumn *title_column = gtk_tree_view_column_new_with_attributes("Title", renderer, "text", TITLE_COLUMN, NULL);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), title_column);
-    GtkTreeViewColumn *start_date_column = gtk_tree_view_column_new_with_attributes("Start Date", renderer, "text", START_DATE_COLUMN, NULL);
+    GtkTreeViewColumn *is_complete_column = gtk_tree_view_column_new_with_attributes("", toggle_renderer, "active", IS_COMPLETE_COLUMN, NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), is_complete_column);
+
+    GtkTreeViewColumn *name_column = gtk_tree_view_column_new_with_attributes("Name", text_renderer, "text", NAME_COLUMN, NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), name_column);
+
+    GtkTreeViewColumn *start_date_column = gtk_tree_view_column_new_with_attributes("Start Date", text_renderer, "text", START_DATE_COLUMN, NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), start_date_column);
-    GtkTreeViewColumn *end_date_column = gtk_tree_view_column_new_with_attributes("End Date", renderer, "text", END_DATE_COLUMN, NULL);
+
+    GtkTreeViewColumn *end_date_column = gtk_tree_view_column_new_with_attributes("End Date", text_renderer, "text", END_DATE_COLUMN, NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), end_date_column);
+
+    GtkTreeViewColumn *date_completed_column = gtk_tree_view_column_new_with_attributes("Completion Date", text_renderer, "text", DATE_COMPLETED_COLUMN, NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), date_completed_column);
 }
 
 ProjectsView::~ProjectsView() {
