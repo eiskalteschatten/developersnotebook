@@ -1,4 +1,6 @@
+#include <boost/filesystem.hpp>
 #include <gtk/gtk.h>
+#include <iostream>
 
 #ifdef __APPLE__
     #include <gtkosxapplication.h>
@@ -6,7 +8,16 @@
 
 #include "windows/MainWindow.hpp"
 
+namespace fs = boost::filesystem;
+
+extern char *PATH_TO_CONFIG;
+
+
+void initialize();
+
 int main(int argc, char **argv) {
+    initialize();
+
     GtkApplication *app;
     MainWindow *window;
     int status;
@@ -24,4 +35,14 @@ int main(int argc, char **argv) {
     #endif
 
     return status;
+}
+
+void initialize() {
+    fs::path path_to_config = fs::path(PATH_TO_CONFIG);
+
+    if (!fs::is_directory(path_to_config)) {
+        if(!fs::create_directory(path_to_config)) {
+            throw std::runtime_error("Unable to create destination directory " + path_to_config.string());
+        }
+    }
 }
