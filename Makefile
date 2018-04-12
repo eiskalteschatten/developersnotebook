@@ -50,8 +50,8 @@ test:
 	./$(BUILD_DIR)/test
 
 
-install-libs-ubuntu:
-	sudo apt install gtk+-3.0
+install-libs-debian:
+	sudo apt install gtk+-3.0 libsqlite3-dev
 
 install-libs-mac:
 	brew install gtk+3 gtk-mac-integration
