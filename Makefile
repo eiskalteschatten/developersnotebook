@@ -27,7 +27,7 @@ all:
 		`pkg-config --cflags gtk+-3.0` \
 		$(SOURCE) \
 		$(CXXINCLUDES) \
-		$(CXXLINKED) \
+		$(CXXLINKED) -lsqlite3 \
 		`pkg-config --libs gtk+-3.0` \
 		-o ./$(BUILD_DIR)/$(TARGET)
 	chmod u+x ./$(BUILD_DIR)/$(TARGET)
