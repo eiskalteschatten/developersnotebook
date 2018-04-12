@@ -4,6 +4,7 @@
 class SqliteConnectionManager {
 private:
     SqliteConnectionManager();
+    void initialize();
 
     static SqliteConnectionManager *instance;
     sqlite3 *db;
