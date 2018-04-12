@@ -9,6 +9,8 @@ private:
     sqlite3 *db;
 
 public:
+    ~SqliteConnectionManager();
+
     static SqliteConnectionManager *getInstance();
 };
 
