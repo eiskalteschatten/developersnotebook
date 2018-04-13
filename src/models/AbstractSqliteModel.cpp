@@ -12,6 +12,6 @@ AbstractSqliteModel::~AbstractSqliteModel() {
     delete connection_manager;
 }
 
-void AbstractSqliteModel::setId(const int &new_id) {
+void AbstractSqliteModel::set_id(const int &new_id) {
     id = new_id;
 }

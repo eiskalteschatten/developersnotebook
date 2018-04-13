@@ -16,8 +16,8 @@ public:
 
     char *getTableName() const {return table_name;}
 
-    int const& getId() const {return id;}
-    void setId(const int &new_id);
+    int const& get_id() const {return id;}
+    void set_id(const int &new_id);
 };
 
 #endif /* AbstractSqliteModel_hpp */
