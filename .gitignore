@@ -28,7 +28,14 @@
 *.out
 *.app
 
-.DS_Store
+# Eclipse
+.cproject
+.settings
+
+# Sublime
 *.sublime*
+
+# macOS
+.DS_Store
 
 build
