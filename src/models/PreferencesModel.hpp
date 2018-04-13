@@ -4,6 +4,9 @@
 #include "AbstractSqliteModel.hpp"
 
 class PreferencesModel : public AbstractSqliteModel {
+
+friend int select_callback(void *data, int argc, char **argv, char **azColName);
+
 private:
     void initialize();
 

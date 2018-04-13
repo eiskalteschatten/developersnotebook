@@ -12,6 +12,8 @@ protected:
     char *table_name;
     int id;
 
+    void update_single_int(const char *insert_column_name, const int &value);
+
 public:
     AbstractSqliteModel();
     ~AbstractSqliteModel();
