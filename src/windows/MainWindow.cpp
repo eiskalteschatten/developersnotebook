@@ -20,6 +20,7 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
     gtk_window_set_default_size(GTK_WINDOW(window), window_width, window_height);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 
+    //g_signal_connect(app, "shutdown", G_CALLBACK(save_window), NULL);
     g_signal_connect(window, "delete_event", G_CALLBACK(save_window), NULL);
 
     setup_grid();
@@ -35,7 +36,6 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
 }
 
 void MainWindow::setup_grid() {
-    // Grid
     grid = gtk_grid_new();
 
     gtk_grid_insert_row(GTK_GRID(grid), 0);
@@ -86,5 +86,5 @@ void MainWindow::save_window(GtkWidget *window, gpointer user_data) {
     preferences_model->set_window_width(width);
     preferences_model->set_window_height(height);
 
-    gtk_widget_destroy(GTK_WIDGET(window));
+    gtk_widget_destroy(window);
 }
