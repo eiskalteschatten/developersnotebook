@@ -24,6 +24,7 @@ endif
 all:
 	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/ && \
 	$(CXX) \
+		-std=c++11 \
 		`pkg-config --cflags gtk+-3.0` \
 		$(SOURCE) \
 		$(CXXINCLUDES) \
