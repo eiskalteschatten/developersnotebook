@@ -7,7 +7,7 @@ class PreferencesModel : public AbstractSqliteModel {
 private:
     void initialize();
 
-    char *table_name;
+
 
 public:
     PreferencesModel();

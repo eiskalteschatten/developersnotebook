@@ -4,7 +4,7 @@
 #include "../SqliteConnectionManager.hpp"
 
 class AbstractSqliteModel {
-private:
+protected:
     SqliteConnectionManager *connection_manager;
 
     char *table_name;

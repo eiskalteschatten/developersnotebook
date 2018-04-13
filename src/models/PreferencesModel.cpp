@@ -1,4 +1,3 @@
-#include <string>
 #include <sqlite3.h>
 
 #include "PreferencesModel.hpp"
@@ -15,8 +14,12 @@ PreferencesModel::~PreferencesModel() {
 
 void PreferencesModel::initialize() {
     char *error_message = 0;
-    char *sql = (char *)"CREATE TABLE PREFERENCES("  \
-                        "ID INT PRIMARY  KEY     NOT NULL," \
-                        "WINDOW_WIDTH    INT    NOT NULL," \
-                        "WINDOW_HEIGHT   INT    NOT NULL);";
+    // char sql[] = { "CREATE TABLE ",
+    //                table_name,
+    //                "(",
+    //                "ID INT PRIMARY  KEY     NOT NULL,",
+    //                "WINDOW_WIDTH    INT    NOT NULL,",
+    //                "WINDOW_HEIGHT   INT    NOT NULL,",
+    //                ");",
+    //              };
 }
