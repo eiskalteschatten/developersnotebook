@@ -14,7 +14,7 @@ CXXINCLUDES=-I/usr/local/Cellar/gtk-mac-integration/2.0.8_2/include/gtkmacintegr
 CXXLINKED=-lgtkmacintegration-gtk3.2
 BUILD_RUN_TARGET=create-mac-bundle
 BUILD_RUN_OPEN=open ./$(BUILD_DIR)/$(MAC_BUNDLE)
-else
+else ifeq ($(OS_TYPE), Linux)
 CXXINCLUDES=
 CXXLINKED=
 BUILD_RUN_TARGET=clean all
@@ -27,7 +27,7 @@ all:
 		`pkg-config --cflags gtk+-3.0` \
 		$(SOURCE) \
 		$(CXXINCLUDES) \
-		$(CXXLINKED) -lsqlite3 -lboost_filesystem \
+		$(CXXLINKED) -lsqlite3 -lboost_system -lboost_filesystem \
 		`pkg-config --libs gtk+-3.0` \
 		-o ./$(BUILD_DIR)/$(TARGET)
 	chmod u+x ./$(BUILD_DIR)/$(TARGET)
