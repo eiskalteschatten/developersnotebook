@@ -10,8 +10,8 @@
 
 
 void MenuBar::close_window(GSimpleAction *action, GVariant *parameter, gpointer app) {
+    // GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     // gtk_widget_destroy(GTK_WIDGET(window));
-    // close top window
 }
 
 void MenuBar::quit_app(GSimpleAction *action, GVariant *parameter, gpointer app) {

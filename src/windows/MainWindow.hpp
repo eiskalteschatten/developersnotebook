@@ -7,6 +7,7 @@ private:
 
     static void setup_grid();
     static void setup_stack();
+    static void save_window(GtkWidget *window, gpointer user_data);
 
 public:
     static void activate(GtkApplication *app, gpointer user_data);

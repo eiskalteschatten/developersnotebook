@@ -16,13 +16,13 @@ static int null_callback(void *NotUsed, int argc, char **argv, char **azColName)
 int select_callback(void *data, int argc, char **argv, char **azColName) {
     int i;
 
-    if (PreferencesModel* const pm = static_cast<PreferencesModel*>(data)) {
+    if (PreferencesModel* const preferences_model = static_cast<PreferencesModel*>(data)) {
         for(i = 0; i<argc; i++){
             if (strcmp(azColName[i], "window_width") == 0) {
-                pm->window_width = argv[i] ? atoi(argv[i]) : default_window_width;
+                preferences_model->window_width = argv[i] ? atoi(argv[i]) : default_window_width;
             }
             else if (strcmp(azColName[i], "window_height") == 0) {
-                pm->window_height = argv[i] ? atoi(argv[i]) : default_window_height;
+                preferences_model->window_height = argv[i] ? atoi(argv[i]) : default_window_height;
             }
         }
     }
