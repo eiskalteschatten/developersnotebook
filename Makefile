@@ -51,10 +51,10 @@ test:
 
 
 install-libs-debian:
-	sudo apt install gtk+-3.0 libsqlite3-dev
+	sudo apt install gtk+-3.0 libsqlite3-dev libboost-all-dev
 
 install-libs-mac:
-	brew install gtk+3 gtk-mac-integration
+	brew install gtk+3 gtk-mac-integration boost
 
 # Mac Application Bundles
 create-mac-bundle: clean all
