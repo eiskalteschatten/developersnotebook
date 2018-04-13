@@ -16,8 +16,6 @@ public:
     AbstractSqliteModel();
     ~AbstractSqliteModel();
 
-    int execute_sql(std::string &sql);
-
 
     // Getters and setters
 

@@ -12,6 +12,7 @@ private:
 
 public:
     PreferencesModel();
+    PreferencesModel(int &select_id);
     ~PreferencesModel();
 
     // Getters and setters
