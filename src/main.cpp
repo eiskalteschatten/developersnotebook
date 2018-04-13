@@ -16,11 +16,11 @@ extern char *PATH_TO_CONFIG;
 void initialize();
 
 int main(int argc, char **argv) {
-    initialize();
-
     GtkApplication *app;
     MainWindow *window;
     int status;
+
+    initialize();
 
     app = gtk_application_new("com.alexseifert.developersnotebook", G_APPLICATION_FLAGS_NONE);
     g_signal_connect(app, "activate", G_CALLBACK(window->activate), NULL);

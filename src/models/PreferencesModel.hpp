@@ -14,6 +14,8 @@ public:
     PreferencesModel();
     ~PreferencesModel();
 
+    // Getters and setters
+
     int const& get_window_width() const {return window_width;}
     void set_window_width(const int &new_width);
 

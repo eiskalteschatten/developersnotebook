@@ -7,6 +7,10 @@
 
 PreferencesModel::PreferencesModel() {
     table_name = (char *)"PREFERENCES";
+    window_width = 1000;
+    window_height = 700;
+
+    initialize();
 }
 
 PreferencesModel::~PreferencesModel() {
@@ -14,12 +18,13 @@ PreferencesModel::~PreferencesModel() {
 }
 
 void PreferencesModel::initialize() {
-    char *error_message = 0;
-    std::string sql = "CREATE TABLE " + (std::string)table_name + "(" +
+    std::string sql = "CREATE TABLE IF NOT EXISTS " + (std::string)table_name + "(" +
                       "ID INT PRIMARY  KEY     NOT NULL," +
                       "WINDOW_WIDTH    INT    NOT NULL," +
                       "WINDOW_HEIGHT   INT    NOT NULL," +
                       ");";
+
+    execute_sql(sql);
 }
 
 

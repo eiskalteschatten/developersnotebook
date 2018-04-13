@@ -1,6 +1,8 @@
 #ifndef SqliteConnectionManager_hpp
 #define SqliteConnectionManager_hpp
 
+#include <sqlite3.h>
+
 class SqliteConnectionManager {
 private:
     SqliteConnectionManager();
@@ -11,7 +13,8 @@ private:
 public:
     ~SqliteConnectionManager();
 
-    static SqliteConnectionManager *getInstance();
+    static SqliteConnectionManager *get_instance();
+    sqlite3* get_db() {return db;};
 };
 
 #endif /* SqliteConnectionManager_hpp */

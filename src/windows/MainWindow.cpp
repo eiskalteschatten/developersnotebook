@@ -4,15 +4,23 @@
 #include "MenuBar.hpp"
 #include "../views/HomeView.hpp"
 #include "../views/ProjectsView.hpp"
+#include "../models/PreferencesModel.hpp"
 
 GtkWidget *window;
 GtkWidget *grid;
 
 
 void MainWindow::activate(GtkApplication *app, gpointer user_data) {
+    int window_width;
+    int window_height;
+
+    PreferencesModel *preferences_model = new PreferencesModel();
+    window_width = preferences_model->get_window_width();
+    window_height = preferences_model->get_window_height();
+
     window = gtk_application_window_new(app);
     gtk_window_set_title(GTK_WINDOW(window), "Developer's Notebook");
-    gtk_window_set_default_size(GTK_WINDOW(window), 1000, 700);
+    gtk_window_set_default_size(GTK_WINDOW(window), window_width, window_height);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 
     setup_grid();
