@@ -6,7 +6,7 @@
 
 
 PreferencesModel::PreferencesModel() {
-    table_name = (char *)"PREFERENCES";
+    table_name = (char *)"preferences";
     window_width = 1000;
     window_height = 700;
 
