@@ -21,7 +21,7 @@ void PreferencesModel::initialize() {
     std::string sql = "CREATE TABLE IF NOT EXISTS " + (std::string)table_name + "(" +
                       "ID INT PRIMARY  KEY     NOT NULL," +
                       "WINDOW_WIDTH    INT    NOT NULL," +
-                      "WINDOW_HEIGHT   INT    NOT NULL," +
+                      "WINDOW_HEIGHT   INT    NOT NULL" +
                       ");";
 
     execute_sql(sql);
