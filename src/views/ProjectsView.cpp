@@ -80,7 +80,7 @@ void ProjectsView::setup_list_view() {
 }
 
 void ProjectsView::setup_form_sidebar() {
-    const int spacing            = 10;
+    const int spacing             = 10;
     const gchar *placeholder_date = "DD-MM-YYYY";
 
     form_grid = gtk_grid_new();
