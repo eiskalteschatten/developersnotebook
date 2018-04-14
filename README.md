@@ -22,7 +22,7 @@ Developer's Notebook relies on the g++ compiler to build. Currently only macOS a
 - Compile: `make`
 - Compile and run: `make build-run`
 
-### macOS-specifice commands
+### macOS-specific commands
 
 - Compile and create an application bundle: `create-mac-bundle`
 
