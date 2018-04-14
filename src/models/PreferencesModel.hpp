@@ -12,6 +12,7 @@ private:
 
     int window_width;
     int window_height;
+    bool window_maximized;
 
 public:
     PreferencesModel();
@@ -25,6 +26,9 @@ public:
 
     int const& get_window_height() const {return window_height;}
     void set_window_height(const int &new_height);
+
+    bool const get_window_maximized() const {return window_maximized;}
+    void set_window_maximized(const bool maximized);
 };
 
 #endif /* PreferencesModel_hpp */

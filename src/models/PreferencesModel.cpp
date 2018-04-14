@@ -24,6 +24,9 @@ int select_callback(void *data, int argc, char **argv, char **azColName) {
             else if (strcmp(azColName[i], "window_height") == 0) {
                 preferences_model->window_height = argv[i] ? atoi(argv[i]) : default_window_height;
             }
+            else if (strcmp(azColName[i], "window_maximized") == 0) {
+                preferences_model->window_maximized = (argv[i] && atoi(argv[i]) == 1) ? true : false;
+            }
         }
     }
 
@@ -58,9 +61,10 @@ void PreferencesModel::initialize() {
     char *error_message = 0;
     int connection;
     std::string sql = "CREATE TABLE IF NOT EXISTS " + (std::string)table_name + "(" +
-                      "id INT PRIMARY  KEY  NOT NULL," +
-                      "window_width    INT  NOT NULL," +
-                      "window_height   INT  NOT NULL" +
+                      "id INT PRIMARY     KEY  NOT NULL," +
+                      "window_width       INT  NOT NULL," +
+                      "window_height      INT  NOT NULL," +
+                      "window_maximized   INT  NOT NULL" +
                       ");";
 
     connection = sqlite3_exec(connection_manager->get_db(), sql.c_str(), null_callback, 0, &error_message);
@@ -71,11 +75,12 @@ void PreferencesModel::initialize() {
     }
 
     sql = "INSERT OR IGNORE INTO " + (std::string)table_name +
-          " (id, window_width, window_height)" +
+          " (id, window_width, window_height, window_maximized)" +
           " VALUES (" +
           std::to_string(id) + ", " +
           std::to_string(default_window_width) + ", " +
-          std::to_string(default_window_height) +
+          std::to_string(default_window_height) + ", " +
+          "0" +
           ");";
 
     connection = sqlite3_exec(connection_manager->get_db(), sql.c_str(), null_callback, 0, &error_message);
@@ -97,4 +102,10 @@ void PreferencesModel::set_window_width(const int &new_width) {
 void PreferencesModel::set_window_height(const int &new_height) {
     window_height = new_height;
     update_single_int("window_height", window_height);
+}
+
+void PreferencesModel::set_window_maximized(const bool maximized) {
+    window_maximized = maximized;
+    int int_value = window_maximized ? 1 : 0;
+    update_single_int("window_maximized", int_value);
 }

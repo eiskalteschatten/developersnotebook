@@ -14,16 +14,15 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
     PreferencesModel *preferences_model = new PreferencesModel();
     int window_width = preferences_model->get_window_width();
     int window_height = preferences_model->get_window_height();
+    bool window_maximized = preferences_model->get_window_maximized();
 
     window = gtk_application_window_new(app);
     gtk_window_set_title(GTK_WINDOW(window), "Developer's Notebook");
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+    gtk_window_set_default_size(GTK_WINDOW(window), window_width, window_height);
 
-    if (window_width == -1 || window_height == -1) {
+    if (window_maximized) {
         gtk_window_maximize(GTK_WINDOW(window));
-    }
-    else {
-        gtk_window_set_default_size(GTK_WINDOW(window), window_width, window_height);
     }
 
     g_signal_connect(window, "delete_event", G_CALLBACK(save_window), NULL);
@@ -84,18 +83,18 @@ void MainWindow::setup_stack() {
 void MainWindow::save_window(GtkWidget *window, gpointer user_data) {
     int width;
     int height;
+    PreferencesModel *preferences_model = new PreferencesModel();
 
-    if (!gtk_window_is_maximized(GTK_WINDOW(window))) {
-        width = -1;
-        height = -1;
+    if (gtk_window_is_maximized(GTK_WINDOW(window))) {
+        preferences_model->set_window_maximized(true);
     }
     else {
         gtk_window_get_size(GTK_WINDOW(window), &width, &height);
-    }
 
-    PreferencesModel *preferences_model = new PreferencesModel();
-    preferences_model->set_window_width(width);
-    preferences_model->set_window_height(height);
+        preferences_model->set_window_width(width);
+        preferences_model->set_window_height(height);
+        preferences_model->set_window_maximized(false);
+    }
 
     gtk_widget_destroy(window);
 }
