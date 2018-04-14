@@ -43,6 +43,9 @@ clean:
 build-run: $(BUILD_RUN_TARGET)
 	$(BUILD_RUN_OPEN)
 
+run:
+	$(BUILD_RUN_OPEN)
+
 
 # Install Libraries
 install-libs-debian:
