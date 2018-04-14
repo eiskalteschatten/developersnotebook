@@ -6,3 +6,4 @@ To Dos
 Code Cache
 Notes
 Bookmarks
+Tools (color picker/converter, image and file compression, etc)
