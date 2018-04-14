@@ -84,7 +84,7 @@ void ProjectsView::setup_form_sidebar() {
     const gchar *placeholder_date = "DD-MM-YYYY";
 
     form_grid = gtk_grid_new();
-    gtk_widget_set_halign(form_grid, GTK_ALIGN_FILL);
+    g_object_set(form_grid, "hexpand", TRUE, NULL);
 
     gtk_grid_set_column_spacing(GTK_GRID(form_grid), spacing);
     gtk_grid_set_row_spacing(GTK_GRID(form_grid), spacing);
@@ -95,7 +95,7 @@ void ProjectsView::setup_form_sidebar() {
     gtk_widget_set_halign(project_name_label, GTK_ALIGN_START);
 
     GtkWidget *project_name_input = gtk_entry_new();
-    gtk_widget_set_halign(project_name_input, GTK_ALIGN_FILL);
+    g_object_set(project_name_input, "hexpand", TRUE, NULL);
 
     gtk_grid_insert_row(GTK_GRID(form_grid), 0);
     gtk_grid_insert_row(GTK_GRID(form_grid), 1);
@@ -108,7 +108,7 @@ void ProjectsView::setup_form_sidebar() {
     gtk_widget_set_halign(start_date_label, GTK_ALIGN_START);
 
     GtkWidget *start_date_input = gtk_entry_new();
-    gtk_widget_set_halign(start_date_input, GTK_ALIGN_FILL);
+    g_object_set(start_date_input, "hexpand", TRUE, NULL);
     gtk_entry_set_placeholder_text(GTK_ENTRY(start_date_input), placeholder_date);
 
     gtk_grid_insert_row(GTK_GRID(form_grid), 2);
@@ -122,7 +122,7 @@ void ProjectsView::setup_form_sidebar() {
     gtk_widget_set_halign(end_date_label, GTK_ALIGN_START);
 
     GtkWidget *end_date_input = gtk_entry_new();
-    gtk_widget_set_halign(end_date_input, GTK_ALIGN_FILL);
+    g_object_set(end_date_input, "hexpand", TRUE, NULL);
     gtk_entry_set_placeholder_text(GTK_ENTRY(end_date_input), placeholder_date);
 
     gtk_grid_insert_row(GTK_GRID(form_grid), 4);
