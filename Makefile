@@ -1,7 +1,7 @@
 .PHONY: test clean build
 
 CXX=g++
-CXXFLAGS=-Wall
+CXXFLAGS=-Wall -g
 BUILD_DIR=build
 SRC_DIR=src
 SOURCE:=$(shell find $(SRC_DIR) -name *.cpp)
@@ -26,7 +26,7 @@ endif
 all:
 	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/ && \
 	$(CXX) \
-		-std=c++11 \
+		$(CXXFLAGS) -std=c++11 \
 		`$(PKG_CONFIG_LOC) --cflags gtk+-3.0` \
 		$(SOURCE) \
 		$(CXXINCLUDES) \
