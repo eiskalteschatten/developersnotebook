@@ -15,7 +15,7 @@ extern char *PATH_TO_CONFIG;
 void initialize();
 
 int main(int argc, char **argv) {
-    MainWindow *window;
+    MainWindow *window = nullptr;
 
     GtkApplication *app = gtk_application_new("com.alexseifert.developersnotebook", G_APPLICATION_FLAGS_NONE);
 
