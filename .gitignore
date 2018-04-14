@@ -39,4 +39,17 @@
 # macOS
 .DS_Store
 
+# autotools
+aclocal*
+depcomp
+missg
+autom4te*
+install-sh
+missing
+Makefile
+configure
+config.*
+*.deps*
+.dirstamp
+
 build
