@@ -11,6 +11,7 @@ private:
 
     void setup_list_store();
     void setup_list_view();
+    void setup_form_sidebar();
 
 public:
     ProjectsView();

@@ -20,22 +20,17 @@ ProjectsView::ProjectsView() {
     gtk_widget_set_valign(main_widget, GTK_ALIGN_FILL);
 
     setup_list_view();
-
-    // Setup form grid
-    form_grid = gtk_grid_new();
-    gtk_widget_set_halign(main_widget, GTK_ALIGN_FILL);
-    gtk_widget_set_valign(main_widget, GTK_ALIGN_FILL);
-
-    gtk_grid_insert_row(GTK_GRID(form_grid), 0);
-    gtk_grid_insert_row(GTK_GRID(form_grid), 1);
-    gtk_grid_insert_column(GTK_GRID(form_grid), 1);
-
-    GtkWidget *pv2 = gtk_label_new("projects form view");
-    gtk_grid_attach(GTK_GRID(form_grid), pv2, 0, 1, 1, 1);
+    setup_form_sidebar();
 
     // Attach everything to the panes
     gtk_paned_add1(GTK_PANED(main_widget), list_view);
     gtk_paned_pack2(GTK_PANED(main_widget), form_grid, FALSE, FALSE);
+}
+
+ProjectsView::~ProjectsView() {
+    delete list_view;
+    delete form_grid;
+    delete list_store;
 }
 
 void ProjectsView::setup_list_store() {
@@ -84,8 +79,60 @@ void ProjectsView::setup_list_view() {
     gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), date_completed_column);
 }
 
-ProjectsView::~ProjectsView() {
-    delete list_view;
-    delete form_grid;
-    delete list_store;
+void ProjectsView::setup_form_sidebar() {
+    const int spacing            = 10;
+    const gchar *placeholder_date = "DD-MM-YYYY";
+
+    form_grid = gtk_grid_new();
+    gtk_widget_set_halign(form_grid, GTK_ALIGN_FILL);
+
+    gtk_grid_set_column_spacing(GTK_GRID(form_grid), spacing);
+    gtk_grid_set_row_spacing(GTK_GRID(form_grid), spacing);
+    gtk_container_set_border_width(GTK_CONTAINER(form_grid), spacing);
+
+    // Project Name
+    GtkWidget *project_name_label = gtk_label_new("Project Name");
+    gtk_widget_set_halign(project_name_label, GTK_ALIGN_START);
+
+    GtkWidget *project_name_input = gtk_entry_new();
+    gtk_widget_set_halign(project_name_input, GTK_ALIGN_FILL);
+
+    gtk_grid_insert_row(GTK_GRID(form_grid), 0);
+    gtk_grid_insert_row(GTK_GRID(form_grid), 1);
+    gtk_grid_attach(GTK_GRID(form_grid), project_name_label, 0, 0, 1, 1);
+    gtk_grid_attach(GTK_GRID(form_grid), project_name_input, 0, 1, 1, 1);
+
+
+    // Start Date
+    GtkWidget *start_date_label = gtk_label_new("Start Date");
+    gtk_widget_set_halign(start_date_label, GTK_ALIGN_START);
+
+    GtkWidget *start_date_input = gtk_entry_new();
+    gtk_widget_set_halign(start_date_input, GTK_ALIGN_FILL);
+    gtk_entry_set_placeholder_text(GTK_ENTRY(start_date_input), placeholder_date);
+
+    gtk_grid_insert_row(GTK_GRID(form_grid), 2);
+    gtk_grid_insert_row(GTK_GRID(form_grid), 3);
+    gtk_grid_attach(GTK_GRID(form_grid), start_date_label, 0, 2, 1, 1);
+    gtk_grid_attach(GTK_GRID(form_grid), start_date_input, 0, 3, 1, 1);
+
+
+    // End Date
+    GtkWidget *end_date_label = gtk_label_new("End Date");
+    gtk_widget_set_halign(end_date_label, GTK_ALIGN_START);
+
+    GtkWidget *end_date_input = gtk_entry_new();
+    gtk_widget_set_halign(end_date_input, GTK_ALIGN_FILL);
+    gtk_entry_set_placeholder_text(GTK_ENTRY(end_date_input), placeholder_date);
+
+    gtk_grid_insert_row(GTK_GRID(form_grid), 4);
+    gtk_grid_insert_row(GTK_GRID(form_grid), 5);
+    gtk_grid_attach(GTK_GRID(form_grid), end_date_label, 0, 4, 1, 1);
+    gtk_grid_attach(GTK_GRID(form_grid), end_date_input, 0, 5, 1, 1);
+
+
+    // Is Complete
+    GtkWidget *is_complete_label = gtk_label_new("Project is completed");
 }
+
+
