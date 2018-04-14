@@ -41,6 +41,7 @@
 
 # autotools
 Makefile
+Makefile.in
 aclocal*
 depcomp
 missg
