@@ -19,7 +19,7 @@ else ifeq ($(OS_TYPE), Linux)
 CXXINCLUDES=
 CXXLINKED=
 PKG_CONFIG_LOC=pkg-config
-BUILD_RUN_TARGET=clean all
+BUILD_RUN_TARGET=all
 BUILD_RUN_OPEN=./$(BUILD_DIR)/$(TARGET)
 endif
 
@@ -60,7 +60,7 @@ install-libs-mac:
 	brew install gtk+3 gtk-mac-integration boost gdb
 
 # Mac Application Bundles
-create-mac-bundle: clean all
+create-mac-bundle: all
 	mkdir -p ./$(BUILD_DIR)/$(MAC_BUNDLE)/Contents/Resources
 	mkdir -p ./$(BUILD_DIR)/$(MAC_BUNDLE)/Contents/MacOS
 	echo APPLnone > ./$(BUILD_DIR)/$(MAC_BUNDLE)/Contents/PkgInfo
