@@ -47,7 +47,6 @@ missg
 autom4te*
 install-sh
 missing
-configure
 config.*
 *.deps*
 .dirstamp
