@@ -52,5 +52,6 @@ config.*
 *.deps*
 .dirstamp
 compile
+stamp-h1
 
 build
