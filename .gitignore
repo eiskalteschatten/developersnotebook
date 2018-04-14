@@ -43,7 +43,6 @@
 Makefile
 Makefile.in
 aclocal*
-depcomp
 missg
 autom4te*
 install-sh
