@@ -12,11 +12,13 @@ MAC_BUNDLE=Developer\'s\ Notebook.app
 ifeq ($(OS_TYPE), Darwin)
 CXXINCLUDES=-I/usr/local/Cellar/gtk-mac-integration/2.0.8_2/include/gtkmacintegration/
 CXXLINKED=-lgtkmacintegration-gtk3.2
+PKG_CONFIG_LOC=/opt/local/bin/pkg-config
 BUILD_RUN_TARGET=create-mac-bundle
 BUILD_RUN_OPEN=open ./$(BUILD_DIR)/$(MAC_BUNDLE)
 else ifeq ($(OS_TYPE), Linux)
 CXXINCLUDES=
 CXXLINKED=
+PKG_CONFIG_LOC=pkg-config
 BUILD_RUN_TARGET=clean all
 BUILD_RUN_OPEN=./$(BUILD_DIR)/$(TARGET)
 endif
@@ -25,11 +27,11 @@ all:
 	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/ && \
 	$(CXX) \
 		-std=c++11 \
-		`pkg-config --cflags gtk+-3.0` \
+		`$(PKG_CONFIG_LOC) --cflags gtk+-3.0` \
 		$(SOURCE) \
 		$(CXXINCLUDES) \
 		$(CXXLINKED) -lsqlite3 -lboost_system -lboost_filesystem \
-		`pkg-config --libs gtk+-3.0` \
+		`$(PKG_CONFIG_LOC) --libs gtk+-3.0` \
 		-o ./$(BUILD_DIR)/$(TARGET)
 	chmod u+x ./$(BUILD_DIR)/$(TARGET)
 
