@@ -17,10 +17,15 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
 
     window = gtk_application_window_new(app);
     gtk_window_set_title(GTK_WINDOW(window), "Developer's Notebook");
-    gtk_window_set_default_size(GTK_WINDOW(window), window_width, window_height);
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
 
-    //g_signal_connect(app, "shutdown", G_CALLBACK(save_window), NULL);
+    if (window_width == -1 || window_height == -1) {
+        gtk_window_maximize(GTK_WINDOW(window));
+    }
+    else {
+        gtk_window_set_default_size(GTK_WINDOW(window), window_width, window_height);
+    }
+
     g_signal_connect(window, "delete_event", G_CALLBACK(save_window), NULL);
 
     setup_grid();
@@ -80,7 +85,13 @@ void MainWindow::save_window(GtkWidget *window, gpointer user_data) {
     int width;
     int height;
 
-    gtk_window_get_size(GTK_WINDOW(window), &width, &height);
+    if (!gtk_window_is_maximized(GTK_WINDOW(window))) {
+        width = -1;
+        height = -1;
+    }
+    else {
+        gtk_window_get_size(GTK_WINDOW(window), &width, &height);
+    }
 
     PreferencesModel *preferences_model = new PreferencesModel();
     preferences_model->set_window_width(width);
