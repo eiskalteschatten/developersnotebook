@@ -296,9 +296,10 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-ACLOCAL_AMFLAGS = -I m4
+ACLOCAL_AMFLAGS = ${ACLOCAL_FLAGS}
 AUTOMAKE_OPTIONS = foreign
 EXTRA_DIST = bootstrap
+AM_CXXFLAGS = -std=c++11
 developersnotebook_SOURCES = src/main.cpp
 developersnotebook_CPPFLAGS = $(DEPENDENCIES_CPPFLAGS) $(BOOST_CPPFLAGS)
 developersnotebook_LDFLAGS = $(BOOST_FILESYSTEM_LDFLAGS)

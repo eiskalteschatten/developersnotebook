@@ -1,6 +1,9 @@
+AC_PREREQ([2.69])
+
 AC_INIT([developersnotebooks], [0.1], [alex@alexseifert.com])
-AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([subdir-objects])
+
+AC_CONFIG_MACRO_DIR([m4])
 
 AC_PROG_CXX
 
