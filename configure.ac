@@ -8,7 +8,7 @@ AX_BOOST_BASE([1.66],, AC_MSG_ERROR([Boost 1.66 or greater was not found on your
 AX_BOOST_SYSTEM
 AX_BOOST_FILESYSTEM
 
-PKG_CHECK_MODULES([DEPENDENCIES], [gtk+-3.0 >= 3.22.0 sqlite3 >= 3.23])
+PKG_CHECK_MODULES([DEPENDENCIES], [gtk+-3.0 >= 3.22.0 sqlite3 >= 3.17])
 
 AC_CONFIG_FILES([Makefile])
 

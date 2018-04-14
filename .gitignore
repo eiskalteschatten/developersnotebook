@@ -40,13 +40,13 @@
 .DS_Store
 
 # autotools
+Makefile
 aclocal*
 depcomp
 missg
 autom4te*
 install-sh
 missing
-Makefile
 configure
 config.*
 *.deps*
