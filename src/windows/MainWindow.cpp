@@ -12,9 +12,9 @@ GtkWidget *grid;
 
 void MainWindow::activate(GtkApplication *app, gpointer user_data) {
     PreferencesModel *preferences_model = new PreferencesModel();
-    int window_width = preferences_model->get_window_width();
-    int window_height = preferences_model->get_window_height();
-    bool window_maximized = preferences_model->get_window_maximized();
+    int window_width                    = preferences_model->get_window_width();
+    int window_height                   = preferences_model->get_window_height();
+    bool window_maximized               = preferences_model->get_window_maximized();
 
     window = gtk_application_window_new(app);
     gtk_window_set_title(GTK_WINDOW(window), "Developer's Notebook");
