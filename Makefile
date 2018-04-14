@@ -12,7 +12,7 @@ MAC_BUNDLE=Developer\'s\ Notebook.app
 ifeq ($(OS_TYPE), Darwin)
 CXXINCLUDES=-I/usr/local/Cellar/gtk-mac-integration/2.0.8_2/include/gtkmacintegration/
 CXXLINKED=-lgtkmacintegration-gtk3.2
-PKG_CONFIG_LOC=/opt/local/bin/pkg-config
+PKG_CONFIG_LOC=pkg-config
 BUILD_RUN_TARGET=create-mac-bundle
 BUILD_RUN_OPEN=open ./$(BUILD_DIR)/$(MAC_BUNDLE)
 else ifeq ($(OS_TYPE), Linux)
