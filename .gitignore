@@ -51,5 +51,6 @@ configure
 config.*
 *.deps*
 .dirstamp
+compile
 
 build
