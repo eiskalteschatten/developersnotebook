@@ -45,7 +45,6 @@ aclocal*
 depcomp
 missg
 autom4te*
-install-sh
 missing
 config.*
 *.deps*
