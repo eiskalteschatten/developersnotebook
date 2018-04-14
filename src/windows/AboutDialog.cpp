@@ -5,7 +5,7 @@
 GtkWidget *dialog;
 
 const char name[21] = "Developer's Notebook";
-const char version[4] = "1.0";
+const char version[4] = "0.1";
 const char copyright[22] = "(c) Alex Seifert 2018";
 const char comments[34] = "A digital notebook for developers";
 const char website[28] = "https://www.alexseifert.com";
