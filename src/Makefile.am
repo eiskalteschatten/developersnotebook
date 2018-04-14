@@ -1,8 +1,5 @@
-ACLOCAL_AMFLAGS = -I m4
 AUTOMAKE_OPTIONS = subdir-objects
 EXTRA_DIST = bootstrap
-
-AM_CXXFLAGS = -std=c++11
 
 ACLOCAL_AMFLAGS = $(ACLOCAL_FLAGS)
 
