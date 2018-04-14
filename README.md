@@ -3,4 +3,4 @@
 ## Install Libs
 
 - Mac: `make install-libs-mac`
-- Ubuntu: `make install-libs-ubuntu`
+- Ubuntu/Debian: `make install-libs-debian`
