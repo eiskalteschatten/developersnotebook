@@ -23,6 +23,7 @@ BUILD_RUN_TARGET=all
 BUILD_RUN_OPEN=./$(BUILD_DIR)/$(TARGET)
 endif
 
+
 all:
 	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/ && \
 	$(CXX) \
@@ -42,22 +43,14 @@ clean:
 build-run: $(BUILD_RUN_TARGET)
 	$(BUILD_RUN_OPEN)
 
-test:
-	$(CXX) \
-		-lboost_unit_test_framework \
-		-lboost_filesystem \
-		./$(SRC_DIR)/*.cpp \
-		./test/*.cpp \
-		-o ./$(BUILD_DIR)/test
-	chmod u+x ./$(BUILD_DIR)/test
-	./$(BUILD_DIR)/test
 
-
+# Install Libraries
 install-libs-debian:
 	sudo apt install gtk+-3.0 libsqlite3-dev libboost-all-dev
 
 install-libs-mac:
 	brew install gtk+3 gtk-mac-integration boost gdb
+
 
 # Mac Application Bundles
 create-mac-bundle: all
@@ -67,6 +60,3 @@ create-mac-bundle: all
 	cp ./$(BUILD_DIR)/$(TARGET) ./$(BUILD_DIR)/$(MAC_BUNDLE)/Contents/MacOS/.
 	cp ./resources/macos/Info.plist ./$(BUILD_DIR)/$(MAC_BUNDLE)/Contents/.
 	cp ./resources/macos/tempicon.icns ./$(BUILD_DIR)/$(MAC_BUNDLE)/Contents/Resources/.
-
-create-run-mac-bundle: create-mac-bundle
-	open ./$(BUILD_DIR)/$(MAC_BUNDLE)
