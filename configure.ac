@@ -2,6 +2,7 @@ AC_PREREQ([2.69])
 
 AC_INIT([developersnotebooks], [0.1], [alex@alexseifert.com])
 AM_INIT_AUTOMAKE([subdir-objects])
+AC_CONFIG_SRCDIR([src/main.cpp])
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])

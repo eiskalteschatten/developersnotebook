@@ -1,3 +1,3 @@
 #!/bin/sh
 
-aclocal && autoheader && automake --add-missing && autoconf
+./bootstrap && autoheader && automake --add-missing && autoconf
