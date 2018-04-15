@@ -16,8 +16,8 @@ protected:
         std::string default_value;
     };
 
-    short table_size;
     DatabaseStruct *database_struct;
+    short table_size;
 
     char *table_name;
     int id;

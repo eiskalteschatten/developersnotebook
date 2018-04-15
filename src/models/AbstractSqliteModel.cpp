@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <sqlite3.h>
+#include <iostream>
 
 #include "AbstractSqliteModel.hpp"
 #include "../SqliteConnectionManager.hpp"
@@ -45,22 +46,22 @@ void AbstractSqliteModel::initialize_db() {
         }
     }
 
+    create_sql += ");";
+
     std::string insert_sql = "INSERT OR IGNORE INTO " + (std::string)table_name +
                              " (" + insert_sql_columns + ")" +
                              " VALUES (" + insert_sql_values + ");";
 
-    create_sql += ");";
-
     connection = sqlite3_exec(connection_manager->get_db(), create_sql.c_str(), null_callback, 0, &error_message);
 
-    if(connection != SQLITE_OK){
+    if(connection != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", error_message);
         sqlite3_free(error_message);
     }
 
     connection = sqlite3_exec(connection_manager->get_db(), insert_sql.c_str(), null_callback, 0, &error_message);
 
-    if(connection != SQLITE_OK){
+    if(connection != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", error_message);
         sqlite3_free(error_message);
     }
@@ -76,7 +77,7 @@ void AbstractSqliteModel::update_single_int(const char *insert_column_name, cons
 
     connection = sqlite3_exec(connection_manager->get_db(), sql.c_str(), null_callback, 0, &error_message);
 
-    if(connection != SQLITE_OK){
+    if(connection != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", error_message);
         sqlite3_free(error_message);
     }

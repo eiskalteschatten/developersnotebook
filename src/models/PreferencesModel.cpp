@@ -38,8 +38,8 @@ PreferencesModel::PreferencesModel() {
     table_size = 3;
 
     database_struct = new DatabaseStruct[table_size];
-    database_struct[0] = {"window_width", "INT", "NOT NULL",(char*) default_window_width};
-    database_struct[1] = {"window_height", "INT", "NOT NULL", (char*)default_window_height};
+    database_struct[0] = {"window_width", "INT", "NOT NULL", std::to_string(default_window_width)};
+    database_struct[1] = {"window_height", "INT", "NOT NULL", std::to_string(default_window_height)};
     database_struct[2] = {"window_maximized", "INT", "NOT NULL", "0"};
 
     initialize_db();
