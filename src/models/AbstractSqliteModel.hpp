@@ -7,6 +7,7 @@
 #include "../db/SqliteConnectionManager.hpp"
 #include "../db/SqliteSchema.hpp"
 
+
 class AbstractSqliteModel {
 protected:
     SqliteConnectionManager *connection_manager;
