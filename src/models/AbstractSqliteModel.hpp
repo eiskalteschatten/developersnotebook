@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "../SqliteConnectionManager.hpp"
+#include "../db/SqliteConnectionManager.hpp"
 
 class AbstractSqliteModel {
 protected:
@@ -16,13 +16,9 @@ protected:
         std::string default_value;
     };
 
-    DatabaseStruct *database_struct;
-    short table_size;
-
     char *table_name;
     int id;
 
-    void initialize_db();
     void update_single_int(const char *insert_column_name, const int &value);
 
 public:

@@ -3,7 +3,7 @@
 #include <sqlite3.h>
 
 #include "PreferencesModel.hpp"
-#include "../SqliteConnectionManager.hpp"
+#include "../db/SqliteConnectionManager.hpp"
 
 const int default_window_width = 1000;
 const int default_window_height = 700;
@@ -35,20 +35,12 @@ PreferencesModel::PreferencesModel() {
 
     id         = 1; // id is 1 because there is only ever 1 row
     table_name = (char *)"preferences";
-    table_size = 3;
-
-    database_struct = new DatabaseStruct[table_size];
-    database_struct[0] = {"window_width", "INT", "NOT NULL", std::to_string(default_window_width)};
-    database_struct[1] = {"window_height", "INT", "NOT NULL", std::to_string(default_window_height)};
-    database_struct[2] = {"window_maximized", "INT", "NOT NULL", "0"};
-
-    initialize_db();
 
     std::string sql = "SELECT * FROM " + (std::string)table_name + " WHERE ID=" + std::to_string(id) + ";";
 
     connection = sqlite3_exec(connection_manager->get_db(), sql.c_str(), &select_callback, static_cast<PreferencesModel*>(this), &error_message);
 
-    if(connection != SQLITE_OK){
+    if(connection != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", error_message);
         sqlite3_free(error_message);
     }

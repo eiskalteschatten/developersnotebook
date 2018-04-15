@@ -5,6 +5,7 @@
     #include <gtkosxapplication.h>
 #endif
 
+#include "db/SqliteSchema.hpp"
 #include "windows/MainWindow.hpp"
 
 namespace fs = boost::filesystem;
@@ -42,4 +43,7 @@ void initialize() {
             throw std::runtime_error("Unable to create destination directory " + path_to_config.string());
         }
     }
+
+    SqliteSchema *db_schema = nullptr;
+    db_schema->setup_db();
 }
