@@ -21,7 +21,7 @@ std::vector<SqliteSchema::TableSchema> SqliteSchema::all_tables {
 };
 
 
-static int null_callback(void *data, int argc, char **argv, char **as_col_name) {
+static int null_callback(void *NotUsed, int argc, char **argv, char **szColName) {
     return 0;
 }
 

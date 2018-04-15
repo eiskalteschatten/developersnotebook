@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 #include "../db/SqliteConnectionManager.hpp"
 #include "../db/SqliteSchema.hpp"
@@ -13,12 +14,16 @@ protected:
     SqliteConnectionManager *connection_manager;
     SqliteSchema::TableSchema *table_schema;
 
+    std::map<std::string, std::string> contents;
+
     int id;
 
-    void update_single_int(const char *insert_column_name, const int &value);
+    void fill_contents();
+    void update_single_int(const std::string insert_column_name, const int &value, bool update_contents);
 
 public:
     AbstractSqliteModel();
+    AbstractSqliteModel(const int &select_id);
     ~AbstractSqliteModel();
 
 
