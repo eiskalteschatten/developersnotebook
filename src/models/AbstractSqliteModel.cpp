@@ -4,7 +4,7 @@
 #include "AbstractSqliteModel.hpp"
 #include "../SqliteConnectionManager.hpp"
 
-static int null_callback(void *NotUsed, int argc, char **argv, char **azColName) {
+static int null_callback(void *data, int argc, char **argv, char **as_col_name) {
     return 0;
 }
 

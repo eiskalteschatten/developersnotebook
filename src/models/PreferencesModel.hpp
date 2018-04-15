@@ -5,7 +5,7 @@
 
 class PreferencesModel : public AbstractSqliteModel {
 
-friend int select_callback(void *data, int argc, char **argv, char **azColName);
+friend int select_callback(void *data, int argc, char **argv, char **as_col_name);
 
 private:
     int window_width;

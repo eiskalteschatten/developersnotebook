@@ -9,18 +9,18 @@ const int default_window_width = 1000;
 const int default_window_height = 700;
 
 
-int select_callback(void *data, int argc, char **argv, char **azColName) {
+int select_callback(void *data, int argc, char **argv, char **as_col_name) {
     int i;
 
     if (PreferencesModel* const preferences_model = static_cast<PreferencesModel*>(data)) {
         for(i = 0; i<argc; i++){
-            if (strcmp(azColName[i], "window_width") == 0) {
+            if (strcmp(as_col_name[i], "window_width") == 0) {
                 preferences_model->window_width = argv[i] ? atoi(argv[i]) : default_window_width;
             }
-            else if (strcmp(azColName[i], "window_height") == 0) {
+            else if (strcmp(as_col_name[i], "window_height") == 0) {
                 preferences_model->window_height = argv[i] ? atoi(argv[i]) : default_window_height;
             }
-            else if (strcmp(azColName[i], "window_maximized") == 0) {
+            else if (strcmp(as_col_name[i], "window_maximized") == 0) {
                 preferences_model->window_maximized = (argv[i] && atoi(argv[i]) == 1) ? true : false;
             }
         }
