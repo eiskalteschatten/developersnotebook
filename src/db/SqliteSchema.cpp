@@ -5,20 +5,8 @@
 #include "SqliteSchema.hpp"
 #include "SqliteConnectionManager.hpp"
 
-typedef struct {
-    std::string column_name;
-    std::string type;
-    std::string null_status;
-    std::string default_value;
-} ColumnSchema;
 
-typedef struct {
-    std::string table_name;
-    std::vector<ColumnSchema> columns;
-} TableSchema;
-
-
-const static TableSchema preferences_table {
+SqliteSchema::TableSchema SqliteSchema::preferences_table {
     "preferences",
     {
         {"window_width", "INT", "NOT NULL", "-1"},
@@ -28,8 +16,8 @@ const static TableSchema preferences_table {
 };
 
 
-const static std::vector<TableSchema> all_tables {
-	preferences_table
+std::vector<SqliteSchema::TableSchema> SqliteSchema::all_tables {
+	SqliteSchema::preferences_table
 };
 
 
@@ -45,9 +33,9 @@ void SqliteSchema::setup_db() {
 
     connection_manager = SqliteConnectionManager::get_instance();
 
-    for (i = 0; i < all_tables.size(); i++) {
-        TableSchema table = all_tables[i];
-        std::vector<ColumnSchema> table_columns = table.columns;
+    for (i = 0; i < SqliteSchema::all_tables.size(); i++) {
+        SqliteSchema::TableSchema table = SqliteSchema::all_tables[i];
+        std::vector<SqliteSchema::ColumnSchema> table_columns = table.columns;
 
         std::string create_sql = "CREATE TABLE IF NOT EXISTS " +
                                  table.table_name +

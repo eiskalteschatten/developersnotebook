@@ -6,6 +6,22 @@ private:
     SqliteSchema();
 
 public:
+    typedef struct {
+        std::string column_name;
+        std::string type;
+        std::string null_status;
+        std::string default_value;
+    } ColumnSchema;
+
+    typedef struct {
+        std::string table_name;
+        std::vector<ColumnSchema> columns;
+    } TableSchema;
+
+    static TableSchema preferences_table;
+
+    static std::vector<TableSchema> all_tables;
+
     static void setup_db();
 };
 
