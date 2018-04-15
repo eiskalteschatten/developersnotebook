@@ -10,6 +10,7 @@ const char copyright[22] = "(c) Alex Seifert 2018";
 const char comments[34] = "A digital notebook for developers";
 const char website[28] = "https://www.alexseifert.com";
 
+
 void AboutDialog::activate() {
     //GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file("../resources/templogo2.jpg", NULL);
 

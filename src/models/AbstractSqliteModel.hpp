@@ -9,9 +9,20 @@ class AbstractSqliteModel {
 protected:
     SqliteConnectionManager *connection_manager;
 
+    struct DatabaseStruct {
+        std::string column_name;
+        std::string type;
+        std::string null_status;
+        std::string default_value;
+    };
+
+    short table_size;
+    DatabaseStruct *database_struct;
+
     char *table_name;
     int id;
 
+    void initialize_db();
     void update_single_int(const char *insert_column_name, const int &value);
 
 public:

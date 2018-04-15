@@ -8,8 +8,6 @@ class PreferencesModel : public AbstractSqliteModel {
 friend int select_callback(void *data, int argc, char **argv, char **azColName);
 
 private:
-    void initialize();
-
     int window_width;
     int window_height;
     bool window_maximized;
