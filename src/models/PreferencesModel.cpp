@@ -17,10 +17,10 @@ int select_callback(void *data, int argc, char **argv, char **as_col_name) {
     if (PreferencesModel* const preferences_model = static_cast<PreferencesModel*>(data)) {
         for(i = 0; i<argc; i++){
             if (strcmp(as_col_name[i], "window_width") == 0) {
-                preferences_model->window_width = argv[i] ? atoi(argv[i]) : default_window_width;
+                preferences_model->window_width = (argv[i] && std::strncmp(argv[i], "-1", 2) != 0) ? atoi(argv[i]) : default_window_width;
             }
             else if (strcmp(as_col_name[i], "window_height") == 0) {
-                preferences_model->window_height = argv[i] ? atoi(argv[i]) : default_window_height;
+                preferences_model->window_height = (argv[i] && std::strncmp(argv[i], "-1", 2) != 0)? atoi(argv[i]) : default_window_height;
             }
             else if (strcmp(as_col_name[i], "window_maximized") == 0) {
                 preferences_model->window_maximized = (argv[i] && atoi(argv[i]) == 1) ? true : false;
