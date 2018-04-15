@@ -29,7 +29,7 @@ const static TableSchema preferences_table {
 
 
 const static std::vector<TableSchema> all_tables {
-
+	preferences_table
 };
 
 
@@ -51,7 +51,7 @@ void SqliteSchema::setup_db() {
 
         std::string create_sql = "CREATE TABLE IF NOT EXISTS " +
                                  table.table_name +
-                                "(id INT PRIMARY KEY  NOT NULL,";
+                                 "(id INT PRIMARY KEY  NOT NULL,";
 
         std::string insert_sql_columns = "id, ";
         std::string insert_sql_values  = "1, ";
