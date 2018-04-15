@@ -13,6 +13,8 @@ const int default_window_height = 700;
 PreferencesModel::PreferencesModel() {
     table_schema = &SqliteSchema::preferences_table;
 
+    fill_contents();
+
     if (get_window_width() == -1) {
         set_window_width(default_window_width);
     }
