@@ -21,10 +21,6 @@ std::vector<SqliteSchema::TableSchema> SqliteSchema::all_tables {
 };
 
 
-static int null_callback(void *NotUsed, int argc, char **argv, char **szColName) {
-    return 0;
-}
-
 void SqliteSchema::setup_db() {
     SqliteConnectionManager *connection_manager;
     char *error_message = 0;
@@ -65,14 +61,14 @@ void SqliteSchema::setup_db() {
                                  " (" + insert_sql_columns + ")" +
                                  " VALUES (" + insert_sql_values + ");";
 
-        connection = sqlite3_exec(connection_manager->get_db(), create_sql.c_str(), null_callback, 0, &error_message);
+        connection = sqlite3_exec(connection_manager->get_db(), create_sql.c_str(), NULL, 0, &error_message);
 
         if(connection != SQLITE_OK) {
             fprintf(stderr, "SQL error: %s\n", error_message);
             sqlite3_free(error_message);
         }
 
-        connection = sqlite3_exec(connection_manager->get_db(), insert_sql.c_str(), null_callback, 0, &error_message);
+        connection = sqlite3_exec(connection_manager->get_db(), insert_sql.c_str(), NULL, 0, &error_message);
 
         if(connection != SQLITE_OK) {
             fprintf(stderr, "SQL error: %s\n", error_message);

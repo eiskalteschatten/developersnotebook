@@ -5,9 +5,6 @@
 #include "AbstractSqliteModel.hpp"
 #include "../db/SqliteConnectionManager.hpp"
 
-static int null_callback(void *NotUsed, int argc, char **argv, char **szColName) {
-    return 0;
-}
 
 AbstractSqliteModel::AbstractSqliteModel() {
     AbstractSqliteModel(1);
@@ -62,7 +59,7 @@ void AbstractSqliteModel::update_single_int(const std::string insert_column_name
                       " = " + std::to_string(value) +
                       " WHERE id=" + std::to_string(id) + ";";
 
-    connection = sqlite3_exec(connection_manager->get_db(), sql.c_str(), null_callback, 0, &error_message);
+    connection = sqlite3_exec(connection_manager->get_db(), sql.c_str(), NULL, 0, &error_message);
 
     if(connection != SQLITE_OK) {
         fprintf(stderr, "SQL error: %s\n", error_message);
