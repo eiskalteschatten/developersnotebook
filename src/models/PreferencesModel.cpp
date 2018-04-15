@@ -1,9 +1,11 @@
 #include <string>
 #include <cstring>
+#include <vector>
 #include <sqlite3.h>
 
 #include "PreferencesModel.hpp"
 #include "../db/SqliteConnectionManager.hpp"
+#include "../db/SqliteSchema.hpp"
 
 const int default_window_width = 1000;
 const int default_window_height = 700;
@@ -33,10 +35,10 @@ PreferencesModel::PreferencesModel() {
     char *error_message = 0;
     int connection;
 
-    id         = 1; // id is 1 because there is only ever 1 row
-    table_name = (char *)"preferences";
+    id           = 1; // id is 1 because there is only ever 1 row
+    table_schema = &SqliteSchema::preferences_table;
 
-    std::string sql = "SELECT * FROM " + (std::string)table_name + " WHERE ID=" + std::to_string(id) + ";";
+    std::string sql = "SELECT * FROM " + table_schema->table_name + " WHERE ID=" + std::to_string(id) + ";";
 
     connection = sqlite3_exec(connection_manager->get_db(), sql.c_str(), &select_callback, static_cast<PreferencesModel*>(this), &error_message);
 

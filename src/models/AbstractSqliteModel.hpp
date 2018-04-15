@@ -2,21 +2,16 @@
 #define AbstractSqliteModel_hpp
 
 #include <string>
+#include <vector>
 
 #include "../db/SqliteConnectionManager.hpp"
+#include "../db/SqliteSchema.hpp"
 
 class AbstractSqliteModel {
 protected:
     SqliteConnectionManager *connection_manager;
+    SqliteSchema::TableSchema *table_schema;
 
-    struct DatabaseStruct {
-        std::string column_name;
-        std::string type;
-        std::string null_status;
-        std::string default_value;
-    };
-
-    char *table_name;
     int id;
 
     void update_single_int(const char *insert_column_name, const int &value);
@@ -27,8 +22,6 @@ public:
 
 
     // Getters and setters
-
-    char *get_table_name() const {return table_name;}
 
     int const& get_id() const {return id;}
     void set_id(const int &new_id);

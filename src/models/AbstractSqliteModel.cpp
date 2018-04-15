@@ -14,13 +14,13 @@ AbstractSqliteModel::AbstractSqliteModel() {
 
 AbstractSqliteModel::~AbstractSqliteModel() {
     delete connection_manager;
-    delete table_name;
+    delete table_schema;
 }
 
 void AbstractSqliteModel::update_single_int(const char *insert_column_name, const int &value) {
     char *error_message = 0;
     int connection;
-    std::string sql = "UPDATE " + (std::string)table_name +
+    std::string sql = "UPDATE " + table_schema->table_name +
                       " SET " + (std::string)insert_column_name +
                       " = " + std::to_string(value) +
                       " WHERE id=" + std::to_string(id) + ";";
