@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <sqlite3.h>
-#include <iostream>
 
 #include "AbstractSqliteModel.hpp"
 #include "../SqliteConnectionManager.hpp"
