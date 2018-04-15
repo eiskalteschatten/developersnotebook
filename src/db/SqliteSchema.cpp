@@ -41,7 +41,7 @@ void SqliteSchema::setup_db() {
     SqliteConnectionManager *connection_manager;
     char *error_message = 0;
     int connection;
-    int i;
+    unsigned int i;
 
     connection_manager = SqliteConnectionManager::get_instance();
 
