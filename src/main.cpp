@@ -32,6 +32,8 @@ int main(int argc, char **argv) {
         g_object_unref(osx_app);
     #endif
 
+    delete window;
+
     return status;
 }
 
@@ -46,4 +48,5 @@ void initialize() {
 
     SqliteSchema *db_schema = nullptr;
     db_schema->setup_db();
+    delete db_schema;
 }

@@ -3,7 +3,6 @@
 #include <sqlite3.h>
 
 #include "PreferencesModel.hpp"
-#include "../db/SqliteConnectionManager.hpp"
 #include "../db/SqliteSchema.hpp"
 
 const int default_window_width = 1000;
