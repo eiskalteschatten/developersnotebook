@@ -5,15 +5,12 @@
 
 class SqliteConnectionManager {
 private:
-    SqliteConnectionManager();
-
-    static SqliteConnectionManager *instance;
     sqlite3 *db = nullptr;
 
 public:
+    SqliteConnectionManager();
     ~SqliteConnectionManager();
 
-    static SqliteConnectionManager *get_instance();
     sqlite3* get_db() {return db;};
 };
 

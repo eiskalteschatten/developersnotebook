@@ -5,16 +5,6 @@
 
 extern char *PATH_TO_DB;
 
-SqliteConnectionManager *SqliteConnectionManager::instance = nullptr;
-
-
-SqliteConnectionManager* SqliteConnectionManager::get_instance() {
-    if (instance == 0) {
-        instance = new SqliteConnectionManager();
-    }
-
-    return instance;
-}
 
 SqliteConnectionManager::SqliteConnectionManager() {
     int connection = sqlite3_open(PATH_TO_DB, &db);
@@ -27,5 +17,4 @@ SqliteConnectionManager::SqliteConnectionManager() {
 
 SqliteConnectionManager::~SqliteConnectionManager() {
     sqlite3_close(db);
-    delete instance;
 }

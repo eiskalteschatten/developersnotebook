@@ -11,7 +11,7 @@ AbstractSqliteModel::AbstractSqliteModel() {
 }
 
 AbstractSqliteModel::AbstractSqliteModel(const int &select_id) {
-    connection_manager = SqliteConnectionManager::get_instance();
+    connection_manager = new SqliteConnectionManager();
     id                 = select_id;
 }
 

@@ -15,14 +15,13 @@ SqliteSchema::TableSchema SqliteSchema::preferences_table {
     }
 };
 
-
 std::vector<SqliteSchema::TableSchema> SqliteSchema::all_tables {
 	SqliteSchema::preferences_table
 };
 
 
 void SqliteSchema::setup_db() {
-    SqliteConnectionManager *connection_manager = SqliteConnectionManager::get_instance();
+    SqliteConnectionManager *connection_manager = new SqliteConnectionManager();
     char *error_message = 0;
     int connection;
     unsigned int i;
@@ -73,4 +72,6 @@ void SqliteSchema::setup_db() {
             sqlite3_free(error_message);
         }
     }
+
+    delete connection_manager;
 }
