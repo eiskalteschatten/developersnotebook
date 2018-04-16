@@ -14,6 +14,8 @@ public:
     PreferencesModel(const int &select_id);
     ~PreferencesModel();
 
+    void setup();
+
     // Getters and setters
 
     void set_window_width(const int &new_width);
