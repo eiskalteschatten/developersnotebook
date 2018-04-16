@@ -22,12 +22,10 @@ std::vector<SqliteSchema::TableSchema> SqliteSchema::all_tables {
 
 
 void SqliteSchema::setup_db() {
-    SqliteConnectionManager *connection_manager = nullptr;
+    SqliteConnectionManager *connection_manager = SqliteConnectionManager::get_instance();
     char *error_message = 0;
     int connection;
     unsigned int i;
-
-    connection_manager = SqliteConnectionManager::get_instance();
 
     for (i = 0; i < SqliteSchema::all_tables.size(); i++) {
         SqliteSchema::TableSchema table = SqliteSchema::all_tables[i];
