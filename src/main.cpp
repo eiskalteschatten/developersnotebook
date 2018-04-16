@@ -5,13 +5,11 @@
     #include <gtkosxapplication.h>
 #endif
 
+#include "constants.hpp"
 #include "db/SqliteSchema.hpp"
 #include "windows/MainWindow.hpp"
 
 namespace fs = boost::filesystem;
-
-extern char *PATH_TO_CONFIG;
-
 
 void initialize();
 
@@ -38,7 +36,7 @@ int main(int argc, char **argv) {
 }
 
 void initialize() {
-    fs::path path_to_config = fs::path(PATH_TO_CONFIG);
+    fs::path path_to_config = fs::path(Constants::path_to_config);
 
     if (!fs::is_directory(path_to_config)) {
         if(!fs::create_directory(path_to_config)) {
