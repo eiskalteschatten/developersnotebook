@@ -8,7 +8,7 @@ private:
     SqliteConnectionManager();
 
     static SqliteConnectionManager *instance;
-    sqlite3 *db;
+    sqlite3 *db = nullptr;
 
 public:
     ~SqliteConnectionManager();

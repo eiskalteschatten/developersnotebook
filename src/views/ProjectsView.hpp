@@ -5,9 +5,9 @@
 
 class ProjectsView : public AbstractView {
 private:
-    GtkWidget *list_view;
-    GtkWidget *form_grid;
-    GtkListStore *list_store;
+    GtkWidget *list_view = nullptr;
+    GtkWidget *form_grid = nullptr;
+    GtkListStore *list_store = nullptr;
 
     void setup_list_store();
     void setup_list_view();

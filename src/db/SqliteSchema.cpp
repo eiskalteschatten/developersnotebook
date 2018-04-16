@@ -22,7 +22,7 @@ std::vector<SqliteSchema::TableSchema> SqliteSchema::all_tables {
 
 
 void SqliteSchema::setup_db() {
-    SqliteConnectionManager *connection_manager;
+    SqliteConnectionManager *connection_manager = nullptr;
     char *error_message = 0;
     int connection;
     unsigned int i;

@@ -5,7 +5,7 @@
 
 class AbstractView {
 protected:
-    GtkWidget *main_widget;
+    GtkWidget *main_widget = nullptr;
 
 public:
     AbstractView() {};
