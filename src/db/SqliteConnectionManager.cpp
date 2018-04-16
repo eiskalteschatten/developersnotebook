@@ -5,7 +5,7 @@
 
 extern char *PATH_TO_DB;
 
-SqliteConnectionManager* SqliteConnectionManager::instance = 0;
+SqliteConnectionManager *SqliteConnectionManager::instance = nullptr;
 
 
 SqliteConnectionManager* SqliteConnectionManager::get_instance() {
