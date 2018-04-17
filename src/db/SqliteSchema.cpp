@@ -40,9 +40,8 @@ void SqliteSchema::setup_db() {
         SqliteConnectionManager *connection_manager = new SqliteConnectionManager();
         char *error_message = 0;
         int connection;
-        unsigned int i;
 
-        for (i = 0; i < SqliteSchema::all_tables.size(); i++) {
+        for (unsigned int i = 0; i < SqliteSchema::all_tables.size(); i++) {
             SqliteSchema::TableSchema table = SqliteSchema::all_tables[i];
             std::vector<SqliteSchema::ColumnSchema> table_columns = table.columns;
 
@@ -53,17 +52,17 @@ void SqliteSchema::setup_db() {
             std::string insert_sql_columns = "id, ";
             std::string insert_sql_values  = "1, ";
 
-            for (i = 0; i < table_columns.size(); i++) {
-                create_sql += table_columns[i].column_name + " ";
-                create_sql += table_columns[i].type + " ";
-                create_sql += table_columns[i].null_status;
+            for (unsigned int c = 0; c < table_columns.size(); c++) {
+                create_sql += table_columns[c].column_name + " ";
+                create_sql += table_columns[c].type + " ";
+                create_sql += table_columns[c].null_status;
 
                 if (table.create_first_row) {
-                    insert_sql_columns += table_columns[i].column_name;
-                    insert_sql_values  += table_columns[i].default_value;
+                    insert_sql_columns += table_columns[c].column_name;
+                    insert_sql_values  += table_columns[c].default_value;
                 }
 
-                if ((i + 1) < table_columns.size()) {
+                if ((c + 1) < table_columns.size()) {
                     create_sql         += ",";
 
                     if (table.create_first_row) {
