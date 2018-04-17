@@ -44,6 +44,8 @@ void AbstractSqliteModel::fill_contents() {
         }
 
         sqlite3_finalize(stmt);
+
+        delete connection_manager;
     }
     catch(const std::exception& e) {
         fprintf(stderr, "An exception occured while trying to set up the database: %s\n", e.what());
@@ -71,6 +73,8 @@ void AbstractSqliteModel::update_single_int(const std::string insert_column_name
         if (update_contents) {
             contents[insert_column_name] = std::to_string(value);
         }
+
+        delete connection_manager;
     }
     catch(const std::exception& e) {
         fprintf(stderr, "An exception occured while trying to save to the database: %s\n", e.what());
