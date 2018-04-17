@@ -1,6 +1,7 @@
 #include <gtk/gtk.h>
 
 #include "ProjectsView.hpp"
+#include "../models/ProjectsModel.hpp"
 
 enum {
     ID_COLUMN,

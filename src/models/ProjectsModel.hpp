@@ -1,18 +1,18 @@
-#ifndef ProjectModel_hpp
-#define ProjectModel_hpp
+#ifndef ProjectsModel_hpp
+#define ProjectsModel_hpp
 
 #include <string>
 
 #include "AbstractSqliteModel.hpp"
 
 
-class ProjectModel : public AbstractSqliteModel {
+class ProjectsModel : public AbstractSqliteModel {
 private:
 
 public:
-    ProjectModel();
-    ProjectModel(const int &select_id);
-    ~ProjectModel();
+    ProjectsModel();
+    ProjectsModel(const int &select_id);
+    ~ProjectsModel();
 
     void setup();
 
@@ -73,4 +73,4 @@ public:
     }
 };
 
-#endif /* ProjectModel_hpp */
+#endif /* ProjectsModel_hpp */
