@@ -147,10 +147,17 @@ void ProjectsView::setup_form_sidebar() {
     GtkWidget *save_button = gtk_button_new_with_label("Save Project");
     gtk_widget_set_halign(save_button, GTK_ALIGN_START);
     g_object_set(save_button, "hexpand", FALSE, NULL);
+    g_signal_connect(G_OBJECT(save_button), "clicked", G_CALLBACK(save_project), NULL);
+
 
     gtk_grid_insert_row(GTK_GRID(form_grid), 7);
     gtk_grid_attach(GTK_GRID(form_grid), save_button, 0, 7, 1, 1);
 
 }
 
+void ProjectsView::save_project(GtkWidget *widget, gpointer data) {
+    ProjectsModel *projects_model = new ProjectsModel();
+
+    delete projects_model;
+}
 

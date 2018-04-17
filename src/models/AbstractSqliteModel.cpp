@@ -52,6 +52,25 @@ void AbstractSqliteModel::fill_contents() {
     }
 }
 
+void AbstractSqliteModel::insert_new_row() {
+    try {
+        std::string insert_sql = "INSERT OR IGNORE INTO " + table_schema->table_name +
+                                 " (" + insert_sql_columns + ")" +
+                                 " VALUES (" + insert_sql_values + ");";
+
+        connection = sqlite3_exec(connection_manager->get_db(), insert_sql.c_str(), NULL, 0, &error_message);
+
+        if(connection != SQLITE_OK) {
+            fprintf(stderr, "SQL error: %s\n", error_message);
+            sqlite3_free(error_message);
+        }
+        delete connection_manager;
+    }
+    catch(const std::exception& e) {
+        fprintf(stderr, "An exception occured while trying to save to the database: %s\n", e.what());
+    }
+}
+
 void AbstractSqliteModel::update_single(const std::string insert_column_name, const std::string &value, bool update_contents) {
     try {
         SqliteConnectionManager *connection_manager = new SqliteConnectionManager();
