@@ -16,9 +16,11 @@ public:
     typedef struct {
         std::string table_name;
         std::vector<ColumnSchema> columns;
+        bool create_first_row;
     } TableSchema;
 
     static TableSchema preferences_table;
+    static TableSchema projects_table;
 
     static std::vector<TableSchema> all_tables;
 
