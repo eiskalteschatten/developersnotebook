@@ -39,4 +39,8 @@
 # macOS
 .DS_Store
 
-build
+
+build/*
+bin/*
+
+!.gitkeep
