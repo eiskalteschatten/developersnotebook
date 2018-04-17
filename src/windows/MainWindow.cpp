@@ -2,6 +2,7 @@
 
 #include "MainWindow.hpp"
 #include "MenuBar.hpp"
+#include "../constants.hpp"
 #include "../views/HomeView.hpp"
 #include "../views/ProjectsView.hpp"
 #include "../models/PreferencesModel.hpp"
@@ -17,7 +18,7 @@ void MainWindow::activate(GtkApplication *app, gpointer user_data) {
     bool window_maximized               = preferences_model->get_window_maximized();
 
     window = gtk_application_window_new(app);
-    gtk_window_set_title(GTK_WINDOW(window), "Developer's Notebook");
+    gtk_window_set_title(GTK_WINDOW(window), Constants::application_name.c_str());
     gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
     gtk_window_set_default_size(GTK_WINDOW(window), window_width, window_height);
 
