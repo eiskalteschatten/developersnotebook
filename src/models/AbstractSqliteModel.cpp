@@ -52,7 +52,7 @@ void AbstractSqliteModel::fill_contents() {
     }
 }
 
-void AbstractSqliteModel::update_single_int(const std::string insert_column_name, const int &value, bool update_contents) {
+void AbstractSqliteModel::update_single(const std::string insert_column_name, const std::string &value, bool update_contents) {
     try {
         SqliteConnectionManager *connection_manager = new SqliteConnectionManager();
 
@@ -60,7 +60,7 @@ void AbstractSqliteModel::update_single_int(const std::string insert_column_name
         int connection;
         std::string sql = "UPDATE " + table_schema->table_name +
                           " SET " + (std::string)insert_column_name +
-                          " = " + std::to_string(value) +
+                          " = " + value +
                           " WHERE id=" + std::to_string(id) + ";";
 
         connection = sqlite3_exec(connection_manager->get_db(), sql.c_str(), NULL, 0, &error_message);
@@ -71,7 +71,7 @@ void AbstractSqliteModel::update_single_int(const std::string insert_column_name
         }
 
         if (update_contents) {
-            contents[insert_column_name] = std::to_string(value);
+            contents[insert_column_name] = value;
         }
 
         delete connection_manager;
@@ -80,6 +80,16 @@ void AbstractSqliteModel::update_single_int(const std::string insert_column_name
         fprintf(stderr, "An exception occured while trying to save to the database: %s\n", e.what());
     }
 }
+
+void AbstractSqliteModel::update_single_text(const std::string insert_column_name, const std::string &value, bool update_contents) {
+    update_single(insert_column_name, value, update_contents);
+}
+
+void AbstractSqliteModel::update_single_int(const std::string insert_column_name, const int &value, bool update_contents) {
+    update_single(insert_column_name, std::to_string(value), update_contents);
+
+}
+
 
 // Setters
 

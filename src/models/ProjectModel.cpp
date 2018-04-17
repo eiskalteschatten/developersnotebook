@@ -5,9 +5,6 @@
 #include "ProjectModel.hpp"
 #include "../db/SqliteSchema.hpp"
 
-const int default_window_width = 1000;
-const int default_window_height = 700;
-
 
 ProjectModel::ProjectModel() : AbstractSqliteModel(1) {
 	setup();
@@ -22,31 +19,34 @@ ProjectModel::~ProjectModel() {
 }
 
 void ProjectModel::setup() {
-	table_schema = &SqliteSchema::preferences_table;
-
+	table_schema = &SqliteSchema::projects_table;
 	fill_contents();
-
-	if (get_window_width() == -1) {
-		set_window_width(default_window_width);
-	}
-
-	if (get_window_height() == -1) {
-		set_window_height(default_window_height);
-	}
 }
 
 
 // Setters
 
-void ProjectModel::set_window_width(const int &width) {
-    update_single_int("window_width", width, true);
+void ProjectModel::set_name(const std::string name) {
+    update_single_text("name", name, true);
 }
 
-void ProjectModel::set_window_height(const int &height) {
-    update_single_int("window_height", height, true);
+void ProjectModel::set_start_date(const std::string start_date) {
+    update_single_text("start_date", start_date, true);
 }
 
-void ProjectModel::set_window_maximized(const bool maximized) {
-    int int_value = maximized ? 1 : 0;
-    update_single_int("window_maximized", int_value, true);
+void ProjectModel::set_end_date(const std::string end_date) {
+    update_single_text("end_date", end_date, true);
+}
+
+void ProjectModel::set_is_complete(const bool is_complete) {
+    int int_value = is_complete ? 1 : 0;
+    update_single_int("is_complete", int_value, true);
+}
+
+void ProjectModel::set_date_completed(const std::string date_completed) {
+    update_single_text("date_completed", date_completed, true);
+}
+
+void ProjectModel::set_date_created(const std::string date_created) {
+    update_single_text("date_created", date_created, true);
 }
