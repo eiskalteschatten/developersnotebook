@@ -80,15 +80,16 @@ void ProjectsView::setup_list_view() {
 }
 
 void ProjectsView::setup_form_sidebar() {
-    const int spacing             = 10;
+    const int grid_spacing        = 10;
+    const int field_margin_bottom = 15;
     const gchar *placeholder_date = "DD-MM-YYYY";
 
     form_grid = gtk_grid_new();
     g_object_set(form_grid, "hexpand", TRUE, NULL);
 
-    gtk_grid_set_column_spacing(GTK_GRID(form_grid), spacing);
-    gtk_grid_set_row_spacing(GTK_GRID(form_grid), spacing);
-    gtk_container_set_border_width(GTK_CONTAINER(form_grid), spacing);
+    gtk_grid_set_column_spacing(GTK_GRID(form_grid), grid_spacing);
+    gtk_grid_set_row_spacing(GTK_GRID(form_grid), grid_spacing);
+    gtk_container_set_border_width(GTK_CONTAINER(form_grid), grid_spacing);
 
     // Project Name
     GtkWidget *project_name_label = gtk_label_new("Project Name");
@@ -96,6 +97,7 @@ void ProjectsView::setup_form_sidebar() {
 
     GtkWidget *project_name_input = gtk_entry_new();
     g_object_set(project_name_input, "hexpand", TRUE, NULL);
+    gtk_widget_set_margin_bottom(project_name_input, field_margin_bottom);
 
     gtk_grid_insert_row(GTK_GRID(form_grid), 0);
     gtk_grid_insert_row(GTK_GRID(form_grid), 1);
@@ -109,6 +111,7 @@ void ProjectsView::setup_form_sidebar() {
 
     GtkWidget *start_date_input = gtk_entry_new();
     g_object_set(start_date_input, "hexpand", TRUE, NULL);
+    gtk_widget_set_margin_bottom(start_date_input, field_margin_bottom);
     gtk_entry_set_placeholder_text(GTK_ENTRY(start_date_input), placeholder_date);
 
     gtk_grid_insert_row(GTK_GRID(form_grid), 2);
@@ -123,6 +126,7 @@ void ProjectsView::setup_form_sidebar() {
 
     GtkWidget *end_date_input = gtk_entry_new();
     g_object_set(end_date_input, "hexpand", TRUE, NULL);
+    gtk_widget_set_margin_bottom(end_date_input, field_margin_bottom);
     gtk_entry_set_placeholder_text(GTK_ENTRY(end_date_input), placeholder_date);
 
     gtk_grid_insert_row(GTK_GRID(form_grid), 4);
@@ -132,7 +136,20 @@ void ProjectsView::setup_form_sidebar() {
 
 
     // Is Complete
-    GtkWidget *is_complete_label = gtk_label_new("Project is completed");
+    GtkWidget *is_complete_checkbox = gtk_check_button_new_with_label("Project is completed");
+    gtk_widget_set_margin_bottom(is_complete_checkbox, field_margin_bottom);
+
+    gtk_grid_insert_row(GTK_GRID(form_grid), 6);
+    gtk_grid_attach(GTK_GRID(form_grid), is_complete_checkbox, 0, 6, 1, 1);
+
+    // Save Button
+    GtkWidget *save_button = gtk_button_new_with_label("Save Project");
+    gtk_widget_set_halign(save_button, GTK_ALIGN_START);
+    g_object_set(save_button, "hexpand", FALSE, NULL);
+
+    gtk_grid_insert_row(GTK_GRID(form_grid), 7);
+    gtk_grid_attach(GTK_GRID(form_grid), save_button, 0, 7, 1, 1);
+
 }
 
 
