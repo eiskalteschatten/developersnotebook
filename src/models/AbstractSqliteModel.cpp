@@ -63,9 +63,9 @@ void AbstractSqliteModel::insert_new_row() {
         std::string insert_sql_values;
         std::vector<SqliteSchema::ColumnSchema> table_columns = table_schema->columns;
 
-        for (unsigned int c = 1; c < table_columns.size(); c++) { // Start at 1 because we don't want to insert the id field
+        for (unsigned int c = 0; c < table_columns.size(); c++) {
             insert_sql_columns += table_columns[c].column_name;
-            insert_sql_values  += table_columns[c].default_value;
+            insert_sql_values  += table_columns[c].default_value.empty() ? "\"\"" : "\"" + table_columns[c].default_value + "\"";
 
             if ((c + 1) < table_columns.size()) {
                 insert_sql_columns += ",";
@@ -105,7 +105,7 @@ void AbstractSqliteModel::update_single(const std::string insert_column_name, co
         int connection;
         std::string sql = "UPDATE " + table_schema->table_name +
                           " SET " + (std::string)insert_column_name +
-                          " = " + value +
+                          " = \"" + value + "\"" +
                           " WHERE id=" + std::to_string(id) + ";";
 
         connection = sqlite3_exec(connection_manager->get_db(), sql.c_str(), NULL, 0, &error_message);
