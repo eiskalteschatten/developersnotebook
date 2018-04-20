@@ -1,4 +1,6 @@
 #include <vector>
+#include <chrono>
+#include <ctime>
 #include <gtk/gtk.h>
 
 #include "ProjectsView.hpp"
@@ -20,12 +22,26 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     // TODO: Get id from selected element in the list view.
     //       If something is selected, pass it to the ProjectsModel constructor, otherwise don't pass any id to create a new entry
 
-    ProjectsModel *projects_model = new ProjectsModel();
+    bool is_complete              = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(pv->is_complete_checkbox));
+    auto now                      = std::chrono::system_clock::now();
+    std::time_t now_time          = std::chrono::system_clock::to_time_t(now);
+    std::string now_str           = std::string(std::ctime(&now_time));
+    std::string date_completed    = is_complete ? now_str : "";
+    ProjectsModel *projects_model = nullptr;
+
+    // if (id) {
+    //     projects_model = new ProjectsModel(id);
+    // }
+    // else {
+        projects_model = new ProjectsModel();
+        projects_model->set_date_created(now_str);
+    //}
 
     projects_model->set_name(std::string(gtk_entry_get_text(GTK_ENTRY(pv->project_name_input))));
     projects_model->set_start_date(std::string(gtk_entry_get_text(GTK_ENTRY(pv->start_date_input))));
     projects_model->set_end_date(std::string(gtk_entry_get_text(GTK_ENTRY(pv->end_date_input))));
-    //const char *is_complete = gtk_entry_get_text(GTK_ENTRY(pv->is_complete_checkbox));
+    projects_model->set_is_complete(is_complete);
+    projects_model->set_date_completed(date_completed);
 }
 
 
