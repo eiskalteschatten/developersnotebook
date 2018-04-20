@@ -6,7 +6,7 @@
 #include "../db/SqliteSchema.hpp"
 
 
-ProjectsModel::ProjectsModel() : AbstractSqliteModel(1) {
+ProjectsModel::ProjectsModel() : AbstractSqliteModel() {
 	setup();
 }
 
