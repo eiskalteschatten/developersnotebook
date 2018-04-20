@@ -27,7 +27,7 @@ public:
     AbstractSqliteModel(const int &select_id);
     ~AbstractSqliteModel();
 
-    void insert_or_replace(std::vector<std::string> *values_to_insert);
+    void insert_new_row();
 
     // Getters and setters
 

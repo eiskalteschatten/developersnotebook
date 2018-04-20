@@ -19,7 +19,7 @@ SqliteSchema::TableSchema SqliteSchema::preferences_table {
 SqliteSchema::TableSchema SqliteSchema::projects_table {
     "projects",
     {
-        {"name", "TEXT", "NOT NULL", ""},
+        {"name", "TEXT", "NULL", ""},
         {"start_date", "TEXT", "NULL", ""},
         {"end_date", "TEXT", "NULL", ""},
         {"is_complete", "INT", "NULL", "0"},

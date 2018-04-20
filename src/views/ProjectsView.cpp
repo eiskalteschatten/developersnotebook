@@ -22,15 +22,11 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
 
     ProjectsModel *projects_model = new ProjectsModel();
 
+
+    projects_model->set_name(std::string(gtk_entry_get_text(GTK_ENTRY(pv->project_name_input))));
+    projects_model->set_start_date(std::string(gtk_entry_get_text(GTK_ENTRY(pv->start_date_input))));
+    projects_model->set_end_date(std::string(gtk_entry_get_text(GTK_ENTRY(pv->end_date_input))));
     //const char *is_complete = gtk_entry_get_text(GTK_ENTRY(pv->is_complete_checkbox));
-
-    std::vector<std::string> values_to_insert = {
-        std::string(gtk_entry_get_text(GTK_ENTRY(pv->project_name_input))),
-        std::string(gtk_entry_get_text(GTK_ENTRY(pv->start_date_input))),
-        std::string(gtk_entry_get_text(GTK_ENTRY(pv->end_date_input)))
-    };
-
-    projects_model->insert_or_replace(&values_to_insert);
 
     delete pv;
     delete projects_model;

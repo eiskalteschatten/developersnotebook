@@ -53,26 +53,19 @@ void AbstractSqliteModel::fill_contents() {
     }
 }
 
-void AbstractSqliteModel::insert_or_replace(std::vector<std::string> *values_to_insert) {
+void AbstractSqliteModel::insert_new_row() {
     try {
         SqliteConnectionManager *connection_manager = new SqliteConnectionManager();
         char *error_message = 0;
         int connection;
-        unsigned int starting_point = 1; // Start at 1 to skip the id column unless the id exists (see below)
 
         std::string insert_sql_columns;
         std::string insert_sql_values;
         std::vector<SqliteSchema::ColumnSchema> table_columns = table_schema->columns;
 
-        if (id) {
-            insert_sql_columns = "id, ";
-            insert_sql_values  = std::to_string(id) + ", ";
-            starting_point = 0;
-        }
-
-        for (unsigned int c = starting_point; c < table_columns.size(); c++) {
+        for (unsigned int c = 1; c < table_columns.size(); c++) { // Start at 1 because we don't want to insert the id field
             insert_sql_columns += table_columns[c].column_name;
-            insert_sql_values  += values_to_insert->at(c);
+            insert_sql_values  += table_columns[c].default_value;
 
             if ((c + 1) < table_columns.size()) {
                 insert_sql_columns += ",";
@@ -80,7 +73,7 @@ void AbstractSqliteModel::insert_or_replace(std::vector<std::string> *values_to_
             }
         }
 
-        std::string insert_sql = "INSERT OR REPLACE INTO " + table_schema->table_name +
+        std::string insert_sql = "INSERT INTO " + table_schema->table_name +
                                  " (" + insert_sql_columns + ")" +
                                  " VALUES (" + insert_sql_values + ");";
 
@@ -91,9 +84,7 @@ void AbstractSqliteModel::insert_or_replace(std::vector<std::string> *values_to_
             sqlite3_free(error_message);
         }
 
-        if (!id) {
-            id = sqlite3_last_insert_rowid(connection_manager->get_db());
-        }
+        id = sqlite3_last_insert_rowid(connection_manager->get_db());
 
         delete connection_manager;
     }
@@ -104,6 +95,10 @@ void AbstractSqliteModel::insert_or_replace(std::vector<std::string> *values_to_
 
 void AbstractSqliteModel::update_single(const std::string insert_column_name, const std::string &value, bool update_contents) {
     try {
+        if (!id) {
+            insert_new_row();
+        }
+
         SqliteConnectionManager *connection_manager = new SqliteConnectionManager();
 
         char *error_message = 0;
