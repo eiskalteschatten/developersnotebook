@@ -18,7 +18,7 @@ protected:
     int id;
 
     void fill_contents();
-    void insert_new_row();
+    void insert_or_replace();
     void update_single(const std::string insert_column_name, const std::string &value, bool update_contents);
     void update_single_text(const std::string insert_column_name, const std::string &value, bool update_contents);
     void update_single_int(const std::string insert_column_name, const int &value, bool update_contents);

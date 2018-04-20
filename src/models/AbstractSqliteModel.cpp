@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 #include <stdio.h>
 #include <sqlite3.h>
 
@@ -52,9 +53,32 @@ void AbstractSqliteModel::fill_contents() {
     }
 }
 
-void AbstractSqliteModel::insert_new_row() {
+void AbstractSqliteModel::insert_or_replace() {
     try {
-        std::string insert_sql = "INSERT OR IGNORE INTO " + table_schema->table_name +
+        SqliteConnectionManager *connection_manager = new SqliteConnectionManager();
+        char *error_message = 0;
+        int connection;
+
+        std::string insert_sql_columns;
+        std::string insert_sql_values;
+        std::vector<SqliteSchema::ColumnSchema> table_columns = table_schema->columns;
+
+        if (id) {
+            insert_sql_columns = "id, ";
+            insert_sql_values  = std::to_string(id) + ", ";
+        }
+
+        for (unsigned int c = 0; c < table_columns.size(); c++) {
+            insert_sql_columns += table_columns[c].column_name;
+            insert_sql_values  += table_columns[c].default_value;
+
+            if ((c + 1) < table_columns.size()) {
+                insert_sql_columns += ",";
+                insert_sql_values  += ",";
+            }
+        }
+
+        std::string insert_sql = "INSERT OR REPLACE INTO " + table_schema->table_name +
                                  " (" + insert_sql_columns + ")" +
                                  " VALUES (" + insert_sql_values + ");";
 
