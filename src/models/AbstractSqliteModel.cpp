@@ -53,11 +53,12 @@ void AbstractSqliteModel::fill_contents() {
     }
 }
 
-void AbstractSqliteModel::insert_or_replace() {
+void AbstractSqliteModel::insert_or_replace(std::vector<std::string> *values_to_insert) {
     try {
         SqliteConnectionManager *connection_manager = new SqliteConnectionManager();
         char *error_message = 0;
         int connection;
+        unsigned int starting_point = 1; // Start at 1 to skip the id column unless the id exists (see below)
 
         std::string insert_sql_columns;
         std::string insert_sql_values;
@@ -66,11 +67,12 @@ void AbstractSqliteModel::insert_or_replace() {
         if (id) {
             insert_sql_columns = "id, ";
             insert_sql_values  = std::to_string(id) + ", ";
+            starting_point = 0;
         }
 
-        for (unsigned int c = 0; c < table_columns.size(); c++) {
+        for (unsigned int c = starting_point; c < table_columns.size(); c++) {
             insert_sql_columns += table_columns[c].column_name;
-            insert_sql_values  += table_columns[c].default_value;
+            insert_sql_values  += values_to_insert->at(c);
 
             if ((c + 1) < table_columns.size()) {
                 insert_sql_columns += ",";

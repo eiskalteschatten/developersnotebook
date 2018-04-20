@@ -1,3 +1,4 @@
+#include <vector>
 #include <gtk/gtk.h>
 
 #include "ProjectsView.hpp"
@@ -13,6 +14,27 @@ enum {
     DATE_CREATED_COLUMN,
     N_COLUMNS
 };
+
+
+void save_project(GtkWidget *widget, ProjectsView *pv) {
+    // TODO: Get id from selected element in the list view.
+    //       If something is selected, pass it to the ProjectsModel constructor, otherwise don't pass any id to create a new entry
+
+    ProjectsModel *projects_model = new ProjectsModel();
+
+    //const char *is_complete = gtk_entry_get_text(GTK_ENTRY(pv->is_complete_checkbox));
+
+    std::vector<std::string> values_to_insert = {
+        std::string(gtk_entry_get_text(GTK_ENTRY(pv->project_name_input))),
+        std::string(gtk_entry_get_text(GTK_ENTRY(pv->start_date_input))),
+        std::string(gtk_entry_get_text(GTK_ENTRY(pv->end_date_input)))
+    };
+
+    projects_model->insert_or_replace(&values_to_insert);
+
+    delete pv;
+    delete projects_model;
+}
 
 
 ProjectsView::ProjectsView() {
@@ -96,7 +118,7 @@ void ProjectsView::setup_form_sidebar() {
     GtkWidget *project_name_label = gtk_label_new("Project Name");
     gtk_widget_set_halign(project_name_label, GTK_ALIGN_START);
 
-    GtkWidget *project_name_input = gtk_entry_new();
+    project_name_input = gtk_entry_new();
     g_object_set(project_name_input, "hexpand", TRUE, NULL);
     gtk_widget_set_margin_bottom(project_name_input, field_margin_bottom);
 
@@ -110,7 +132,7 @@ void ProjectsView::setup_form_sidebar() {
     GtkWidget *start_date_label = gtk_label_new("Start Date");
     gtk_widget_set_halign(start_date_label, GTK_ALIGN_START);
 
-    GtkWidget *start_date_input = gtk_entry_new();
+    start_date_input = gtk_entry_new();
     g_object_set(start_date_input, "hexpand", TRUE, NULL);
     gtk_widget_set_margin_bottom(start_date_input, field_margin_bottom);
     gtk_entry_set_placeholder_text(GTK_ENTRY(start_date_input), placeholder_date);
@@ -125,7 +147,7 @@ void ProjectsView::setup_form_sidebar() {
     GtkWidget *end_date_label = gtk_label_new("End Date");
     gtk_widget_set_halign(end_date_label, GTK_ALIGN_START);
 
-    GtkWidget *end_date_input = gtk_entry_new();
+    end_date_input = gtk_entry_new();
     g_object_set(end_date_input, "hexpand", TRUE, NULL);
     gtk_widget_set_margin_bottom(end_date_input, field_margin_bottom);
     gtk_entry_set_placeholder_text(GTK_ENTRY(end_date_input), placeholder_date);
@@ -137,7 +159,7 @@ void ProjectsView::setup_form_sidebar() {
 
 
     // Is Complete
-    GtkWidget *is_complete_checkbox = gtk_check_button_new_with_label("Project is completed");
+    is_complete_checkbox = gtk_check_button_new_with_label("Project is completed");
     gtk_widget_set_margin_bottom(is_complete_checkbox, field_margin_bottom);
 
     gtk_grid_insert_row(GTK_GRID(form_grid), 6);
@@ -147,17 +169,11 @@ void ProjectsView::setup_form_sidebar() {
     GtkWidget *save_button = gtk_button_new_with_label("Save Project");
     gtk_widget_set_halign(save_button, GTK_ALIGN_START);
     g_object_set(save_button, "hexpand", FALSE, NULL);
-    g_signal_connect(G_OBJECT(save_button), "clicked", G_CALLBACK(save_project), NULL);
+    g_signal_connect(G_OBJECT(save_button), "clicked", G_CALLBACK(save_project), this);
 
 
     gtk_grid_insert_row(GTK_GRID(form_grid), 7);
     gtk_grid_attach(GTK_GRID(form_grid), save_button, 0, 7, 1, 1);
 
-}
-
-void ProjectsView::save_project(GtkWidget *widget, gpointer data) {
-    ProjectsModel *projects_model = new ProjectsModel();
-
-    delete projects_model;
 }
 

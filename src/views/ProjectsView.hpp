@@ -4,15 +4,23 @@
 #include "AbstractView.hpp"
 
 class ProjectsView : public AbstractView {
+
+
 private:
     GtkWidget *list_view = nullptr;
     GtkWidget *form_grid = nullptr;
     GtkListStore *list_store = nullptr;
 
+    // Form
+    GtkWidget *project_name_input;
+    GtkWidget *start_date_input;
+    GtkWidget *end_date_input;
+    GtkWidget *is_complete_checkbox;
+
+    friend void save_project(GtkWidget *widget, ProjectsView *pv);
     void setup_list_store();
     void setup_list_view();
     void setup_form_sidebar();
-    static void save_project(GtkWidget *widget, gpointer data);
 
 public:
     ProjectsView();
