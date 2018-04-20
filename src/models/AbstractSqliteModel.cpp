@@ -55,6 +55,12 @@ void AbstractSqliteModel::fill_contents() {
 
 void AbstractSqliteModel::insert_or_replace() {
     try {
+        /*
+
+            TODO: FIGURE OUT WHAT TO DO WITH THE ID
+
+        */
+
         SqliteConnectionManager *connection_manager = new SqliteConnectionManager();
         char *error_message = 0;
         int connection;
