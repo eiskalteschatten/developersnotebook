@@ -55,12 +55,6 @@ void AbstractSqliteModel::fill_contents() {
 
 void AbstractSqliteModel::insert_or_replace() {
     try {
-        /*
-
-            TODO: FIGURE OUT WHAT TO DO WITH THE ID
-
-        */
-
         SqliteConnectionManager *connection_manager = new SqliteConnectionManager();
         char *error_message = 0;
         int connection;
@@ -94,6 +88,11 @@ void AbstractSqliteModel::insert_or_replace() {
             fprintf(stderr, "SQL error: %s\n", error_message);
             sqlite3_free(error_message);
         }
+
+        if (!id) {
+            id = sqlite3_last_insert_rowid(connection_manager->get_db());
+        }
+
         delete connection_manager;
     }
     catch(const std::exception& e) {
