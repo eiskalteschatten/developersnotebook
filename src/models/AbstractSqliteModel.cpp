@@ -16,7 +16,6 @@ AbstractSqliteModel::AbstractSqliteModel(const int &select_id) {
 }
 
 AbstractSqliteModel::~AbstractSqliteModel() {
-    delete table_schema;
 }
 
 void AbstractSqliteModel::fill_contents() {

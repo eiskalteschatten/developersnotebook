@@ -11,7 +11,7 @@
 
 class AbstractSqliteModel {
 protected:
-    SqliteSchema::TableSchema *table_schema = nullptr;
+    SqliteSchema::TableSchema *table_schema;
 
     std::map<std::string, std::string> contents;
 

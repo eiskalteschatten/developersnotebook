@@ -7,8 +7,8 @@
 #include "../views/ProjectsView.hpp"
 #include "../models/PreferencesModel.hpp"
 
-GtkWidget *window = nullptr;
-GtkWidget *grid = nullptr;
+GtkWidget *window;
+GtkWidget *grid;
 
 
 void MainWindow::activate(GtkApplication *app, gpointer user_data) {

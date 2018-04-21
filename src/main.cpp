@@ -14,12 +14,10 @@ namespace fs = boost::filesystem;
 void initialize();
 
 int main(int argc, char **argv) {
-    MainWindow *window = nullptr;
-
     GtkApplication *app = gtk_application_new("com.alexseifert.developersnotebook", G_APPLICATION_FLAGS_NONE);
 
     g_signal_connect(app, "startup", G_CALLBACK(initialize), NULL);
-    g_signal_connect(app, "activate", G_CALLBACK(window->activate), NULL);
+    g_signal_connect(app, "activate", G_CALLBACK(MainWindow::activate), NULL);
 
     int status = g_application_run(G_APPLICATION(app), argc, argv);
     g_object_unref(app);
@@ -29,8 +27,6 @@ int main(int argc, char **argv) {
         gtkosx_application_ready(osx_app);
         g_object_unref(osx_app);
     #endif
-
-    delete window;
 
     return status;
 }
@@ -44,7 +40,5 @@ void initialize() {
         }
     }
 
-    SqliteSchema *db_schema = nullptr;
-    db_schema->setup_db();
-    delete db_schema;
+    SqliteSchema::setup_db();
 }

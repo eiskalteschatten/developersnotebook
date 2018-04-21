@@ -59,9 +59,6 @@ ProjectsView::ProjectsView() {
 }
 
 ProjectsView::~ProjectsView() {
-    delete list_view;
-    delete form_grid;
-    delete list_store;
 }
 
 void ProjectsView::setup_list_store() {

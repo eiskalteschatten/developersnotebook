@@ -39,13 +39,6 @@ MenuBar::MenuBar(GtkWidget *window) : window(window) {
 }
 
 MenuBar::~MenuBar() {
-    delete window;
-    delete accel_group;
-    delete menubar;
-    delete file_quit_mi;
-    delete preferences_mi;
-    delete about_mi;
-    delete help_mi;
 }
 
 void MenuBar::setup_file_menu() {
