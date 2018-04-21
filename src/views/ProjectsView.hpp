@@ -18,9 +18,6 @@ private:
     GtkWidget *is_complete_checkbox;
 
     friend void save_project(GtkWidget *widget, ProjectsView *pv);
-    void setup_list_store();
-    void setup_list_view();
-    void setup_form_sidebar();
 
 public:
     ProjectsView();
