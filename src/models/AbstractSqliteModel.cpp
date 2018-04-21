@@ -20,16 +20,16 @@ AbstractSqliteModel::~AbstractSqliteModel() {
 
 void AbstractSqliteModel::fill_contents() {
     try {
-        SqliteConnectionManager *connection_manager = new SqliteConnectionManager();
+        SqliteConnectionManager connection_manager;
 
         std::string sql = "SELECT * FROM " + table_schema->table_name + " WHERE ID=" + std::to_string(id) + ";";
         int connection;
         sqlite3_stmt *stmt;
 
-        connection = sqlite3_prepare_v2(connection_manager->get_db(), sql.c_str(), -1, &stmt, NULL);
+        connection = sqlite3_prepare_v2(connection_manager.get_db(), sql.c_str(), -1, &stmt, NULL);
 
         if(connection != SQLITE_OK) {
-            fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(connection_manager->get_db()));
+            fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(connection_manager.get_db()));
         }
 
         while ((connection = sqlite3_step(stmt)) == SQLITE_ROW) {
@@ -44,8 +44,6 @@ void AbstractSqliteModel::fill_contents() {
         }
 
         sqlite3_finalize(stmt);
-
-        delete connection_manager;
     }
     catch(const std::exception& e) {
         fprintf(stderr, "An exception occured while trying to set up the database: %s\n", e.what());
@@ -54,7 +52,7 @@ void AbstractSqliteModel::fill_contents() {
 
 void AbstractSqliteModel::insert_new_row() {
     try {
-        SqliteConnectionManager *connection_manager = new SqliteConnectionManager();
+        SqliteConnectionManager connection_manager;
         char *error_message = 0;
         int connection;
 
@@ -76,16 +74,14 @@ void AbstractSqliteModel::insert_new_row() {
                                  " (" + insert_sql_columns + ")" +
                                  " VALUES (" + insert_sql_values + ");";
 
-        connection = sqlite3_exec(connection_manager->get_db(), insert_sql.c_str(), NULL, 0, &error_message);
+        connection = sqlite3_exec(connection_manager.get_db(), insert_sql.c_str(), NULL, 0, &error_message);
 
         if(connection != SQLITE_OK) {
             fprintf(stderr, "SQL error: %s\n", error_message);
             sqlite3_free(error_message);
         }
 
-        id = sqlite3_last_insert_rowid(connection_manager->get_db());
-
-        delete connection_manager;
+        id = sqlite3_last_insert_rowid(connection_manager.get_db());
     }
     catch(const std::exception& e) {
         fprintf(stderr, "An exception occured while trying to save to the database: %s\n", e.what());
@@ -98,7 +94,7 @@ void AbstractSqliteModel::update_single(const std::string insert_column_name, co
             insert_new_row();
         }
 
-        SqliteConnectionManager *connection_manager = new SqliteConnectionManager();
+        SqliteConnectionManager connection_manager;
 
         char *error_message = 0;
         int connection;
@@ -107,7 +103,7 @@ void AbstractSqliteModel::update_single(const std::string insert_column_name, co
                           " = \"" + value + "\"" +
                           " WHERE id=" + std::to_string(id) + ";";
 
-        connection = sqlite3_exec(connection_manager->get_db(), sql.c_str(), NULL, 0, &error_message);
+        connection = sqlite3_exec(connection_manager.get_db(), sql.c_str(), NULL, 0, &error_message);
 
         if(connection != SQLITE_OK) {
             fprintf(stderr, "SQL error: %s\n", error_message);
@@ -117,8 +113,6 @@ void AbstractSqliteModel::update_single(const std::string insert_column_name, co
         if (update_contents) {
             contents[insert_column_name] = value;
         }
-
-        delete connection_manager;
     }
     catch(const std::exception& e) {
         fprintf(stderr, "An exception occured while trying to save to the database: %s\n", e.what());

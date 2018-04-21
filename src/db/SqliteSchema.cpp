@@ -37,7 +37,7 @@ std::vector<SqliteSchema::TableSchema> SqliteSchema::all_tables {
 
 void SqliteSchema::setup_db() {
     try {
-        SqliteConnectionManager *connection_manager = new SqliteConnectionManager();
+        SqliteConnectionManager connection_manager;
         char *error_message = 0;
         int connection;
 
@@ -74,7 +74,7 @@ void SqliteSchema::setup_db() {
 
             create_sql += ");";
 
-            connection = sqlite3_exec(connection_manager->get_db(), create_sql.c_str(), NULL, 0, &error_message);
+            connection = sqlite3_exec(connection_manager.get_db(), create_sql.c_str(), NULL, 0, &error_message);
 
             if(connection != SQLITE_OK) {
                 fprintf(stderr, "SQL error: %s\n", error_message);
@@ -86,7 +86,7 @@ void SqliteSchema::setup_db() {
                                          " (" + insert_sql_columns + ")" +
                                          " VALUES (" + insert_sql_values + ");";
 
-                connection = sqlite3_exec(connection_manager->get_db(), insert_sql.c_str(), NULL, 0, &error_message);
+                connection = sqlite3_exec(connection_manager.get_db(), insert_sql.c_str(), NULL, 0, &error_message);
 
                 if(connection != SQLITE_OK) {
                     fprintf(stderr, "SQL error: %s\n", error_message);
@@ -94,8 +94,6 @@ void SqliteSchema::setup_db() {
                 }
             }
         }
-
-        delete connection_manager;
     }
     catch(const std::exception& e) {
         fprintf(stderr, "An exception occured while trying to set up the database: %s\n", e.what());
