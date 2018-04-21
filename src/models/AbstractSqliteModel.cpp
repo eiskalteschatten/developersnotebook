@@ -8,7 +8,7 @@
 
 
 AbstractSqliteModel::AbstractSqliteModel() {
-
+	id = 0;
 }
 
 AbstractSqliteModel::AbstractSqliteModel(const int &select_id) {
