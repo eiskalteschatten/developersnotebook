@@ -66,6 +66,7 @@ After building, the binaries can be found in the `build` directory. They can eit
 - Journal
 - Notes
 - Code cache
+- Icons in the menu on the left
 - Search
 - Updated home
 
