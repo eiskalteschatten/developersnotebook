@@ -36,6 +36,46 @@ After building, the binaries can be found in the `build` directory. They can eit
     make run
 
 
+## Roadmap
+
+### 0.1
+
+- Home
+- Projects
+- Preferences
+  - Choose database location (good for using it with DropBox, OwnCloud, etc)
+- Check for updates
+
+
+### 0.2
+
+- To dos
+- Issues
+- Updated home
+
+
+### 0.3
+
+- Tools (color picker/converter, image and file compression, etc)
+- Bookmarks
+- Updated home
+
+
+### 1.0
+
+- Journal
+- Notes
+- Code cache
+- Search
+- Updated home
+
+
+### 2.0
+
+- Custom UI theme?
+- ...
+
+
 ---
 
 Alex Seifert - https://www.alexseifert.com
