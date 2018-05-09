@@ -80,6 +80,7 @@ After building, the binaries can be found in the `build` directory. They can eit
 ### 2.0
 
 - Custom UI theme?
+- Support for multiple databases?
 - ...
 
 
