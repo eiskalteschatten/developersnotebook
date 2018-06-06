@@ -17,7 +17,7 @@ private:
     GtkWidget *end_date_input;
     GtkWidget *is_complete_checkbox;
 
-    friend void load_data_into_view(void *model, int argc, char **argv, char **azColName);
+    friend int load_data_into_view(void *model, int argc, char **argv, char **azColName);
     friend void save_project(GtkWidget *widget, ProjectsView *pv);
     void setup_list_store();
     void setup_list_view();

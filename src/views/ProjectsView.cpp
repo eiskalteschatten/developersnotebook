@@ -18,7 +18,7 @@ enum {
 };
 
 
-void load_data_into_view(void *model, int argc, char **argv, char **azColName) {
+int load_data_into_view(void *model, int argc, char **argv, char **azColName) {
     GtkTreeIter iter;
 
    for (int i = 0; i < argc; i++) {
@@ -30,10 +30,13 @@ void load_data_into_view(void *model, int argc, char **argv, char **azColName) {
    // AFTER PRINTING TO CONSOLE FILL THE MODEL WITH THE DATA
 
    gtk_list_store_append(GTK_LIST_STORE(model), &iter);
-   gtk_list_store_set(GTK_LIST_STORE(model), &iter, LIST_ID, argv[0],
-         LIST_BRAND, argv[1],
-         LIST_PRICE, argv[2],
-         -1);
+   gtk_list_store_set(GTK_LIST_STORE(model), &iter, NAME_COLUMN, argv[1],
+                                                    START_DATE_COLUMN, argv[2],
+                                                    END_DATE_COLUMN, argv[3],
+                                                    IS_COMPLETE_COLUMN, argv[4],
+                                                    DATE_COMPLETED_COLUMN, argv[5],
+                                                    DATE_CREATED_COLUMN, argv[6],
+                                                    -1);
 
    return 0;
 }
@@ -89,17 +92,6 @@ void ProjectsView::setup_list_store() {
                                     G_TYPE_BOOLEAN,
                                     G_TYPE_STRING,
                                     G_TYPE_STRING);
-
-    GtkTreeIter iter1;
-    gtk_list_store_append(list_store, &iter1);
-    gtk_list_store_set(list_store, &iter1,
-                        NAME_COLUMN, "Project X",
-                        START_DATE_COLUMN, "start date",
-                        END_DATE_COLUMN, "end date",
-                        IS_COMPLETE_COLUMN, TRUE,
-                        DATE_COMPLETED_COLUMN, "completion date",
-                        DATE_CREATED_COLUMN, "created date",
-                        -1);
 }
 
 void ProjectsView::setup_list_view() {
