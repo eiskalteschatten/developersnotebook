@@ -43,12 +43,12 @@ After building, the binaries can be found in the `build` directory. They can eit
 - Home
 - Projects
 - Preferences
-  - Choose database location (good for using it with DropBox, OwnCloud, etc)
 - Check for updates
 
 
 ### 0.2
 
+- Ability to have multiple databases and save them wherever the user wants
 - To dos
 - Issues
 - Updated home
