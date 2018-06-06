@@ -18,6 +18,26 @@ enum {
 };
 
 
+void load_data_into_view(void *model, int argc, char **argv, char **azColName) {
+    GtkTreeIter iter;
+
+   for (int i = 0; i < argc; i++) {
+      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+   }
+
+   printf("\n");
+
+   // AFTER PRINTING TO CONSOLE FILL THE MODEL WITH THE DATA
+
+   gtk_list_store_append(GTK_LIST_STORE(model), &iter);
+   gtk_list_store_set(GTK_LIST_STORE(model), &iter, LIST_ID, argv[0],
+         LIST_BRAND, argv[1],
+         LIST_PRICE, argv[2],
+         -1);
+
+   return 0;
+}
+
 void save_project(GtkWidget *widget, ProjectsView *pv) {
     // TODO: Get id from selected element in the list view.
     //       If something is selected, pass it to the ProjectsModel constructor, otherwise don't pass any id to create a new entry
@@ -32,7 +52,7 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     //     ProjectsModel projects_model(id);
     // }
     // else {
-    	ProjectsModel projects_model;
+        ProjectsModel projects_model;
         projects_model.set_date_created(now_str);
     //}
 

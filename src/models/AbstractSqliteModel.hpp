@@ -21,6 +21,7 @@ protected:
     void update_single(const std::string insert_column_name, const std::string &value, bool update_contents);
     void update_single_text(const std::string insert_column_name, const std::string &value, bool update_contents);
     void update_single_int(const std::string insert_column_name, const int &value, bool update_contents);
+    void select_all(const std::string select_column_name);
 
 public:
     AbstractSqliteModel();

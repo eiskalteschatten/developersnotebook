@@ -128,6 +128,10 @@ void AbstractSqliteModel::update_single_int(const std::string insert_column_name
 
 }
 
+void AbstractSqliteModel::select_all(const std::string select_column_name) {
+
+}
+
 
 // Setters
 
