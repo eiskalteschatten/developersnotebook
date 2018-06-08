@@ -73,9 +73,9 @@ void ProjectsView::setup_list_store() {
                                     G_TYPE_STRING);
 
 
-    const std::vector<std::map<std::string, std::string>> *contents = projects_model.select_all();
+    const std::vector<std::map<std::string, std::string>> &contents = projects_model.select_all();
 
-    for (auto const &row : *contents) {
+    for (auto const &row : contents) {
         GtkTreeIter iter;
 
         gtk_list_store_append(GTK_LIST_STORE(list_store), &iter);
@@ -87,8 +87,6 @@ void ProjectsView::setup_list_store() {
                                                               DATE_CREATED_COLUMN, row.at('date_created'),
                                                               -1);
     }
-
-    delete contents;
 }
 
 void ProjectsView::setup_list_view() {

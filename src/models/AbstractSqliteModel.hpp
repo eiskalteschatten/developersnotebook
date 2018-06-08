@@ -14,6 +14,7 @@ protected:
     SqliteSchema::TableSchema *table_schema;
 
     std::map<std::string, std::string> contents;
+    std::vector<std::map<std::string, std::string>> all_contents;
 
     int id;
 
@@ -28,14 +29,15 @@ public:
 
     void insert_new_row();
     void select_one();
-    std::vector<std::map<std::string, std::string>> const* select_all();
+    std::vector<std::map<std::string, std::string>> const& select_all();
 
     // Getters and setters
 
     int const& get_id() const {return id;}
     void set_id(const int &new_id);
 
-    std::map<std::string, std::string> const& get_contents() {return contents;}
+    std::map<std::string, std::string> const& get_contents() const {return contents;}
+    std::vector<std::map<std::string, std::string>> const& get_all_contents() const {return all_contents;}
 };
 
 #endif /* AbstractSqliteModel_hpp */

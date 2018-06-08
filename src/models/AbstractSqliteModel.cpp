@@ -128,9 +128,7 @@ void AbstractSqliteModel::select_one() {
     }
 }
 
-std::vector<std::map<std::string, std::string>> const* AbstractSqliteModel::select_all() {
-    std::vector<std::map<std::string, std::string>> *all_contents = nullptr;
-
+std::vector<std::map<std::string, std::string>> const& AbstractSqliteModel::select_all() {
     try {
         SqliteConnectionManager connection_manager;
 
@@ -154,19 +152,16 @@ std::vector<std::map<std::string, std::string>> const* AbstractSqliteModel::sele
                 row[column_name]        = column_text;
             }
 
-            all_contents->push_back(row);
+            all_contents.push_back(row);
         }
 
         sqlite3_finalize(stmt);
-
-        return all_contents;
     }
     catch(const std::exception& e) {
         fprintf(stderr, "An exception occured while trying to set up the database: %s\n", e.what());
-        delete all_contents;
     }
 
-    return NULL;
+    return all_contents;
 }
 
 
