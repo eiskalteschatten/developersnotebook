@@ -20,7 +20,6 @@ ProjectsModel::~ProjectsModel() {
 
 void ProjectsModel::setup() {
 	table_schema = &SqliteSchema::projects_table;
-	fill_contents();
 }
 
 

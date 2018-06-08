@@ -17,11 +17,9 @@ protected:
 
     int id;
 
-    void fill_contents();
     void update_single(const std::string insert_column_name, const std::string &value, bool update_contents);
     void update_single_text(const std::string insert_column_name, const std::string &value, bool update_contents);
     void update_single_int(const std::string insert_column_name, const int &value, bool update_contents);
-    void select_all(const std::string select_column_name);
 
 public:
     AbstractSqliteModel();
@@ -29,11 +27,15 @@ public:
     ~AbstractSqliteModel();
 
     void insert_new_row();
+    void select_one();
+    std::vector<std::map<std::string, std::string>> const* select_all();
 
     // Getters and setters
 
     int const& get_id() const {return id;}
     void set_id(const int &new_id);
+
+    std::map<std::string, std::string> const& get_contents() {return contents;}
 };
 
 #endif /* AbstractSqliteModel_hpp */

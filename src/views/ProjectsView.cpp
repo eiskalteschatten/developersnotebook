@@ -18,29 +18,6 @@ enum {
 };
 
 
-int load_data_into_view(void *model, int argc, char **argv, char **azColName) {
-    GtkTreeIter iter;
-
-   for (int i = 0; i < argc; i++) {
-      printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-   }
-
-   printf("\n");
-
-   // AFTER PRINTING TO CONSOLE FILL THE MODEL WITH THE DATA
-
-   gtk_list_store_append(GTK_LIST_STORE(model), &iter);
-   gtk_list_store_set(GTK_LIST_STORE(model), &iter, NAME_COLUMN, argv[1],
-                                                    START_DATE_COLUMN, argv[2],
-                                                    END_DATE_COLUMN, argv[3],
-                                                    IS_COMPLETE_COLUMN, argv[4],
-                                                    DATE_COMPLETED_COLUMN, argv[5],
-                                                    DATE_CREATED_COLUMN, argv[6],
-                                                    -1);
-
-   return 0;
-}
-
 void save_project(GtkWidget *widget, ProjectsView *pv) {
     // TODO: Get id from selected element in the list view.
     //       If something is selected, pass it to the ProjectsModel constructor, otherwise don't pass any id to create a new entry
@@ -84,6 +61,8 @@ ProjectsView::~ProjectsView() {
 }
 
 void ProjectsView::setup_list_store() {
+    ProjectsModel projects_model;
+
     list_store = gtk_list_store_new(N_COLUMNS,
                                     G_TYPE_STRING,
                                     G_TYPE_STRING,
@@ -92,6 +71,24 @@ void ProjectsView::setup_list_store() {
                                     G_TYPE_BOOLEAN,
                                     G_TYPE_STRING,
                                     G_TYPE_STRING);
+
+
+    const std::vector<std::map<std::string, std::string>> *contents = projects_model.select_all();
+
+    for (auto const &row : *contents) {
+        GtkTreeIter iter;
+
+        gtk_list_store_append(GTK_LIST_STORE(list_store), &iter);
+        gtk_list_store_set(GTK_LIST_STORE(list_store), &iter, NAME_COLUMN, row.at('name'),
+                                                              START_DATE_COLUMN, row.at('start_date'),
+                                                              END_DATE_COLUMN, row.at('end_date'),
+                                                              IS_COMPLETE_COLUMN, row.at('is_complete'),
+                                                              DATE_COMPLETED_COLUMN, row.at('date_completed'),
+                                                              DATE_CREATED_COLUMN, row.at('date_created'),
+                                                              -1);
+    }
+
+    delete contents;
 }
 
 void ProjectsView::setup_list_view() {

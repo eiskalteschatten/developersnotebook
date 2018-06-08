@@ -18,38 +18,6 @@ AbstractSqliteModel::AbstractSqliteModel(const int &select_id) {
 AbstractSqliteModel::~AbstractSqliteModel() {
 }
 
-void AbstractSqliteModel::fill_contents() {
-    try {
-        SqliteConnectionManager connection_manager;
-
-        std::string sql = "SELECT * FROM " + table_schema->table_name + " WHERE ID=" + std::to_string(id) + ";";
-        int connection;
-        sqlite3_stmt *stmt;
-
-        connection = sqlite3_prepare_v2(connection_manager.get_db(), sql.c_str(), -1, &stmt, NULL);
-
-        if(connection != SQLITE_OK) {
-            fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(connection_manager.get_db()));
-        }
-
-        while ((connection = sqlite3_step(stmt)) == SQLITE_ROW) {
-            // i = 1 to skip the "id" column
-            for (int i = 1; i < sqlite3_column_count(stmt); i++) {
-                std::string column_name = std::string(reinterpret_cast<const char*>(sqlite3_column_name(stmt, i)));
-                std::string column_text = std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, i)));
-                contents[column_name] = column_text;
-            }
-
-            break; // We only want one row. There should only be one with the id, but just be sure.
-        }
-
-        sqlite3_finalize(stmt);
-    }
-    catch(const std::exception& e) {
-        fprintf(stderr, "An exception occured while trying to set up the database: %s\n", e.what());
-    }
-}
-
 void AbstractSqliteModel::insert_new_row() {
     try {
         SqliteConnectionManager connection_manager;
@@ -128,8 +96,77 @@ void AbstractSqliteModel::update_single_int(const std::string insert_column_name
 
 }
 
-void AbstractSqliteModel::select_all(const std::string select_column_name) {
+void AbstractSqliteModel::select_one() {
+    try {
+        SqliteConnectionManager connection_manager;
 
+        std::string sql = "SELECT * FROM " + table_schema->table_name + " WHERE ID=" + std::to_string(id) + ";";
+        int connection;
+        sqlite3_stmt *stmt;
+
+        connection = sqlite3_prepare_v2(connection_manager.get_db(), sql.c_str(), -1, &stmt, NULL);
+
+        if(connection != SQLITE_OK) {
+            fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(connection_manager.get_db()));
+        }
+
+        while ((connection = sqlite3_step(stmt)) == SQLITE_ROW) {
+            // i = 1 to skip the "id" column
+            for (int i = 1; i < sqlite3_column_count(stmt); i++) {
+                std::string column_name = std::string(reinterpret_cast<const char*>(sqlite3_column_name(stmt, i)));
+                std::string column_text = std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, i)));
+                contents[column_name]   = column_text;
+            }
+
+            break; // We only want one row. There should only be one with the id, but just be sure.
+        }
+
+        sqlite3_finalize(stmt);
+    }
+    catch(const std::exception& e) {
+        fprintf(stderr, "An exception occured while trying to set up the database: %s\n", e.what());
+    }
+}
+
+std::vector<std::map<std::string, std::string>> const* AbstractSqliteModel::select_all() {
+    std::vector<std::map<std::string, std::string>> *all_contents = nullptr;
+
+    try {
+        SqliteConnectionManager connection_manager;
+
+        std::string sql = "SELECT * FROM " + table_schema->table_name + ";";
+        int connection;
+        sqlite3_stmt *stmt;
+
+        connection = sqlite3_prepare_v2(connection_manager.get_db(), sql.c_str(), -1, &stmt, NULL);
+
+        if(connection != SQLITE_OK) {
+            fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(connection_manager.get_db()));
+        }
+
+
+        while ((connection = sqlite3_step(stmt)) == SQLITE_ROW) {
+            std::map<std::string, std::string> row;
+
+            for (int i = 0; i < sqlite3_column_count(stmt); i++) {
+                std::string column_name = std::string(reinterpret_cast<const char*>(sqlite3_column_name(stmt, i)));
+                std::string column_text = std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, i)));
+                row[column_name]        = column_text;
+            }
+
+            all_contents->push_back(row);
+        }
+
+        sqlite3_finalize(stmt);
+
+        return all_contents;
+    }
+    catch(const std::exception& e) {
+        fprintf(stderr, "An exception occured while trying to set up the database: %s\n", e.what());
+        delete all_contents;
+    }
+
+    return NULL;
 }
 
 
