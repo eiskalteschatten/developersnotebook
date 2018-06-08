@@ -152,7 +152,7 @@ tableVector const& AbstractSqliteModel::select_all() {
                 row[column_name]        = column_text;
             }
 
-            all_contents.push_back(row);
+            full_table.push_back(row);
         }
 
         sqlite3_finalize(stmt);
@@ -161,7 +161,7 @@ tableVector const& AbstractSqliteModel::select_all() {
         fprintf(stderr, "An exception occured while trying to set up the database: %s\n", e.what());
     }
 
-    return all_contents;
+    return full_table;
 }
 
 

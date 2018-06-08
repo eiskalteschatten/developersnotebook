@@ -16,7 +16,7 @@ protected:
     SqliteSchema::TableSchema *table_schema;
 
     std::map<std::string, std::string> contents;
-    tableVector all_contents;
+    tableVector full_table;
 
     int id;
 
@@ -39,7 +39,7 @@ public:
     void set_id(const int &new_id);
 
     std::map<std::string, std::string> const& get_contents() const {return contents;}
-    tableVector const& get_all_contents() const {return all_contents;}
+    tableVector const& get_full_table() const {return full_table;}
 };
 
 #endif /* AbstractSqliteModel_hpp */
