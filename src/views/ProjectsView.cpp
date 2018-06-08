@@ -78,11 +78,13 @@ void ProjectsView::setup_list_store() {
     for (auto const &row : contents) {
         GtkTreeIter iter;
 
+        bool is_complete = std::strncmp(row.at("is_complete").c_str(), "0", 1) != 0;
+
         gtk_list_store_append(GTK_LIST_STORE(list_store), &iter);
         gtk_list_store_set(GTK_LIST_STORE(list_store), &iter, NAME_COLUMN, row.at("name").c_str(),
                                                               START_DATE_COLUMN, row.at("start_date").c_str(),
                                                               END_DATE_COLUMN, row.at("end_date").c_str(),
-                                                              IS_COMPLETE_COLUMN, row.at("is_complete").c_str(),
+                                                              IS_COMPLETE_COLUMN, is_complete,
                                                               DATE_COMPLETED_COLUMN, row.at("date_completed").c_str(),
                                                               DATE_CREATED_COLUMN, row.at("date_created").c_str(),
                                                               -1);
