@@ -24,7 +24,7 @@ public:
             return std::stoi(contents.at("window_width"));
         }
 
-        return 1024;
+        return 1;
     }
 
     void set_window_height(const int &new_height);
@@ -33,7 +33,7 @@ public:
             return std::stoi(contents.at("window_height"));
         }
 
-        return 768;
+        return 1;
     }
 
     void set_window_maximized(const bool maximized);
