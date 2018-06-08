@@ -1,6 +1,7 @@
 #include <vector>
 #include <chrono>
 #include <ctime>
+#include <cstring>
 #include <gtk/gtk.h>
 
 #include "ProjectsView.hpp"
