@@ -8,13 +8,15 @@
 #include "../db/SqliteConnectionManager.hpp"
 #include "../db/SqliteSchema.hpp"
 
+typedef std::vector<std::map<std::string, std::string>> tableVector;
+
 
 class AbstractSqliteModel {
 protected:
     SqliteSchema::TableSchema *table_schema;
 
     std::map<std::string, std::string> contents;
-    std::vector<std::map<std::string, std::string>> all_contents;
+    tableVector all_contents;
 
     int id;
 
@@ -29,7 +31,7 @@ public:
 
     void insert_new_row();
     void select_one();
-    std::vector<std::map<std::string, std::string>> const& select_all();
+    tableVector const& select_all();
 
     // Getters and setters
 
@@ -37,7 +39,7 @@ public:
     void set_id(const int &new_id);
 
     std::map<std::string, std::string> const& get_contents() const {return contents;}
-    std::vector<std::map<std::string, std::string>> const& get_all_contents() const {return all_contents;}
+    tableVector const& get_all_contents() const {return all_contents;}
 };
 
 #endif /* AbstractSqliteModel_hpp */

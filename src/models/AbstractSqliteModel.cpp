@@ -128,7 +128,7 @@ void AbstractSqliteModel::select_one() {
     }
 }
 
-std::vector<std::map<std::string, std::string>> const& AbstractSqliteModel::select_all() {
+tableVector const& AbstractSqliteModel::select_all() {
     try {
         SqliteConnectionManager connection_manager;
 

@@ -73,7 +73,7 @@ void ProjectsView::setup_list_store() {
                                     G_TYPE_STRING);
 
 
-    const std::vector<std::map<std::string, std::string>> &contents = projects_model.select_all();
+    const tableVector &contents = projects_model.select_all();
 
     for (auto const &row : contents) {
         GtkTreeIter iter;
