@@ -3,7 +3,6 @@
 
 #include "AbstractView.hpp"
 
-gint sort_by_string(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer data);
 
 class ProjectsView : public AbstractView {
 private:

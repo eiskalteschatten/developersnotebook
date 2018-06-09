@@ -13,6 +13,8 @@ class AbstractView {
 protected:
     GtkWidget *main_widget;
 
+    static gint sort_by_string(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer data);
+
 public:
     AbstractView() {};
     ~AbstractView();
