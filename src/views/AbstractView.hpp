@@ -1,6 +1,8 @@
 #ifndef AbstractView_hpp
 #define AbstractView_hpp
 
+#include <vector>
+#include <map>
 #include <gtk/gtk.h>
 
 typedef std::map<std::string, std::string> tableRowMap;
