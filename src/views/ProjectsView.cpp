@@ -120,18 +120,49 @@ void ProjectsView::setup_list_view() {
     GtkTreeViewColumn *name_column = gtk_tree_view_column_new_with_attributes("Name", text_renderer, "text", NAME_COLUMN, NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), name_column);
     gtk_tree_view_column_set_sort_column_id(name_column, SORT_NAME_COLUMN);
+    gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_NAME_COLUMN, sort_by_string, GINT_TO_POINTER(NAME_COLUMN), NULL);
 
     GtkTreeViewColumn *start_date_column = gtk_tree_view_column_new_with_attributes("Start Date", text_renderer, "text", START_DATE_COLUMN, NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), start_date_column);
     gtk_tree_view_column_set_sort_column_id(start_date_column, SORT_START_DATE_COLUMN);
+    gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_START_DATE_COLUMN, sort_by_string, GINT_TO_POINTER(START_DATE_COLUMN), NULL);
 
     GtkTreeViewColumn *end_date_column = gtk_tree_view_column_new_with_attributes("End Date", text_renderer, "text", END_DATE_COLUMN, NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), end_date_column);
     gtk_tree_view_column_set_sort_column_id(end_date_column, SORT_END_DATE_COLUMN);
+    gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_END_DATE_COLUMN, sort_by_string, GINT_TO_POINTER(END_DATE_COLUMN), NULL);
 
     GtkTreeViewColumn *date_completed_column = gtk_tree_view_column_new_with_attributes("Completion Date", text_renderer, "text", DATE_COMPLETED_COLUMN, NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), date_completed_column);
     gtk_tree_view_column_set_sort_column_id(date_completed_column, SORT_DATE_COMPLETED_COLUMN);
+    gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_DATE_COMPLETED_COLUMN, sort_by_string, GINT_TO_POINTER(DATE_COMPLETED_COLUMN), NULL);
+
+
+    gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(list_store), SORT_IS_COMPLETE_COLUMN, GTK_SORT_ASCENDING);
+}
+
+gint sort_by_string(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer user_data) {
+    gint ret = 0;
+    gchar *string1, *string2;
+    gint sortcol = GPOINTER_TO_INT(user_data);
+
+    gtk_tree_model_get(model, a, sortcol, &string1, -1);
+    gtk_tree_model_get(model, b, sortcol, &string2, -1);
+
+    if (
+        (string1 == NULL || string2 == NULL) &&
+        !(string1 == NULL && string2 == NULL)
+    ) {
+        ret = (string1 == NULL) ? -1 : 1;
+    }
+    else if (!(string1 == NULL && string2 == NULL)) {
+        ret = g_utf8_collate(string1, string2);
+    }
+
+    g_free(string1);
+    g_free(string2);
+
+    return ret;
 }
 
 void ProjectsView::append_to_list_store(GtkTreeIter *tree_iter) {
