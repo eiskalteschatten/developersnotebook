@@ -116,6 +116,7 @@ void ProjectsView::setup_list_view() {
     GtkTreeViewColumn *is_complete_column = gtk_tree_view_column_new_with_attributes("", toggle_renderer, "active", IS_COMPLETE_COLUMN, NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), is_complete_column);
     gtk_tree_view_column_set_sort_column_id(is_complete_column, SORT_IS_COMPLETE_COLUMN);
+    gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_IS_COMPLETE_COLUMN, sort_by_boolean, GINT_TO_POINTER(IS_COMPLETE_COLUMN), NULL);
 
     GtkTreeViewColumn *name_column = gtk_tree_view_column_new_with_attributes("Name", text_renderer, "text", NAME_COLUMN, NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), name_column);

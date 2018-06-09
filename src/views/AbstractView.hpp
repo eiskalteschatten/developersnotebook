@@ -14,6 +14,7 @@ protected:
     GtkWidget *main_widget;
 
     static gint sort_by_string(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer data);
+    static gint sort_by_boolean(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer data);
 
 public:
     AbstractView() {};

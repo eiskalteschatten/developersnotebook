@@ -5,7 +5,8 @@ AbstractView::~AbstractView() {
 
 gint AbstractView::sort_by_string(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer user_data) {
     gint ret = 0;
-    gchar *string1, *string2;
+    gchar *string1;
+    gchar *string2;
     gint sortcol = GPOINTER_TO_INT(user_data);
 
     gtk_tree_model_get(model, a, sortcol, &string1, -1);
@@ -25,4 +26,22 @@ gint AbstractView::sort_by_string(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIt
     g_free(string2);
 
     return ret;
+}
+
+gint AbstractView::sort_by_boolean(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer user_data) {
+    gboolean bool1;
+    gboolean bool2;
+    gint sortcol = GPOINTER_TO_INT(user_data);
+
+    gtk_tree_model_get(model, a, sortcol, &bool1, -1);
+    gtk_tree_model_get(model, b, sortcol, &bool2, -1);
+
+    if (!bool1 && bool2) {
+        return -1;
+    }
+    else if (bool1 && !bool2) {
+        return 1;
+    }
+
+    return 0;
 }
