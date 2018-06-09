@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build-Run",
+            "label": "build-run",
             "isBuildCommand": true,
             "showOutput": "always",
             "type": "shell",
@@ -16,7 +16,18 @@
             "problemMatcher": []
         },
         {
-            "label": "Clean",
+            "label": "build-run-mac",
+            "showOutput": "always",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "build-run-mac",
+                "-j6"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "clean",
             "isBuildCommand": true,
             "type": "shell",
             "command": "make",

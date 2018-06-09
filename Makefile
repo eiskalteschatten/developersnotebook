@@ -16,8 +16,8 @@ ifeq ($(OS_TYPE), Darwin)
 CXXINCLUDES=-I/usr/local/Cellar/gtk-mac-integration/2.0.8_2/include/gtkmacintegration/
 CXXLINKED=-lgtkmacintegration-gtk3.2
 PKG_CONFIG_LOC=pkg-config
-BUILD_RUN_TARGET=create-mac-bundle
-BUILD_RUN_OPEN=open ./$(BIN_DIR)/$(MAC_BUNDLE)
+BUILD_RUN_TARGET=all
+BUILD_RUN_OPEN=./$(BIN_DIR)/$(TARGET)
 
 else ifeq ($(OS_TYPE), Linux)
 
@@ -58,6 +58,9 @@ clean:
 	@echo "Cleaning...";
 	rm -rf ./$(BUILD_DIR)/* 2> /dev/null
 	rm -rf ./$(BIN_DIR)/* 2> /dev/null
+
+build-run-mac: create-mac-bundle
+	open ./$(BIN_DIR)/$(MAC_BUNDLE)
 
 build-run: $(BUILD_RUN_TARGET)
 	$(BUILD_RUN_OPEN)
