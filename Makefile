@@ -74,7 +74,7 @@ install-libs-debian:
 	sudo apt install gtk+-3.0 libsqlite3-dev libboost-all-dev
 
 install-libs-mac:
-	brew install gtk+3 gtk-mac-integration boost gdb
+	brew install gtk+3 gtk-mac-integration boost gdb adwaita-icon-theme
 
 
 # Mac Application Bundles
