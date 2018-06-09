@@ -21,6 +21,7 @@ private:
     void append_to_list_store(GtkTreeIter *tree_iter);
     void prepend_to_list_store(GtkTreeIter *tree_iter);
     void set_list_store(const tableRowMap &row, GtkTreeIter *tree_iter);
+    void select_row_in_list_view(GtkTreeIter *tree_iter);
     void setup_form_sidebar();
 
 public:

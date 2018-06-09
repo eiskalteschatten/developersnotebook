@@ -55,6 +55,7 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     projects_model.set_date_completed(date_completed);
 
     pv->set_list_store(row, &tree_iter);
+    pv->select_row_in_list_view(&tree_iter);
 }
 
 
@@ -138,6 +139,11 @@ void ProjectsView::set_list_store(const tableRowMap &row, GtkTreeIter *tree_iter
                                                               DATE_COMPLETED_COLUMN, row.at("date_completed").c_str(),
                                                               DATE_CREATED_COLUMN, row.at("date_created").c_str(),
                                                               -1);
+}
+
+void ProjectsView::select_row_in_list_view(GtkTreeIter *tree_iter) {
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(list_view));
+    gtk_tree_selection_select_iter(selection, tree_iter);
 }
 
 void ProjectsView::setup_form_sidebar() {
