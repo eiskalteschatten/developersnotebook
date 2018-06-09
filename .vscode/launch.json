@@ -27,12 +27,12 @@
             "name": "Mac",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/Developer's Notebook.app/Contents/MacOS/developersnotebook",
+            "program": "${workspaceFolder}/bin/developersnotebook",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
-            "externalConsole": false,
+            "externalConsole": true,
             "MIMode": "lldb"
         }
     ]
