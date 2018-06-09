@@ -144,7 +144,7 @@ tableVector const& AbstractSqliteModel::select_all() {
 
 
         while ((connection = sqlite3_step(stmt)) == SQLITE_ROW) {
-            std::map<std::string, std::string> row;
+            tableRowMap row;
 
             for (int i = 0; i < sqlite3_column_count(stmt); i++) {
                 std::string column_name = std::string(reinterpret_cast<const char*>(sqlite3_column_name(stmt, i)));

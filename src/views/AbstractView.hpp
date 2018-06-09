@@ -3,6 +3,10 @@
 
 #include <gtk/gtk.h>
 
+typedef std::map<std::string, std::string> tableRowMap;
+typedef std::vector<tableRowMap> tableVector;
+
+
 class AbstractView {
 protected:
     GtkWidget *main_widget;
