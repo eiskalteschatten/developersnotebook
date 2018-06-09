@@ -8,7 +8,6 @@ private:
     GtkWidget *list_view;
     GtkWidget *form_grid;
     GtkListStore *list_store;
-    GtkTreeIter tree_iter;
 
     // Form
     GtkWidget *project_name_input;
@@ -19,9 +18,9 @@ private:
     friend void save_project(GtkWidget *widget, ProjectsView *pv);
     void setup_list_store();
     void setup_list_view();
-    void append_to_list_store();
-    void prepend_to_list_store();
-    void set_list_store(const tableRowMap &row);
+    void append_to_list_store(GtkTreeIter *tree_iter);
+    void prepend_to_list_store(GtkTreeIter *tree_iter);
+    void set_list_store(const tableRowMap &row, GtkTreeIter *tree_iter);
     void setup_form_sidebar();
 
 public:
