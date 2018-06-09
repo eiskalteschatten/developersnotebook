@@ -4,6 +4,17 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "build",
+            "isBuildCommand": true,
+            "showOutput": "always",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "-j6"
+            ],
+            "problemMatcher": []
+        },
+        {
             "label": "build-run",
             "isBuildCommand": true,
             "showOutput": "always",
@@ -17,6 +28,7 @@
         },
         {
             "label": "build-run-mac",
+            "isBuildCommand": true,
             "showOutput": "always",
             "type": "shell",
             "command": "make",

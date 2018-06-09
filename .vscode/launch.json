@@ -13,6 +13,7 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
+            "preLaunchTask": "build",
             "externalConsole": true,
             "MIMode": "gdb",
             "setupCommands": [
@@ -32,6 +33,7 @@
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
+            "preLaunchTask": "build",
             "externalConsole": true,
             "MIMode": "lldb"
         }
