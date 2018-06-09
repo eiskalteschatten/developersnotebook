@@ -18,6 +18,14 @@ enum {
     N_COLUMNS
 };
 
+enum {
+    SORT_NAME_COLUMN,
+    SORT_START_DATE_COLUMN,
+    SORT_END_DATE_COLUMN,
+    SORT_IS_COMPLETE_COLUMN,
+    SORT_DATE_COMPLETED_COLUMN
+};
+
 
 void save_project(GtkWidget *widget, ProjectsView *pv) {
     // TODO: Get id from selected element in the list view.
@@ -107,18 +115,23 @@ void ProjectsView::setup_list_view() {
 
     GtkTreeViewColumn *is_complete_column = gtk_tree_view_column_new_with_attributes("", toggle_renderer, "active", IS_COMPLETE_COLUMN, NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), is_complete_column);
+    gtk_tree_view_column_set_sort_column_id(is_complete_column, SORT_IS_COMPLETE_COLUMN);
 
     GtkTreeViewColumn *name_column = gtk_tree_view_column_new_with_attributes("Name", text_renderer, "text", NAME_COLUMN, NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), name_column);
+    gtk_tree_view_column_set_sort_column_id(name_column, SORT_NAME_COLUMN);
 
     GtkTreeViewColumn *start_date_column = gtk_tree_view_column_new_with_attributes("Start Date", text_renderer, "text", START_DATE_COLUMN, NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), start_date_column);
+    gtk_tree_view_column_set_sort_column_id(start_date_column, SORT_START_DATE_COLUMN);
 
     GtkTreeViewColumn *end_date_column = gtk_tree_view_column_new_with_attributes("End Date", text_renderer, "text", END_DATE_COLUMN, NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), end_date_column);
+    gtk_tree_view_column_set_sort_column_id(end_date_column, SORT_END_DATE_COLUMN);
 
     GtkTreeViewColumn *date_completed_column = gtk_tree_view_column_new_with_attributes("Completion Date", text_renderer, "text", DATE_COMPLETED_COLUMN, NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), date_completed_column);
+    gtk_tree_view_column_set_sort_column_id(date_completed_column, SORT_DATE_COMPLETED_COLUMN);
 }
 
 void ProjectsView::append_to_list_store(GtkTreeIter *tree_iter) {
