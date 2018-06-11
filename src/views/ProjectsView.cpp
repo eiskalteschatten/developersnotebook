@@ -68,6 +68,39 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     pv->select_row_in_list_view(&tree_iter);
 }
 
+void list_selection_changed(GtkTreeSelection *selection, gpointer data, ProjectsView *pv) {
+    GtkTreeIter tree_iter;
+    GtkTreeModel *model;
+    gchar *id;
+    gchar *name;
+    gchar *start_date;
+    gchar *end_date;
+    bool is_complete;
+
+    if (gtk_tree_selection_get_selected(selection, &model, &tree_iter)) {
+        gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id,
+                                              NAME_COLUMN, &name,
+                                              START_DATE_COLUMN, &start_date,
+                                              END_DATE_COLUMN, &end_date,
+                                              //IS_COMPLETE_COLUMN, &is_complete,
+                                              -1);
+
+        tableRowMap row;
+        row["id"]          = std::string(id);
+        row["name"]        = std::string(name);
+        row["start_date"]  = std::string(start_date);
+        row["end_date"]    = std::string(end_date);
+        row["is_complete"] = is_complete ? "1" : "0";
+
+        g_free(id);
+        g_free(name);
+        g_free(start_date);
+        g_free(end_date);
+
+        pv->fill_in_sidebar(row);
+    }
+}
+
 
 // Class
 
@@ -85,7 +118,7 @@ ProjectsView::ProjectsView() {
 
     select = gtk_tree_view_get_selection(GTK_TREE_VIEW(list_view));
     gtk_tree_selection_set_mode(select, GTK_SELECTION_SINGLE);
-    g_signal_connect(G_OBJECT(select), "changed", G_CALLBACK(list_selection_changed), NULL);
+    g_signal_connect(G_OBJECT(select), "changed", G_CALLBACK(list_selection_changed), this);
 }
 
 ProjectsView::~ProjectsView() {
@@ -254,21 +287,8 @@ void ProjectsView::setup_form_sidebar() {
     gtk_grid_attach(GTK_GRID(form_grid), save_button, 0, 7, 1, 1);
 }
 
-void ProjectsView::list_selection_changed(GtkTreeSelection *selection, gpointer data) {
-    GtkTreeIter tree_iter;
-    GtkTreeModel *model;
-    int id;
-    std::string name;
-    std::string start_date;
-    std::string end_date;
-    bool is_complete;
-
-    if (gtk_tree_selection_get_selected(selection, &model, &tree_iter)) {
-        gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id,
-                                              NAME_COLUMN, &name,
-                                              START_DATE_COLUMN, &start_date,
-                                              END_DATE_COLUMN, &end_date,
-                                              IS_COMPLETE_COLUMN, &is_complete,
-                                              -1);
-    }
+void ProjectsView::fill_in_sidebar(const tableRowMap &row) {
+    gtk_entry_set_text(GTK_ENTRY(project_name_input), row.at("name").c_str());
+    gtk_entry_set_text(GTK_ENTRY(start_date_input), row.at("start_date").c_str());
+    gtk_entry_set_text(GTK_ENTRY(end_date_input), row.at("end_date").c_str());
 }

@@ -18,7 +18,7 @@ private:
     GtkWidget *is_complete_checkbox;
 
     friend void save_project(GtkWidget *widget, ProjectsView *pv);
-    static void list_selection_changed(GtkTreeSelection *selection, gpointer data);
+    friend void list_selection_changed(GtkTreeSelection *selection, gpointer data, ProjectsView *pv);
 
     void setup_list_store();
     void setup_list_view();
@@ -27,6 +27,7 @@ private:
     void set_list_store(const tableRowMap &row, GtkTreeIter *tree_iter);
     void select_row_in_list_view(GtkTreeIter *tree_iter);
     void setup_form_sidebar();
+    void fill_in_sidebar(const tableRowMap &row);
 
 public:
     ProjectsView();
