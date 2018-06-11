@@ -9,15 +9,6 @@
 #include "AboutDialog.hpp"
 
 
-void MenuBar::close_window(GSimpleAction *action, GVariant *parameter, gpointer app) {
-    // GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    // gtk_widget_destroy(GTK_WIDGET(window));
-}
-
-void MenuBar::quit_app(GSimpleAction *action, GVariant *parameter, gpointer app) {
-    exit(0);
-}
-
 MenuBar::MenuBar(GtkWidget *window) : window(window) {
     primary_mask_key = GDK_CONTROL_MASK;
 
@@ -148,4 +139,13 @@ void MenuBar::setup_macos_menu_bar() {
 
         g_object_unref(osx_app);
     #endif
+}
+
+void MenuBar::close_window(GSimpleAction *action, GVariant *parameter, gpointer app) {
+    // GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    // gtk_widget_destroy(GTK_WIDGET(window));
+}
+
+void MenuBar::quit_app(GSimpleAction *action, GVariant *parameter, gpointer app) {
+    exit(0);
 }
