@@ -113,6 +113,10 @@ void ProjectsView::setup_list_view() {
     GtkCellRenderer *text_renderer = gtk_cell_renderer_text_new();
     GtkCellRenderer *toggle_renderer = gtk_cell_renderer_toggle_new();
 
+    GtkTreeViewColumn *id_column = gtk_tree_view_column_new_with_attributes("Id", text_renderer, "text", ID_COLUMN, NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), id_column);
+    gtk_tree_view_column_set_visible(id_column, FALSE);
+
     GtkTreeViewColumn *is_complete_column = gtk_tree_view_column_new_with_attributes("", toggle_renderer, "active", IS_COMPLETE_COLUMN, NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), is_complete_column);
     gtk_tree_view_column_set_sort_column_id(is_complete_column, SORT_IS_COMPLETE_COLUMN);
@@ -153,7 +157,8 @@ void ProjectsView::prepend_to_list_store(GtkTreeIter *tree_iter) {
 void ProjectsView::set_list_store(const tableRowMap &row, GtkTreeIter *tree_iter) {
     bool is_complete = std::strncmp(row.at("is_complete").c_str(), "0", 1) != 0;
 
-    gtk_list_store_set(GTK_LIST_STORE(list_store), tree_iter, NAME_COLUMN, row.at("name").c_str(),
+    gtk_list_store_set(GTK_LIST_STORE(list_store), tree_iter, ID_COLUMN, row.at("id").c_str(),
+                                                              NAME_COLUMN, row.at("name").c_str(),
                                                               START_DATE_COLUMN, row.at("start_date").c_str(),
                                                               END_DATE_COLUMN, row.at("end_date").c_str(),
                                                               IS_COMPLETE_COLUMN, is_complete,
