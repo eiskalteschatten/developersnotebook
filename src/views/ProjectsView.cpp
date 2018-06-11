@@ -78,6 +78,10 @@ ProjectsView::ProjectsView() {
     // Attach everything to the panes
     gtk_paned_add1(GTK_PANED(main_widget), list_view);
     gtk_paned_pack2(GTK_PANED(main_widget), form_grid, FALSE, FALSE);
+
+    select = gtk_tree_view_get_selection(GTK_TREE_VIEW(list_view));
+    gtk_tree_selection_set_mode(select, GTK_SELECTION_SINGLE);
+    g_signal_connect(G_OBJECT(select), "changed", G_CALLBACK(list_selection_changed), NULL);
 }
 
 ProjectsView::~ProjectsView() {
@@ -244,6 +248,23 @@ void ProjectsView::setup_form_sidebar() {
 
     gtk_grid_insert_row(GTK_GRID(form_grid), 7);
     gtk_grid_attach(GTK_GRID(form_grid), save_button, 0, 7, 1, 1);
-
 }
 
+void ProjectsView::list_selection_changed(GtkTreeSelection *selection, gpointer data) {
+    GtkTreeIter tree_iter;
+    GtkTreeModel *model;
+    int id;
+    std::string name;
+    std::string start_date;
+    std::string end_date;
+    bool is_complete;
+
+    if (gtk_tree_selection_get_selected(selection, &model, &tree_iter)) {
+        gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id,
+                                              NAME_COLUMN, &name,
+                                              START_DATE_COLUMN, &start_date,
+                                              END_DATE_COLUMN, &end_date,
+                                              IS_COMPLETE_COLUMN, &is_complete,
+                                              -1);
+    }
+}

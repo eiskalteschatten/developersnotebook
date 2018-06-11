@@ -9,6 +9,7 @@ private:
     GtkWidget *list_view;
     GtkWidget *form_grid;
     GtkListStore *list_store;
+    GtkTreeSelection *select;
 
     // Form
     GtkWidget *project_name_input;
@@ -17,6 +18,8 @@ private:
     GtkWidget *is_complete_checkbox;
 
     friend void save_project(GtkWidget *widget, ProjectsView *pv);
+    static void list_selection_changed(GtkTreeSelection *selection, gpointer data);
+
     void setup_list_store();
     void setup_list_view();
     void append_to_list_store(GtkTreeIter *tree_iter);
