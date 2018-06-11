@@ -27,6 +27,8 @@ enum {
 };
 
 
+// Friends
+
 void save_project(GtkWidget *widget, ProjectsView *pv) {
     // TODO: Get id from selected element in the list view.
     //       If something is selected, pass it to the ProjectsModel constructor, otherwise don't pass any id to create a new entry
@@ -66,6 +68,8 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     pv->select_row_in_list_view(&tree_iter);
 }
 
+
+// Class
 
 ProjectsView::ProjectsView() {
     main_widget = gtk_paned_new(GTK_ORIENTATION_HORIZONTAL);
