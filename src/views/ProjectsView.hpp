@@ -4,13 +4,13 @@
 #include "AbstractView.hpp"
 
 typedef struct {
-    gchar *id;
-    gchar *name;
-    gchar *start_date;
-    gchar *end_date;
+    const gchar *id;
+    const gchar *name;
+    const gchar *start_date;
+    const gchar *end_date;
     bool is_complete;
-    gchar *date_completed;
-    gchar *date_created;
+    const gchar *date_completed;
+    const gchar *date_created;
 } ProjectsRow;
 
 
@@ -34,10 +34,11 @@ private:
     void setup_list_view();
     void append_to_list_store(GtkTreeIter *tree_iter);
     void prepend_to_list_store(GtkTreeIter *tree_iter);
-    void set_list_store(const tableRowMap &row, GtkTreeIter *tree_iter);
+    void set_list_store(const ProjectsRow &row, GtkTreeIter *tree_iter);
     void select_row_in_list_view(GtkTreeIter *tree_iter);
     void setup_form_sidebar();
     void fill_in_sidebar(const ProjectsRow &row);
+    ProjectsRow convert_table_row_map_to_struct(const tableRowMap &map);
 
 public:
     ProjectsView();

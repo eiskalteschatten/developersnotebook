@@ -39,13 +39,15 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     std::string now_str        = std::string(std::ctime(&now_time));
     std::string date_completed = is_complete ? now_str : "";
 
-    tableRowMap row;
-    row["name"]           = std::string(gtk_entry_get_text(GTK_ENTRY(pv->project_name_input)));
-    row["start_date"]     = std::string(gtk_entry_get_text(GTK_ENTRY(pv->start_date_input)));
-    row["end_date"]       = std::string(gtk_entry_get_text(GTK_ENTRY(pv->end_date_input)));
-    row["is_complete"]    = is_complete ? "1" : "0";
-    row["date_completed"] = date_completed;
-    row["date_created"]   = now_str;
+    const ProjectsRow row = {
+        "temp_id",
+        gtk_entry_get_text(GTK_ENTRY(pv->project_name_input)),
+        gtk_entry_get_text(GTK_ENTRY(pv->start_date_input)),
+        gtk_entry_get_text(GTK_ENTRY(pv->end_date_input)),
+        is_complete,
+        date_completed.c_str(),
+        now_str.c_str()
+    };
 
     // if (id) {
     //     ProjectsModel projects_model(id);
@@ -58,9 +60,9 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
         pv->prepend_to_list_store(&tree_iter);
     //}
 
-    projects_model.set_name(row.at("name"));
-    projects_model.set_start_date(row.at("start_date"));
-    projects_model.set_end_date(row.at("end_date"));
+    projects_model.set_name(row.name);
+    projects_model.set_start_date(row.start_date);
+    projects_model.set_end_date(row.end_date);
     projects_model.set_is_complete(is_complete);
     projects_model.set_date_completed(date_completed);
 
@@ -85,7 +87,7 @@ void list_selection_changed(GtkTreeSelection *selection, gpointer data, Projects
                                               //IS_COMPLETE_COLUMN, &is_complete,
                                               -1);
 
-        ProjectsRow row = {
+        const ProjectsRow row = {
             id,
             name,
             start_date,
@@ -141,7 +143,8 @@ void ProjectsView::setup_list_store() {
 
     const tableVector &contents = projects_model.select_all();
 
-    for (auto const &row : contents) {
+    for (auto const &row_map : contents) {
+        const ProjectsRow row = convert_table_row_map_to_struct(row_map);
         append_to_list_store(&tree_iter);
         set_list_store(row, &tree_iter);
     }
@@ -196,16 +199,14 @@ void ProjectsView::prepend_to_list_store(GtkTreeIter *tree_iter) {
     gtk_list_store_prepend(GTK_LIST_STORE(list_store), tree_iter);
 }
 
-void ProjectsView::set_list_store(const tableRowMap &row, GtkTreeIter *tree_iter) {
-    bool is_complete = std::strncmp(row.at("is_complete").c_str(), "0", 1) != 0;
-
-    gtk_list_store_set(GTK_LIST_STORE(list_store), tree_iter, ID_COLUMN, row.at("id").c_str(),
-                                                              NAME_COLUMN, row.at("name").c_str(),
-                                                              START_DATE_COLUMN, row.at("start_date").c_str(),
-                                                              END_DATE_COLUMN, row.at("end_date").c_str(),
-                                                              IS_COMPLETE_COLUMN, is_complete,
-                                                              DATE_COMPLETED_COLUMN, row.at("date_completed").c_str(),
-                                                              DATE_CREATED_COLUMN, row.at("date_created").c_str(),
+void ProjectsView::set_list_store(const ProjectsRow &row, GtkTreeIter *tree_iter) {
+    gtk_list_store_set(GTK_LIST_STORE(list_store), tree_iter, ID_COLUMN, row.id,
+                                                              NAME_COLUMN, row.name,
+                                                              START_DATE_COLUMN, row.start_date,
+                                                              END_DATE_COLUMN, row.end_date,
+                                                              IS_COMPLETE_COLUMN, row.is_complete,
+                                                              DATE_COMPLETED_COLUMN, row.date_completed,
+                                                              DATE_CREATED_COLUMN, row.date_created,
                                                               -1);
 }
 
@@ -294,4 +295,20 @@ void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
     gtk_entry_set_text(GTK_ENTRY(project_name_input), row.name);
     gtk_entry_set_text(GTK_ENTRY(start_date_input), row.start_date);
     gtk_entry_set_text(GTK_ENTRY(end_date_input), row.end_date);
+}
+
+ProjectsRow ProjectsView::convert_table_row_map_to_struct(const tableRowMap &map) {
+    bool is_complete = map.at("is_complete") != "0";
+
+    const ProjectsRow row = {
+        map.at("id").c_str(),
+        map.at("name").c_str(),
+        map.at("start_date").c_str(),
+        map.at("end_date").c_str(),
+        is_complete,
+        map.at("date_completed").c_str(),
+        map.at("date_created").c_str()
+    };
+
+    return row;
 }
