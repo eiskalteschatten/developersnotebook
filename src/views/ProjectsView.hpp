@@ -8,7 +8,7 @@ typedef struct {
     const gchar *name;
     const gchar *start_date;
     const gchar *end_date;
-    bool is_complete;
+    const bool is_complete;
     const gchar *date_completed;
     const gchar *date_created;
 } ProjectsRow;

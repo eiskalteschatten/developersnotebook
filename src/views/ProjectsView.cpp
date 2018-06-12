@@ -72,20 +72,23 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
 
 void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv) {
     GtkTreeIter tree_iter;
-    GtkTreeModel *model = nullptr;
-    gchar *id           = nullptr;
-    gchar *name         = nullptr;
-    gchar *start_date   = nullptr;
-    gchar *end_date     = nullptr;
-    bool is_complete    = false;
+    GtkTreeModel *model   = nullptr;
+    gchar *id             = nullptr;
+    gchar *name           = nullptr;
+    gchar *start_date     = nullptr;
+    gchar *end_date       = nullptr;
+    bool *is_complete_ptr = nullptr;
 
     if (gtk_tree_selection_get_selected(selection, &model, &tree_iter)) {
         gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id,
                                               NAME_COLUMN, &name,
                                               START_DATE_COLUMN, &start_date,
                                               END_DATE_COLUMN, &end_date,
-                                              //IS_COMPLETE_COLUMN, &is_complete,
+                                              IS_COMPLETE_COLUMN, &is_complete_ptr,
                                               -1);
+
+        const bool is_complete = is_complete_ptr ? *is_complete_ptr : FALSE;
+        g_free(is_complete_ptr);
 
         const ProjectsRow row = {
             id,
@@ -295,6 +298,7 @@ void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
     gtk_entry_set_text(GTK_ENTRY(project_name_input), row.name);
     gtk_entry_set_text(GTK_ENTRY(start_date_input), row.start_date);
     gtk_entry_set_text(GTK_ENTRY(end_date_input), row.end_date);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(is_complete_checkbox), row.is_complete);
 }
 
 ProjectsRow ProjectsView::convert_table_row_map_to_struct(const tableRowMap &map) {
