@@ -225,6 +225,7 @@ void ProjectsView::setup_form_sidebar() {
     gtk_grid_set_row_spacing(GTK_GRID(form_grid), grid_spacing);
     gtk_container_set_border_width(GTK_CONTAINER(form_grid), grid_spacing);
 
+
     // Project Name
     GtkWidget *project_name_label = gtk_label_new("Project Name");
     gtk_widget_set_halign(project_name_label, GTK_ALIGN_START);
@@ -275,6 +276,7 @@ void ProjectsView::setup_form_sidebar() {
 
     gtk_grid_insert_row(GTK_GRID(form_grid), 6);
     gtk_grid_attach(GTK_GRID(form_grid), is_complete_checkbox, 0, 6, 1, 1);
+
 
     // Save Button
     GtkWidget *save_button = gtk_button_new_with_label("Save Project");
