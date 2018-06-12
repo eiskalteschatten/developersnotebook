@@ -3,6 +3,16 @@
 
 #include "AbstractView.hpp"
 
+typedef struct {
+    gchar *id;
+    gchar *name;
+    gchar *start_date;
+    gchar *end_date;
+    bool is_complete;
+    gchar *date_completed;
+    gchar *date_created;
+} ProjectsRow;
+
 
 class ProjectsView : public AbstractView {
 private:
@@ -27,7 +37,7 @@ private:
     void set_list_store(const tableRowMap &row, GtkTreeIter *tree_iter);
     void select_row_in_list_view(GtkTreeIter *tree_iter);
     void setup_form_sidebar();
-    void fill_in_sidebar(const tableRowMap &row);
+    void fill_in_sidebar(const ProjectsRow &row);
 
 public:
     ProjectsView();

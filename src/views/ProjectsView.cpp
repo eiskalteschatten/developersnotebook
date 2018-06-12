@@ -85,19 +85,20 @@ void list_selection_changed(GtkTreeSelection *selection, gpointer data, Projects
                                               //IS_COMPLETE_COLUMN, &is_complete,
                                               -1);
 
-        tableRowMap row;
-        row["id"]          = std::string(id);
-        row["name"]        = std::string(name);
-        row["start_date"]  = std::string(start_date);
-        row["end_date"]    = std::string(end_date);
-        row["is_complete"] = is_complete ? "1" : "0";
+        ProjectsRow row = {
+            id,
+            name,
+            start_date,
+            end_date,
+            is_complete
+        };
+
+        pv->fill_in_sidebar(row);
 
         g_free(id);
         g_free(name);
         g_free(start_date);
         g_free(end_date);
-
-        pv->fill_in_sidebar(row);
     }
 }
 
@@ -289,8 +290,8 @@ void ProjectsView::setup_form_sidebar() {
     gtk_grid_attach(GTK_GRID(form_grid), save_button, 0, 7, 1, 1);
 }
 
-void ProjectsView::fill_in_sidebar(const tableRowMap &row) {
-    gtk_entry_set_text(GTK_ENTRY(project_name_input), row.at("name").c_str());
-    gtk_entry_set_text(GTK_ENTRY(start_date_input), row.at("start_date").c_str());
-    gtk_entry_set_text(GTK_ENTRY(end_date_input), row.at("end_date").c_str());
+void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
+    gtk_entry_set_text(GTK_ENTRY(project_name_input), row.name);
+    gtk_entry_set_text(GTK_ENTRY(start_date_input), row.start_date);
+    gtk_entry_set_text(GTK_ENTRY(end_date_input), row.end_date);
 }
