@@ -72,19 +72,19 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
 
 void list_selection_changed(GtkTreeSelection *selection, gpointer data, ProjectsView *pv) {
     GtkTreeIter tree_iter;
-    GtkTreeModel *model;
-    gchar *id;
-    gchar *name;
-    gchar *start_date;
-    gchar *end_date;
-    bool is_complete;
+    GtkTreeModel *model = nullptr;
+    gchar *id = nullptr;
+    gchar *name = nullptr;
+    gchar *start_date = nullptr;
+    gchar *end_date = nullptr;
+    bool is_complete = false;
 
     if (gtk_tree_selection_get_selected(selection, &model, &tree_iter)) {
         gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id,
                                               NAME_COLUMN, &name,
                                               START_DATE_COLUMN, &start_date,
                                               END_DATE_COLUMN, &end_date,
-                                              //IS_COMPLETE_COLUMN, &is_complete,
+                                              IS_COMPLETE_COLUMN, &is_complete,
                                               -1);
 
         const ProjectsRow row = {
