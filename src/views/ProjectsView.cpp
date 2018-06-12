@@ -298,7 +298,7 @@ void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
 }
 
 ProjectsRow ProjectsView::convert_table_row_map_to_struct(const tableRowMap &map) {
-    bool is_complete = map.at("is_complete") != "0";
+    bool is_complete = std::strncmp(map.at("is_complete").c_str(), "0", 1) != 0;
 
     const ProjectsRow row = {
         map.at("id").c_str(),
