@@ -23,6 +23,11 @@ private:
     GtkListStore *list_store;
     GtkTreeSelection *select;
 
+    // Tree View Toolbar
+    GtkWidget *toolbar_box;
+    GtkWidget *new_toolbar_button;
+    GtkWidget *delete_toolbar_button;
+
     // Form
     GtkWidget *project_name_input;
     GtkWidget *start_date_input;

@@ -114,9 +114,12 @@ void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv) {
         g_free(name);
         g_free(start_date);
         g_free(end_date);
+
+        gtk_widget_set_sensitive(pv->delete_toolbar_button, TRUE);
     }
     else {
         pv->empty_sidebar();
+        gtk_widget_set_sensitive(pv->delete_toolbar_button, FALSE);
     }
 }
 
@@ -229,13 +232,19 @@ void ProjectsView::setup_list_view_toolbar() {
 
     gtk_grid_attach(GTK_GRID(list_view_grid), list_scrolled_window, 0, 0, 1, 1);
 
-    GtkWidget *toolbar_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
+    toolbar_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
 
-    GtkWidget *new_toolbar_button = gtk_button_new_from_icon_name("document-new", GTK_ICON_SIZE_SMALL_TOOLBAR);
+    new_toolbar_button = gtk_button_new_from_icon_name("document-new", GTK_ICON_SIZE_SMALL_TOOLBAR);
     g_object_set(new_toolbar_button, "hexpand", FALSE, NULL);
     g_signal_connect(G_OBJECT(new_toolbar_button), "clicked", G_CALLBACK(create_new_project), this);
-
     gtk_box_pack_start(GTK_BOX(toolbar_box), new_toolbar_button, FALSE, FALSE, 0);
+
+    delete_toolbar_button = gtk_button_new_from_icon_name("edit-delete", GTK_ICON_SIZE_SMALL_TOOLBAR);
+    g_object_set(delete_toolbar_button, "hexpand", FALSE, NULL);
+    g_signal_connect(G_OBJECT(delete_toolbar_button), "clicked", G_CALLBACK(delete_project), this);
+    gtk_box_pack_start(GTK_BOX(toolbar_box), delete_toolbar_button, FALSE, FALSE, 0);
+    gtk_widget_set_sensitive(delete_toolbar_button, FALSE);
+
 
     gtk_grid_attach(GTK_GRID(list_view_grid), toolbar_box, 0, 1, 1, 1);
 }
