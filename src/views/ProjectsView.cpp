@@ -35,18 +35,19 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     std::time_t now_time       = std::chrono::system_clock::to_time_t(now);
     std::string now_str        = std::string(std::ctime(&now_time));
     std::string date_completed = is_complete ? now_str : "";
+    int id                     = -1;
     gchar *id_char             = nullptr;
     GtkTreeModel *model        = nullptr;
     GtkTreeIter tree_iter;
 
     if (gtk_tree_selection_get_selected(pv->select, &model, &tree_iter)) {
         gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id_char, -1);
+        id = std::stoi(id_char);
     }
 
-    const int id = std::stoi(id_char);
-    ProjectsModel *projects_model = id ? new ProjectsModel(id) : new ProjectsModel();
+    ProjectsModel *projects_model = id != -1 ? new ProjectsModel(id) : new ProjectsModel();
 
-    if (!id) {
+    if (id == -1) {
         projects_model->set_date_created(now_str);
         pv->prepend_to_list_store(&tree_iter);
     }
