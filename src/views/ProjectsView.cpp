@@ -80,7 +80,6 @@ void delete_project(GtkWidget *widget, ProjectsView *pv) {
 
 void create_new_project(GtkWidget *widget, ProjectsView *pv) {
     gtk_tree_selection_unselect_all(pv->select);
-    pv->empty_sidebar();
     gtk_widget_grab_focus(pv->project_name_input);
 }
 
@@ -115,6 +114,9 @@ void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv) {
         g_free(name);
         g_free(start_date);
         g_free(end_date);
+    }
+    else {
+        pv->empty_sidebar();
     }
 }
 
