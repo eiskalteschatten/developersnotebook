@@ -77,25 +77,22 @@ void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv) {
     gchar *name           = nullptr;
     gchar *start_date     = nullptr;
     gchar *end_date       = nullptr;
-    bool *is_complete_ptr = nullptr;
+    gboolean is_complete;
 
     if (gtk_tree_selection_get_selected(selection, &model, &tree_iter)) {
         gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id,
                                               NAME_COLUMN, &name,
                                               START_DATE_COLUMN, &start_date,
                                               END_DATE_COLUMN, &end_date,
-                                              IS_COMPLETE_COLUMN, &is_complete_ptr,
+                                              IS_COMPLETE_COLUMN, &is_complete,
                                               -1);
-
-        const bool is_complete = is_complete_ptr ? *is_complete_ptr : FALSE;
-        g_free(is_complete_ptr);
 
         const ProjectsRow row = {
             id,
             name,
             start_date,
             end_date,
-            is_complete
+            is_complete != 0
         };
 
         pv->fill_in_sidebar(row);
