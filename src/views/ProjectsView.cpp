@@ -344,7 +344,7 @@ void ProjectsView::setup_form_sidebar() {
 
 
     // Delete Button
-    delete_button = gtk_button_new_with_label("Delete Project");
+    delete_button = gtk_button_new_from_icon_name("edit-delete", GTK_ICON_SIZE_BUTTON);
     gtk_widget_set_halign(delete_button, GTK_ALIGN_END);
     g_object_set(delete_button, "hexpand", TRUE, NULL);
     g_signal_connect(G_OBJECT(delete_button), "clicked", G_CALLBACK(delete_project), this);
