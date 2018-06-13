@@ -120,7 +120,7 @@ ProjectsView::ProjectsView() {
     setup_form_sidebar();
 
     // Attach everything to the panes
-    gtk_paned_add1(GTK_PANED(main_widget), list_view);
+    gtk_paned_pack1(GTK_PANED(main_widget), list_scrolled_window, TRUE, FALSE);
     gtk_paned_pack2(GTK_PANED(main_widget), form_grid, FALSE, FALSE);
 
     empty_sidebar();
@@ -160,6 +160,9 @@ void ProjectsView::setup_list_view() {
     setup_list_store();
 
     list_view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(list_store));
+
+    list_scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+    gtk_container_add(GTK_CONTAINER(list_scrolled_window), list_view);
 
     GtkCellRenderer *text_renderer = gtk_cell_renderer_text_new();
     GtkCellRenderer *toggle_renderer = gtk_cell_renderer_toggle_new();

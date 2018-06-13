@@ -16,6 +16,7 @@ typedef struct {
 
 class ProjectsView : public AbstractView {
 private:
+    GtkWidget *list_scrolled_window;
     GtkWidget *list_view;
     GtkWidget *form_grid;
     GtkListStore *list_store;
