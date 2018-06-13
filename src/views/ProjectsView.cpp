@@ -30,28 +30,29 @@ enum {
 // Friends
 
 void save_project(GtkWidget *widget, ProjectsView *pv) {
-    // TODO: Get id from selected element in the list view.
-    //       If something is selected, pass it to the ProjectsModel constructor, otherwise don't pass any id to create a new entry
-
     bool is_complete           = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(pv->is_complete_checkbox));
     auto now                   = std::chrono::system_clock::now();
     std::time_t now_time       = std::chrono::system_clock::to_time_t(now);
     std::string now_str        = std::string(std::ctime(&now_time));
     std::string date_completed = is_complete ? now_str : "";
+    gchar *id_char             = nullptr;
+    GtkTreeModel *model        = nullptr;
+    GtkTreeIter tree_iter;
 
-    // if (id) {
-    //     ProjectsModel projects_model(id);
-    // }
-    // else {
-        ProjectsModel projects_model;
-        projects_model.set_date_created(now_str);
+    if (gtk_tree_selection_get_selected(pv->select, &model, &tree_iter)) {
+        gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id_char, -1);
+    }
 
-        GtkTreeIter tree_iter;
+    const int id = std::stoi(id_char);
+    ProjectsModel *projects_model = id ? new ProjectsModel(id) : new ProjectsModel();
+
+    if (!id) {
+        projects_model->set_date_created(now_str);
         pv->prepend_to_list_store(&tree_iter);
-    //}
+    }
 
     const ProjectsRow row = {
-        std::to_string(projects_model.get_id()).c_str(),
+        std::to_string(projects_model->get_id()).c_str(),
         gtk_entry_get_text(GTK_ENTRY(pv->project_name_input)),
         gtk_entry_get_text(GTK_ENTRY(pv->start_date_input)),
         gtk_entry_get_text(GTK_ENTRY(pv->end_date_input)),
@@ -60,14 +61,16 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
         now_str.c_str()
     };
 
-    projects_model.set_name(row.name);
-    projects_model.set_start_date(row.start_date);
-    projects_model.set_end_date(row.end_date);
-    projects_model.set_is_complete(is_complete);
-    projects_model.set_date_completed(date_completed);
+    projects_model->set_name(row.name);
+    projects_model->set_start_date(row.start_date);
+    projects_model->set_end_date(row.end_date);
+    projects_model->set_is_complete(is_complete);
+    projects_model->set_date_completed(date_completed);
 
     pv->set_list_store(row, &tree_iter);
     pv->select_row_in_list_view(&tree_iter);
+
+    delete projects_model;
 }
 
 void delete_project(GtkWidget *widget, ProjectsView *pv) {
