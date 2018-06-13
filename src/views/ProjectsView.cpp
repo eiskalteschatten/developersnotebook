@@ -271,6 +271,7 @@ void ProjectsView::setup_form_sidebar() {
 
     form_grid = gtk_grid_new();
     g_object_set(form_grid, "hexpand", TRUE, NULL);
+    gtk_widget_set_size_request(form_grid, 300, -1);
 
     gtk_grid_set_column_spacing(GTK_GRID(form_grid), grid_spacing);
     gtk_grid_set_row_spacing(GTK_GRID(form_grid), grid_spacing);
