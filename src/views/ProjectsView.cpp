@@ -221,8 +221,14 @@ void ProjectsView::setup_list_view_toolbar() {
 
     gtk_grid_attach(GTK_GRID(list_view_grid), list_scrolled_window, 0, 0, 1, 1);
 
-    GtkWidget *temp_button = gtk_button_new_with_label("Create New Project");
-    gtk_grid_attach(GTK_GRID(list_view_grid), temp_button, 0, 1, 1, 1);
+    GtkWidget *toolbar_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
+
+    GtkWidget *new_toolbar_button = gtk_button_new_from_icon_name("document-new", GTK_ICON_SIZE_SMALL_TOOLBAR);
+    g_object_set(new_toolbar_button, "hexpand", FALSE, NULL);
+
+    gtk_box_pack_start(GTK_BOX(toolbar_box), new_toolbar_button, FALSE, FALSE, 0);
+
+    gtk_grid_attach(GTK_GRID(list_view_grid), toolbar_box, 0, 1, 1, 1);
 }
 
 void ProjectsView::append_to_list_store(GtkTreeIter *tree_iter) {
