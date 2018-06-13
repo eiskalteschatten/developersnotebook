@@ -39,16 +39,6 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     std::string now_str        = std::string(std::ctime(&now_time));
     std::string date_completed = is_complete ? now_str : "";
 
-    const ProjectsRow row = {
-        "temp_id",
-        gtk_entry_get_text(GTK_ENTRY(pv->project_name_input)),
-        gtk_entry_get_text(GTK_ENTRY(pv->start_date_input)),
-        gtk_entry_get_text(GTK_ENTRY(pv->end_date_input)),
-        is_complete,
-        date_completed.c_str(),
-        now_str.c_str()
-    };
-
     // if (id) {
     //     ProjectsModel projects_model(id);
     // }
@@ -59,6 +49,16 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
         GtkTreeIter tree_iter;
         pv->prepend_to_list_store(&tree_iter);
     //}
+
+    const ProjectsRow row = {
+        std::to_string(projects_model.get_id()).c_str(),
+        gtk_entry_get_text(GTK_ENTRY(pv->project_name_input)),
+        gtk_entry_get_text(GTK_ENTRY(pv->start_date_input)),
+        gtk_entry_get_text(GTK_ENTRY(pv->end_date_input)),
+        is_complete,
+        date_completed.c_str(),
+        now_str.c_str()
+    };
 
     projects_model.set_name(row.name);
     projects_model.set_start_date(row.start_date);
