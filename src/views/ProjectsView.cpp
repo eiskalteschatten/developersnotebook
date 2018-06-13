@@ -78,6 +78,12 @@ void delete_project(GtkWidget *widget, ProjectsView *pv) {
 
 }
 
+void create_new_project(GtkWidget *widget, ProjectsView *pv) {
+    gtk_tree_selection_unselect_all(pv->select);
+    pv->empty_sidebar();
+    gtk_widget_grab_focus(pv->project_name_input);
+}
+
 void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv) {
     GtkTreeIter tree_iter;
     GtkTreeModel *model   = nullptr;
@@ -225,6 +231,7 @@ void ProjectsView::setup_list_view_toolbar() {
 
     GtkWidget *new_toolbar_button = gtk_button_new_from_icon_name("document-new", GTK_ICON_SIZE_SMALL_TOOLBAR);
     g_object_set(new_toolbar_button, "hexpand", FALSE, NULL);
+    g_signal_connect(G_OBJECT(new_toolbar_button), "clicked", G_CALLBACK(create_new_project), this);
 
     gtk_box_pack_start(GTK_BOX(toolbar_box), new_toolbar_button, FALSE, FALSE, 0);
 

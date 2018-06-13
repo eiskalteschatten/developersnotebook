@@ -33,6 +33,7 @@ private:
 
     friend void save_project(GtkWidget *widget, ProjectsView *pv);
     friend void delete_project(GtkWidget *widget, ProjectsView *pv);
+    friend void create_new_project(GtkWidget *widget, ProjectsView *pv);
     friend void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv);
 
     void setup_list_store();
