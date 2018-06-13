@@ -281,7 +281,7 @@ void ProjectsView::setup_form_sidebar() {
 
 
     // Save Button
-    GtkWidget *save_button = gtk_button_new_with_label("Save Project");
+    save_button = gtk_button_new_with_label("Create New Project");
     gtk_widget_set_halign(save_button, GTK_ALIGN_START);
     g_object_set(save_button, "hexpand", FALSE, NULL);
     g_signal_connect(G_OBJECT(save_button), "clicked", G_CALLBACK(save_project), this);
@@ -296,6 +296,8 @@ void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
     gtk_entry_set_text(GTK_ENTRY(start_date_input), row.start_date);
     gtk_entry_set_text(GTK_ENTRY(end_date_input), row.end_date);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(is_complete_checkbox), row.is_complete);
+
+    gtk_button_set_label(GTK_BUTTON(save_button), "Save Project");
 }
 
 ProjectsRow ProjectsView::convert_table_row_map_to_struct(const tableRowMap &map) {
