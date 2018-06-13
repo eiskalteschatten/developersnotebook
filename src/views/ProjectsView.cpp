@@ -121,10 +121,11 @@ ProjectsView::ProjectsView() {
     gtk_widget_set_valign(main_widget, GTK_ALIGN_FILL);
 
     setup_list_view();
+    setup_list_view_toolbar();
     setup_form_sidebar();
 
     // Attach everything to the panes
-    gtk_paned_pack1(GTK_PANED(main_widget), list_scrolled_window, TRUE, FALSE);
+    gtk_paned_pack1(GTK_PANED(main_widget), list_view_grid, TRUE, FALSE);
     gtk_paned_pack2(GTK_PANED(main_widget), form_grid, FALSE, FALSE);
 
     empty_sidebar();
@@ -166,6 +167,10 @@ void ProjectsView::setup_list_view() {
     list_view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(list_store));
 
     list_scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+    g_object_set(list_scrolled_window, "hexpand", TRUE, NULL);
+    g_object_set(list_scrolled_window, "vexpand", TRUE, NULL);
+    gtk_widget_set_halign(list_scrolled_window, GTK_ALIGN_FILL);
+    gtk_widget_set_valign(list_scrolled_window, GTK_ALIGN_FILL);
     gtk_container_add(GTK_CONTAINER(list_scrolled_window), list_view);
 
     GtkCellRenderer *text_renderer = gtk_cell_renderer_text_new();
@@ -202,6 +207,22 @@ void ProjectsView::setup_list_view() {
 
 
     gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(list_store), SORT_IS_COMPLETE_COLUMN, GTK_SORT_ASCENDING);
+}
+
+void ProjectsView::setup_list_view_toolbar() {
+    list_view_grid = gtk_grid_new();
+    g_object_set(list_view_grid, "hexpand", TRUE, NULL);
+    g_object_set(list_view_grid, "vexpand", TRUE, NULL);
+    gtk_widget_set_halign(list_view_grid, GTK_ALIGN_FILL);
+    gtk_widget_set_valign(list_view_grid, GTK_ALIGN_FILL);
+
+    gtk_grid_insert_row(GTK_GRID(list_view_grid), 0);
+    gtk_grid_insert_row(GTK_GRID(list_view_grid), 1);
+
+    gtk_grid_attach(GTK_GRID(list_view_grid), list_scrolled_window, 0, 0, 1, 1);
+
+    GtkWidget *temp_button = gtk_button_new_with_label("Create New Project");
+    gtk_grid_attach(GTK_GRID(list_view_grid), temp_button, 0, 1, 1, 1);
 }
 
 void ProjectsView::append_to_list_store(GtkTreeIter *tree_iter) {

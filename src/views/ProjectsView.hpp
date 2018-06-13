@@ -16,6 +16,7 @@ typedef struct {
 
 class ProjectsView : public AbstractView {
 private:
+    GtkWidget *list_view_grid;
     GtkWidget *list_scrolled_window;
     GtkWidget *list_view;
     GtkWidget *form_grid;
@@ -36,6 +37,7 @@ private:
 
     void setup_list_store();
     void setup_list_view();
+    void setup_list_view_toolbar();
     void append_to_list_store(GtkTreeIter *tree_iter);
     void prepend_to_list_store(GtkTreeIter *tree_iter);
     void set_list_store(const ProjectsRow &row, GtkTreeIter *tree_iter);
