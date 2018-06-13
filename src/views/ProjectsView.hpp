@@ -27,8 +27,10 @@ private:
     GtkWidget *end_date_input;
     GtkWidget *is_complete_checkbox;
     GtkWidget *save_button;
+    GtkWidget *delete_button;
 
     friend void save_project(GtkWidget *widget, ProjectsView *pv);
+    friend void delete_project(GtkWidget *widget, ProjectsView *pv);
     friend void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv);
 
     void setup_list_store();
@@ -38,6 +40,7 @@ private:
     void set_list_store(const ProjectsRow &row, GtkTreeIter *tree_iter);
     void select_row_in_list_view(GtkTreeIter *tree_iter);
     void setup_form_sidebar();
+    void empty_sidebar();
     void fill_in_sidebar(const ProjectsRow &row);
     ProjectsRow convert_table_row_map_to_struct(const tableRowMap &map);
 

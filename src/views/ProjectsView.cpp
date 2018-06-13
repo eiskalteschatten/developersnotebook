@@ -70,6 +70,10 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     pv->select_row_in_list_view(&tree_iter);
 }
 
+void delete_project(GtkWidget *widget, ProjectsView *pv) {
+
+}
+
 void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv) {
     GtkTreeIter tree_iter;
     GtkTreeModel *model   = nullptr;
@@ -118,6 +122,8 @@ ProjectsView::ProjectsView() {
     // Attach everything to the panes
     gtk_paned_add1(GTK_PANED(main_widget), list_view);
     gtk_paned_pack2(GTK_PANED(main_widget), form_grid, FALSE, FALSE);
+
+    empty_sidebar();
 
     select = gtk_tree_view_get_selection(GTK_TREE_VIEW(list_view));
     gtk_tree_selection_set_mode(select, GTK_SELECTION_SINGLE);
@@ -280,15 +286,50 @@ void ProjectsView::setup_form_sidebar() {
     gtk_grid_attach(GTK_GRID(form_grid), is_complete_checkbox, 0, 6, 1, 1);
 
 
-    // Save Button
+    // Button Grid
+    GtkWidget *button_grid = gtk_grid_new();
+    g_object_set(button_grid, "hexpand", TRUE, NULL);
+    gtk_grid_insert_row(GTK_GRID(button_grid), 0);
+
+
+    // Create New Project / Save Button
     save_button = gtk_button_new_with_label("Create New Project");
     gtk_widget_set_halign(save_button, GTK_ALIGN_START);
     g_object_set(save_button, "hexpand", FALSE, NULL);
     g_signal_connect(G_OBJECT(save_button), "clicked", G_CALLBACK(save_project), this);
 
+    gtk_grid_insert_column(GTK_GRID(button_grid), 0);
+    gtk_grid_attach(GTK_GRID(button_grid), save_button, 0, 0, 1, 1);
 
+
+    // Delete Button
+    delete_button = gtk_button_new_with_label("Delete Project");
+    gtk_widget_set_halign(delete_button, GTK_ALIGN_END);
+    g_object_set(delete_button, "hexpand", TRUE, NULL);
+    g_signal_connect(G_OBJECT(delete_button), "clicked", G_CALLBACK(delete_project), this);
+
+    gtk_grid_insert_column(GTK_GRID(button_grid), 1);
+    gtk_grid_attach(GTK_GRID(button_grid), delete_button, 1, 0, 1, 1);
+
+
+    // Add the button grid to the form grid
     gtk_grid_insert_row(GTK_GRID(form_grid), 7);
-    gtk_grid_attach(GTK_GRID(form_grid), save_button, 0, 7, 1, 1);
+    gtk_grid_attach(GTK_GRID(form_grid), button_grid, 0, 7, 1, 1);
+}
+
+void ProjectsView::empty_sidebar() {
+    const ProjectsRow row = {
+        "",
+        "",
+        "",
+        "",
+        false
+    };
+
+    fill_in_sidebar(row);
+
+    gtk_button_set_label(GTK_BUTTON(save_button), "Create New Project");
+    gtk_widget_set_sensitive(delete_button, FALSE);
 }
 
 void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
@@ -298,6 +339,7 @@ void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(is_complete_checkbox), row.is_complete);
 
     gtk_button_set_label(GTK_BUTTON(save_button), "Save Project");
+    gtk_widget_set_sensitive(delete_button, TRUE);
 }
 
 ProjectsRow ProjectsView::convert_table_row_map_to_struct(const tableRowMap &map) {
