@@ -11,7 +11,7 @@ typedef std::vector<tableRowMap> tableVector;
 
 class AbstractView {
 protected:
-    GtkWindow *main_window;
+    GtkWidget *main_window;
     GtkWidget *main_widget;
 
     static gint sort_by_string(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer data);
@@ -19,7 +19,8 @@ protected:
     void show_error_modal(const gchar *error);
 
 public:
-    AbstractView(GtkWindow *window);
+    AbstractView();
+    AbstractView(GtkWidget *window);
     ~AbstractView();
 
     GtkWidget *get_widget() {return main_widget;}

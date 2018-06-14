@@ -55,7 +55,7 @@ private:
     ProjectsRow convert_table_row_map_to_struct(const tableRowMap &map);
 
 public:
-    ProjectsView(GtkWindow *window);
+    ProjectsView(GtkWidget *window);
     ~ProjectsView();
 
     GtkWidget *get_list_view() {return list_view;}

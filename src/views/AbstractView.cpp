@@ -1,6 +1,8 @@
 #include "AbstractView.hpp"
 
-AbstractView::AbstractView(GtkWindow *window) {
+AbstractView::AbstractView() {}
+
+AbstractView::AbstractView(GtkWidget *window) {
     main_window = window;
 }
 
@@ -54,7 +56,7 @@ gint AbstractView::sort_by_boolean(GtkTreeModel *model, GtkTreeIter *a, GtkTreeI
 
 void AbstractView::show_error_modal(const gchar *error) {
     GtkDialogFlags flags = GTK_DIALOG_DESTROY_WITH_PARENT;
-    GtkWidget *dialog = gtk_message_dialog_new(main_window,
+    GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(main_window),
                                                flags,
                                                GTK_MESSAGE_ERROR,
                                                GTK_BUTTONS_CLOSE,
