@@ -64,7 +64,7 @@ void MainWindow::setup_stack() {
     HomeView *home_view         = new HomeView();
     GtkWidget *home_view_widget = home_view->get_widget();
 
-    ProjectsView *projects_view     = new ProjectsView();
+    ProjectsView *projects_view     = new ProjectsView(window);
     GtkWidget *projects_view_widget = projects_view->get_widget();
 
     // Stack

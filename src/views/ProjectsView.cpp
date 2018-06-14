@@ -148,7 +148,7 @@ void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv) {
 
 // Class
 
-ProjectsView::ProjectsView() {
+ProjectsView::ProjectsView(GtkWindow *window) : AbstractView(window) {
     main_widget = gtk_paned_new(GTK_ORIENTATION_HORIZONTAL);
     gtk_widget_set_halign(main_widget, GTK_ALIGN_FILL);
     gtk_widget_set_valign(main_widget, GTK_ALIGN_FILL);
