@@ -3,14 +3,18 @@
 
 class MainWindow {
 private:
-    MainWindow();
+    GtkWidget *window;
+    GtkWidget *grid;
 
-    static void setup_grid();
-    static void setup_stack();
+    void setup_grid();
+    void setup_stack();
     static void save_window(GtkWidget *window, gpointer user_data);
 
 public:
-    static void activate(GtkApplication *app, gpointer user_data);
+    MainWindow();
+    ~MainWindow();
+
+    static void activate(GtkApplication *app, MainWindow *mw);
 };
 
 #endif /* MainWindow_hpp */

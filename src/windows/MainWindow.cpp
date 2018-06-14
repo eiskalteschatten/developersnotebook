@@ -7,35 +7,41 @@
 #include "../views/ProjectsView.hpp"
 #include "../models/PreferencesModel.hpp"
 
-GtkWidget *window;
-GtkWidget *grid;
 
+MainWindow::MainWindow() {
 
-void MainWindow::activate(GtkApplication *app, gpointer user_data) {
+}
+
+MainWindow::~MainWindow() {
+    g_free(window);
+    g_free(grid);
+}
+
+void MainWindow::activate(GtkApplication *app, MainWindow *mw) {
     PreferencesModel *preferences_model = new PreferencesModel();
     int window_width                    = preferences_model->get_window_width();
     int window_height                   = preferences_model->get_window_height();
     bool window_maximized               = preferences_model->get_window_maximized();
 
-    window = gtk_application_window_new(app);
-    gtk_window_set_title(GTK_WINDOW(window), Constants::application_name.c_str());
-    gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
-    gtk_window_set_default_size(GTK_WINDOW(window), window_width, window_height);
+    mw->window = gtk_application_window_new(app);
+    gtk_window_set_title(GTK_WINDOW(mw->window), Constants::application_name.c_str());
+    gtk_window_set_position(GTK_WINDOW(mw->window), GTK_WIN_POS_CENTER);
+    gtk_window_set_default_size(GTK_WINDOW(mw->window), window_width, window_height);
 
     if (window_maximized) {
-        gtk_window_maximize(GTK_WINDOW(window));
+        gtk_window_maximize(GTK_WINDOW(mw->window));
     }
 
-    g_signal_connect(window, "delete_event", G_CALLBACK(save_window), NULL);
+    g_signal_connect(mw->window, "delete_event", G_CALLBACK(mw->save_window), NULL);
 
-    setup_grid();
-    setup_stack();
+    mw->setup_grid();
+    mw->setup_stack();
 
-    MenuBar *menubar_obj = new MenuBar(window);
+    MenuBar *menubar_obj = new MenuBar(mw->window);
     GtkWidget *menubar   = menubar_obj->get_menu_bar();
-    gtk_grid_attach(GTK_GRID(grid), menubar, 0, 0, 2, 1);
+    gtk_grid_attach(GTK_GRID(mw->grid), menubar, 0, 0, 2, 1);
 
-    gtk_widget_show_all(window);
+    gtk_widget_show_all(mw->window);
 
     menubar_obj->setup_macos_menu_bar();
 }
