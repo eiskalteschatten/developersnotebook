@@ -43,27 +43,31 @@ After building, the binaries can be found in the `build` directory. They can eit
 
 - Home
 - Projects
-- Custom UI theme(s)
 - Preferences
 - Check for updates
 
 
 ### 0.2
 
+- Custom UI theme(s)
 - Ability to have multiple databases and save them wherever the user wants
+
+
+### 0.3
+
 - To dos
 - Issues
 - Updated home
 
 
-### 0.3
+### 0.4
 
 - Tools (color picker/converter, image and file compression, etc)
 - Bookmarks
 - Updated home
 
 
-### 0.4
+### 0.5
 
 - Journal
 - Notes
