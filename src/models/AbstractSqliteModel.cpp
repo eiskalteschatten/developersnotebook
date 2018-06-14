@@ -98,7 +98,7 @@ void AbstractSqliteModel::update_single_int(const std::string insert_column_name
 void AbstractSqliteModel::delete_single() {
     try {
         if (!id) {
-            // TODO: error modal
+            fprintf(stderr, "Could not delete the entry because there was no id!");
             return;
         }
 
