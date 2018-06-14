@@ -76,7 +76,15 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
 }
 
 void delete_project(GtkWidget *widget, ProjectsView *pv) {
-    // TODO: Prompt to make sure the user really wants to delete the row
+    GtkDialogFlags flags = GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT;
+    GtkWidget *dialog    = gtk_dialog_new_with_buttons("Are you sure?",
+                                                       pv->main_window,
+                                                       flags,
+                                                       "Yes",
+                                                       GTK_RESPONSE_ACCEPT,
+                                                       "No",
+                                                       GTK_RESPONSE_REJECT,
+                                                       NULL);
 
     int id              = -1;
     gchar *id_char      = nullptr;

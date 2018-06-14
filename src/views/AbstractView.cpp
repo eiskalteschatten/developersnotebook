@@ -56,12 +56,12 @@ gint AbstractView::sort_by_boolean(GtkTreeModel *model, GtkTreeIter *a, GtkTreeI
 
 void AbstractView::show_error_modal(const gchar *error) {
     GtkDialogFlags flags = GTK_DIALOG_DESTROY_WITH_PARENT;
-    GtkWidget *dialog = gtk_message_dialog_new(GTK_WINDOW(main_window),
-                                               flags,
-                                               GTK_MESSAGE_ERROR,
-                                               GTK_BUTTONS_CLOSE,
-                                               "%s",
-                                               error);
+    GtkWidget *dialog    = gtk_message_dialog_new(GTK_WINDOW(main_window),
+                                                  flags,
+                                                  GTK_MESSAGE_ERROR,
+                                                  GTK_BUTTONS_CLOSE,
+                                                  "%s",
+                                                  error);
     gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
 }
