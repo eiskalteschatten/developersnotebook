@@ -60,6 +60,7 @@ void AbstractView::show_error_modal(const gchar *error) {
                                                flags,
                                                GTK_MESSAGE_ERROR,
                                                GTK_BUTTONS_CLOSE,
+                                               "%s",
                                                error);
     gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);

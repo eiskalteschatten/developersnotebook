@@ -90,7 +90,7 @@ void delete_project(GtkWidget *widget, ProjectsView *pv) {
     }
 
     if (!gtk_tree_selection_get_selected(pv->select, &model, &tree_iter) || id == -1) {
-        // TODO: Show error modal
+        pv->show_error_modal("No project selected.");
         return;
     }
 
