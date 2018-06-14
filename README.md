@@ -43,6 +43,7 @@ After building, the binaries can be found in the `build` directory. They can eit
 
 - Home
 - Projects
+- Custom UI theme(s)
 - Preferences
 - Check for updates
 
@@ -80,7 +81,6 @@ After building, the binaries can be found in the `build` directory. They can eit
 
 ### 2.0
 
-- Custom UI theme?
 - ...
 
 
