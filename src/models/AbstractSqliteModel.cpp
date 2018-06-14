@@ -93,7 +93,32 @@ void AbstractSqliteModel::update_single_text(const std::string insert_column_nam
 
 void AbstractSqliteModel::update_single_int(const std::string insert_column_name, const int &value, bool update_contents) {
     update_single(insert_column_name, std::to_string(value), update_contents);
+}
 
+void AbstractSqliteModel::delete_single() {
+    try {
+        if (!id) {
+            // TODO: error modal
+            return;
+        }
+
+        SqliteConnectionManager connection_manager;
+
+        char *error_message = 0;
+        int connection;
+        std::string sql = "DELETE FROM " + table_schema->table_name +
+                          " WHERE id=" + std::to_string(id) + ";";
+
+        connection = sqlite3_exec(connection_manager.get_db(), sql.c_str(), NULL, 0, &error_message);
+
+        if(connection != SQLITE_OK) {
+            fprintf(stderr, "SQL error: %s\n", error_message);
+            sqlite3_free(error_message);
+        }
+    }
+    catch(const std::exception& e) {
+        fprintf(stderr, "An exception occured while trying to delete from the database: %s\n", e.what());
+    }
 }
 
 void AbstractSqliteModel::select_one() {

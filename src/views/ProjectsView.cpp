@@ -43,6 +43,7 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     if (gtk_tree_selection_get_selected(pv->select, &model, &tree_iter)) {
         gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id_char, -1);
         id = std::stoi(id_char);
+        g_free(id_char);
     }
 
     ProjectsModel *projects_model = id != -1 ? new ProjectsModel(id) : new ProjectsModel();
@@ -75,7 +76,28 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
 }
 
 void delete_project(GtkWidget *widget, ProjectsView *pv) {
+    // TODO: Prompt to make sure the user really wants to delete the row
 
+    int id              = -1;
+    gchar *id_char      = nullptr;
+    GtkTreeModel *model = nullptr;
+    GtkTreeIter tree_iter;
+
+    if (gtk_tree_selection_get_selected(pv->select, &model, &tree_iter)) {
+        gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id_char, -1);
+        id = std::stoi(id_char);
+        g_free(id_char);
+    }
+
+    if (!gtk_tree_selection_get_selected(pv->select, &model, &tree_iter) || id == -1) {
+        // TODO: Show error modal
+        return;
+    }
+
+    ProjectsModel projects_model(id);
+    projects_model.delete_single();
+
+    pv->remove_from_list_store(&tree_iter);
 }
 
 void create_new_project(GtkWidget *widget, ProjectsView *pv) {
@@ -255,6 +277,10 @@ void ProjectsView::append_to_list_store(GtkTreeIter *tree_iter) {
 
 void ProjectsView::prepend_to_list_store(GtkTreeIter *tree_iter) {
     gtk_list_store_prepend(GTK_LIST_STORE(list_store), tree_iter);
+}
+
+void ProjectsView::remove_from_list_store(GtkTreeIter *tree_iter) {
+    gtk_list_store_remove(GTK_LIST_STORE(list_store), tree_iter);
 }
 
 void ProjectsView::set_list_store(const ProjectsRow &row, GtkTreeIter *tree_iter) {

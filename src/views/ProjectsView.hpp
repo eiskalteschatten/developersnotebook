@@ -46,6 +46,7 @@ private:
     void setup_list_view_toolbar();
     void append_to_list_store(GtkTreeIter *tree_iter);
     void prepend_to_list_store(GtkTreeIter *tree_iter);
+    void remove_from_list_store(GtkTreeIter *tree_iter);
     void set_list_store(const ProjectsRow &row, GtkTreeIter *tree_iter);
     void select_row_in_list_view(GtkTreeIter *tree_iter);
     void setup_form_sidebar();

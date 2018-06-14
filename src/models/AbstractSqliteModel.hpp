@@ -21,6 +21,7 @@ protected:
 
     int id;
 
+    void insert_new_row();
     void update_single(const std::string insert_column_name, const std::string &value, bool update_contents);
     void update_single_text(const std::string insert_column_name, const std::string &value, bool update_contents);
     void update_single_int(const std::string insert_column_name, const int &value, bool update_contents);
@@ -30,7 +31,7 @@ public:
     AbstractSqliteModel(const int &select_id);
     ~AbstractSqliteModel();
 
-    void insert_new_row();
+    void delete_single();
     void select_one();
     tableVector const& select_all();
 
