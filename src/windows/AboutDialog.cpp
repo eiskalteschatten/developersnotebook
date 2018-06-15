@@ -12,6 +12,30 @@
 #include "../constants.hpp"
 
 
+const char *get_icon_path() {
+    char cwd[1024];
+    getcwd(cwd, sizeof(cwd));
+    const std::string path = Constants::path_to_resources + "/images/icon128x128.svg";
+
+    return std::strcat(cwd, path.c_str());
+}
+
+const char *get_icon_path_mac() {
+    #ifdef __APPLE__
+        CFURLRef file_url_ref = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("icon128x128"), CFSTR("svg"), NULL);
+
+        if (file_url_ref == NULL) {
+            return get_icon_path();
+        }
+
+        CFStringRef path                 = CFURLCopyFileSystemPath(file_url_ref, kCFURLPOSIXPathStyle);
+        CFStringEncoding encoding_method = CFStringGetSystemEncoding();
+        CFRelease(file_url_ref);
+
+        return CFStringGetCStringPtr(path, encoding_method);
+    #endif
+}
+
 void AboutDialog::activate(GtkWidget *menu_item, GtkWidget *main_window) {
     const std::string copyright = "(c) Alex Seifert 2018";
     const std::string comments  = "A digital notebook for developers";
@@ -20,16 +44,9 @@ void AboutDialog::activate(GtkWidget *menu_item, GtkWidget *main_window) {
     const char *icon_path = nullptr;
 
     #ifdef __APPLE__
-        CFURLRef file_url_ref            = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("icon128x128"), CFSTR("svg"), NULL);
-        CFStringRef path                 = CFURLCopyFileSystemPath(file_url_ref, kCFURLPOSIXPathStyle);
-        CFStringEncoding encoding_method = CFStringGetSystemEncoding();
-        icon_path                        = CFStringGetCStringPtr(path, encoding_method);
-        CFRelease(file_url_ref);
+        icon_path = get_icon_path_mac();
     #else
-        char cwd[1024];
-        getcwd(cwd, sizeof(cwd));
-        const std::string path = Constants::path_to_resources + "/images/icon128x128.svg";
-        icon_path              = std::strcat(cwd, path.c_str());
+        icon_path = get_icon_path();
     #endif
 
     std::ifstream ifs(icon_path);
