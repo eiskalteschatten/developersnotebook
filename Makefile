@@ -86,3 +86,4 @@ create-mac-bundle: all
 	@cp ./$(BIN_DIR)/$(TARGET) ./$(BIN_DIR)/$(MAC_BUNDLE)/Contents/MacOS/.
 	@cp ./resources/macos/Info.plist ./$(BIN_DIR)/$(MAC_BUNDLE)/Contents/.
 	@cp ./resources/macos/icon.icns ./$(BIN_DIR)/$(MAC_BUNDLE)/Contents/Resources/.
+	@cp ./resources/images/* ./$(BIN_DIR)/$(MAC_BUNDLE)/Contents/Resources/.

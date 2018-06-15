@@ -4,6 +4,10 @@
 #include <fstream>
 #include <gtk/gtk.h>
 
+#ifdef __APPLE__
+    #include <CoreFoundation/CoreFoundation.h>
+#endif
+
 #include "AboutDialog.hpp"
 #include "../constants.hpp"
 
@@ -13,10 +17,20 @@ void AboutDialog::activate(GtkWidget *menu_item, GtkWidget *main_window) {
     const std::string comments  = "A digital notebook for developers";
     const std::string website   = "https://www.alexseifert.com";
 
-    char cwd[1024];
-    getcwd(cwd, sizeof(cwd));
+    const char *icon_path = nullptr;
 
-    const char *icon_path = std::strcat(cwd, "/resources/images/icon128x128.svg");
+    #ifdef __APPLE__
+        CFURLRef file_url_ref            = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("icon128x128"), CFSTR("svg"), NULL);
+        CFStringRef path                 = CFURLCopyFileSystemPath(file_url_ref, kCFURLPOSIXPathStyle);
+        CFStringEncoding encoding_method = CFStringGetSystemEncoding();
+        icon_path                        = CFStringGetCStringPtr(path, encoding_method);
+        CFRelease(file_url_ref);
+    #else
+        char cwd[1024];
+        getcwd(cwd, sizeof(cwd));
+        const std::string path = Constants::path_to_resources + "/icon128x128.svg";
+        icon_path              = std::strcat(cwd, path.c_str());
+    #endif
 
     std::ifstream ifs(icon_path);
     std::string icon_svg_content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
