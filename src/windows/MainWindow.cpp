@@ -1,3 +1,4 @@
+#include <cstring>
 #include <gtk/gtk.h>
 
 #include "MainWindow.hpp"
@@ -23,10 +24,16 @@ void MainWindow::activate(GtkApplication *app, MainWindow *mw) {
     int window_height                   = preferences_model->get_window_height();
     bool window_maximized               = preferences_model->get_window_maximized();
 
+    char cwd[1024];
+    getcwd(cwd, sizeof(cwd));
+
+    const char *icon_path = std::strcat(cwd, Constants::application_icon_path);
+
     mw->window = gtk_application_window_new(app);
     gtk_window_set_title(GTK_WINDOW(mw->window), Constants::application_name.c_str());
     gtk_window_set_position(GTK_WINDOW(mw->window), GTK_WIN_POS_CENTER);
     gtk_window_set_default_size(GTK_WINDOW(mw->window), window_width, window_height);
+    gtk_window_set_icon_from_file(GTK_WINDOW(mw->window), icon_path, NULL);
 
     if (window_maximized) {
         gtk_window_maximize(GTK_WINDOW(mw->window));
