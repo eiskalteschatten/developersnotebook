@@ -76,36 +76,59 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
 }
 
 void delete_project(GtkWidget *widget, ProjectsView *pv) {
-    GtkDialogFlags flags = GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT;
-    GtkWidget *dialog    = gtk_dialog_new_with_buttons("Are you sure?",
-                                                       pv->main_window,
+    GtkWidget *image = gtk_image_new_from_icon_name("dialog-warning", GTK_ICON_SIZE_DIALOG);
+    GtkWidget *label = gtk_label_new("Are you sure you want to delete the selected project?");
+    GtkWidget *hbox  = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+
+    gtk_container_set_border_width(GTK_CONTAINER(hbox), 10);
+    gtk_box_pack_start(GTK_BOX(hbox), image, FALSE, FALSE, 0);
+    gtk_box_pack_end(GTK_BOX(hbox), label, TRUE, FALSE, 0);
+
+    GtkDialogFlags flags = GTK_DIALOG_DESTROY_WITH_PARENT;
+    GtkWidget *dialog    = gtk_dialog_new_with_buttons("",
+                                                       GTK_WINDOW(pv->main_window),
                                                        flags,
-                                                       "Yes",
+                                                       "Delete Project",
                                                        GTK_RESPONSE_ACCEPT,
-                                                       "No",
+                                                       "Cancel",
                                                        GTK_RESPONSE_REJECT,
                                                        NULL);
 
-    int id              = -1;
-    gchar *id_char      = nullptr;
-    GtkTreeModel *model = nullptr;
-    GtkTreeIter tree_iter;
+    GtkWidget *content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
+    gtk_box_pack_start(GTK_BOX(content_area), hbox, TRUE, FALSE, 0);
+    gtk_widget_show_all(dialog);
 
-    if (gtk_tree_selection_get_selected(pv->select, &model, &tree_iter)) {
-        gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id_char, -1);
-        id = std::stoi(id_char);
-        g_free(id_char);
+    int result = gtk_dialog_run(GTK_DIALOG(dialog));
+
+    gtk_widget_destroy(dialog);
+
+    switch(result) {
+        case GTK_RESPONSE_ACCEPT: {
+            int id              = -1;
+            gchar *id_char      = nullptr;
+            GtkTreeModel *model = nullptr;
+            GtkTreeIter tree_iter;
+
+            if (gtk_tree_selection_get_selected(pv->select, &model, &tree_iter)) {
+                gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id_char, -1);
+                id = std::stoi(id_char);
+                g_free(id_char);
+            }
+
+            if (!gtk_tree_selection_get_selected(pv->select, &model, &tree_iter) || id == -1) {
+                pv->show_error_modal("No project selected.");
+                break;
+            }
+
+            ProjectsModel projects_model(id);
+            projects_model.delete_single();
+
+            pv->remove_from_list_store(&tree_iter);
+
+        } break;
+        default:
+        break;
     }
-
-    if (!gtk_tree_selection_get_selected(pv->select, &model, &tree_iter) || id == -1) {
-        pv->show_error_modal("No project selected.");
-        return;
-    }
-
-    ProjectsModel projects_model(id);
-    projects_model.delete_single();
-
-    pv->remove_from_list_store(&tree_iter);
 }
 
 void create_new_project(GtkWidget *widget, ProjectsView *pv) {
