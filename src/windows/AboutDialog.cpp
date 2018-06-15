@@ -33,6 +33,8 @@ std::string get_icon_path_mac() {
         CFRelease(file_url_ref);
 
         return std::string(CFStringGetCStringPtr(path, encoding_method));
+    #else
+        return get_icon_path();
     #endif
 }
 
