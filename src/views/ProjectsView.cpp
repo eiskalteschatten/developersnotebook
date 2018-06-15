@@ -60,7 +60,7 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
 
     gtk_calendar_get_date(GTK_CALENDAR(pv->start_date_input), &year, &month, &day);
 
-    start_date_tm.tm_year = year;
+    start_date_tm.tm_year = year - 1900;
     start_date_tm.tm_mon  = month;
     start_date_tm.tm_mday = day;
 
