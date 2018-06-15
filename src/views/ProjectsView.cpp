@@ -34,9 +34,9 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     GtkTreeIter tree_iter;
 
     // Now datetime object
-    auto now            = std::time(nullptr);
-    struct tm *now_tm   = std::localtime(&now);
-    std::string now_str = pv->format_date_time(now_tm);
+    auto now               = std::time(nullptr);
+    struct std::tm *now_tm = std::localtime(&now);
+    std::string now_str    = pv->format_date_time(now_tm);
 
     // Form values
     int id                     = -1;
@@ -456,8 +456,6 @@ void ProjectsView::empty_sidebar() {
 
     fill_in_sidebar(row);
 
-    gtk_calendar_select_day(GTK_CALENDAR(start_date_input), 0);
-
     gtk_button_set_label(GTK_BUTTON(save_button), "Create New Project");
     gtk_widget_set_sensitive(delete_button, FALSE);
 }
@@ -468,8 +466,15 @@ void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(is_complete_checkbox), row.is_complete);
 
     if (row.start_date && row.start_date[0]) {
-        gtk_calendar_select_month(GTK_CALENDAR(start_date_input), 10, 2025);
-        gtk_calendar_select_day(GTK_CALENDAR(start_date_input), 10);
+        std::string start_date_str = std::string(row.start_date);
+        std::tm start_date_tm      = get_date_from_string(&start_date_str);
+        guint year                 = start_date_tm.tm_year + 1900;
+
+        gtk_calendar_select_month(GTK_CALENDAR(start_date_input), start_date_tm.tm_mon, year);
+        gtk_calendar_select_day(GTK_CALENDAR(start_date_input), start_date_tm.tm_mday);
+    }
+    else {
+        gtk_calendar_select_day(GTK_CALENDAR(start_date_input), 0);
     }
 
     gtk_button_set_label(GTK_BUTTON(save_button), "Save Project");

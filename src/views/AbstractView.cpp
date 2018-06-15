@@ -60,7 +60,7 @@ gint AbstractView::sort_by_boolean(GtkTreeModel *model, GtkTreeIter *a, GtkTreeI
 }
 
 std::string AbstractView::format_date(const guint *year, const guint *month, const guint *day) {
-    struct tm date_tm = {0};
+    std::tm date_tm = {};
 
     date_tm.tm_year = *year - 1900;
     date_tm.tm_mon  = *month;
@@ -69,16 +69,23 @@ std::string AbstractView::format_date(const guint *year, const guint *month, con
     return format_date(&date_tm);
 }
 
-std::string AbstractView::format_date(const tm *date_tm) {
+std::string AbstractView::format_date(const std::tm *date_tm) {
     std::stringstream ss;
     ss << std::put_time(date_tm, Constants::default_date_format.c_str());
     return ss.str();
 }
 
-std::string AbstractView::format_date_time(const tm *date_tm) {
+std::string AbstractView::format_date_time(const std::tm *date_tm) {
     std::stringstream ss;
     ss << std::put_time(date_tm, Constants::default_date_time_format.c_str());
     return ss.str();
+}
+
+std::tm AbstractView::get_date_from_string(std::string *date_str) {
+    std::tm date_tm = {};
+    std::stringstream ss(*date_str);
+    ss >> std::get_time(&date_tm, Constants::default_date_format.c_str());
+    return date_tm;
 }
 
 void AbstractView::show_error_modal(const gchar *error) {
