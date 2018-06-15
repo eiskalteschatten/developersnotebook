@@ -57,7 +57,7 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
 
     gtk_calendar_get_date(GTK_CALENDAR(pv->start_date_input), &year, &month, &day);
 
-    std::string start_date_str = pv->format_date(&year, &month, &day);
+    std::string start_date_str = day == 0 ? "" : pv->format_date(&year, &month, &day);
 
     // Start saving
     if (gtk_tree_selection_get_selected(pv->select, &model, &tree_iter)) {
@@ -456,7 +456,7 @@ void ProjectsView::empty_sidebar() {
 
     fill_in_sidebar(row);
 
-    gtk_calendar_clear_marks(GTK_CALENDAR(start_date_input));
+    gtk_calendar_select_day(GTK_CALENDAR(start_date_input), 0);
 
     gtk_button_set_label(GTK_BUTTON(save_button), "Create New Project");
     gtk_widget_set_sensitive(delete_button, FALSE);
