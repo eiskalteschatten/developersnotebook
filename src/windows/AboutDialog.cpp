@@ -15,11 +15,10 @@ void AboutDialog::activate() {
     char cwd[1024];
     getcwd(cwd, sizeof(cwd));
 
-    const gchar *icon_path = std::strcat(cwd, "/resources/images/icon.png");
+    const char *icon_path = std::strcat(cwd, "/resources/images/icon.png");
 
     GError *error;
     GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file(icon_path, &error);
-
     GtkWidget *dialog = gtk_about_dialog_new();
 
     gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
