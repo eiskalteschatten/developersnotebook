@@ -12,15 +12,15 @@
 #include "../constants.hpp"
 
 
-const char *get_icon_path() {
+std::string get_icon_path() {
     char cwd[1024];
     getcwd(cwd, sizeof(cwd));
     const std::string path = Constants::path_to_resources + "/images/icon128x128.svg";
 
-    return std::strcat(cwd, path.c_str());
+    return std::string(std::strcat(cwd, path.c_str()));
 }
 
-const char *get_icon_path_mac() {
+std::string get_icon_path_mac() {
     #ifdef __APPLE__
         CFURLRef file_url_ref = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("icon128x128"), CFSTR("svg"), NULL);
 
@@ -32,7 +32,7 @@ const char *get_icon_path_mac() {
         CFStringEncoding encoding_method = CFStringGetSystemEncoding();
         CFRelease(file_url_ref);
 
-        return CFStringGetCStringPtr(path, encoding_method);
+        return std::string(CFStringGetCStringPtr(path, encoding_method));
     #endif
 }
 
@@ -41,15 +41,15 @@ void AboutDialog::activate(GtkWidget *menu_item, GtkWidget *main_window) {
     const std::string comments  = "A digital notebook for developers";
     const std::string website   = "https://www.alexseifert.com";
 
-    const char *icon_path = nullptr;
+    std::string icon_path_str;
 
     #ifdef __APPLE__
-        icon_path = get_icon_path_mac();
+        icon_path_str = get_icon_path_mac();
     #else
-        icon_path = get_icon_path();
+        icon_path_str = get_icon_path();
     #endif
 
-    std::ifstream ifs(icon_path);
+    std::ifstream ifs(icon_path_str.c_str());
     std::string icon_svg_content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
 
     GInputStream *stream = g_memory_input_stream_new_from_data(icon_svg_content.c_str(), -1, g_free);
