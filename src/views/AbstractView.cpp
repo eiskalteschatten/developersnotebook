@@ -105,6 +105,8 @@ void AbstractView::show_error_modal(const gchar *error) {
                                                        GTK_RESPONSE_OK,
                                                        NULL);
 
+    gtk_container_set_border_width(GTK_CONTAINER(dialog), 10);
+
     GtkWidget *content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
     gtk_box_pack_start(GTK_BOX(content_area), hbox, TRUE, FALSE, 0);
     gtk_widget_show_all(dialog);
