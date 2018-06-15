@@ -65,8 +65,18 @@ std::string AbstractView::format_date(const guint *year, const guint *month, con
     date_tm.tm_mon  = *month;
     date_tm.tm_mday = *day;
 
+    return format_date(&date_tm);
+}
+
+std::string AbstractView::format_date(const tm *date_tm) {
     std::stringstream ss;
-    ss << std::put_time(&date_tm, "%a, %d %B %Y");
+    ss << std::put_time(date_tm, "%a, %d %B %Y");
+    return ss.str();
+}
+
+std::string AbstractView::format_date_time(const tm *date_tm) {
+    std::stringstream ss;
+    ss << std::put_time(date_tm, "%a, %d %B %Y %T");
     return ss.str();
 }
 

@@ -34,9 +34,11 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     GtkTreeIter tree_iter;
 
     // Now datetime object
-    auto now             = std::chrono::system_clock::now();
-    std::time_t now_time = std::chrono::system_clock::to_time_t(now);
-    std::string now_str  = std::string(std::ctime(&now_time));
+    auto now            = std::time(nullptr);
+    struct tm *now_tm   = std::localtime(&now);
+    std::string now_str = pv->format_date_time(now_tm);
+
+    delete now_tm;
 
     // Form values
     int id                     = -1;
@@ -144,7 +146,6 @@ void delete_project(GtkWidget *widget, ProjectsView *pv) {
             projects_model.delete_single();
 
             pv->remove_from_list_store(&tree_iter);
-
         } break;
         default:
         break;

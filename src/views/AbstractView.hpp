@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <ctime>
 #include <gtk/gtk.h>
 
 typedef std::map<std::string, std::string> tableRowMap;
@@ -19,6 +20,8 @@ protected:
     static gint sort_by_boolean(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer data);
 
     std::string format_date(const guint *year, const guint *month, const guint *day);
+    std::string format_date(const tm *date_tm);
+    std::string format_date_time(const tm *date_tm);
     void show_error_modal(const gchar *error);
 
 public:
