@@ -308,12 +308,16 @@ void ProjectsView::setup_list_view_toolbar() {
 
     toolbar_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
 
+    // New button
     new_toolbar_button = gtk_button_new_from_icon_name("document-new", GTK_ICON_SIZE_SMALL_TOOLBAR);
+    gtk_button_set_relief(GTK_BUTTON(new_toolbar_button), GTK_RELIEF_NONE);
     g_object_set(new_toolbar_button, "hexpand", FALSE, NULL);
     g_signal_connect(G_OBJECT(new_toolbar_button), "clicked", G_CALLBACK(create_new_project), this);
     gtk_box_pack_start(GTK_BOX(toolbar_box), new_toolbar_button, FALSE, FALSE, 0);
 
+    // Delete button
     delete_toolbar_button = gtk_button_new_from_icon_name("edit-delete", GTK_ICON_SIZE_SMALL_TOOLBAR);
+     gtk_button_set_relief(GTK_BUTTON(delete_toolbar_button), GTK_RELIEF_NONE);
     g_object_set(delete_toolbar_button, "hexpand", FALSE, NULL);
     g_signal_connect(G_OBJECT(delete_toolbar_button), "clicked", G_CALLBACK(delete_project), this);
     gtk_box_pack_start(GTK_BOX(toolbar_box), delete_toolbar_button, FALSE, FALSE, 0);
