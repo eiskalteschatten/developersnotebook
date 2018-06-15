@@ -55,13 +55,26 @@ gint AbstractView::sort_by_boolean(GtkTreeModel *model, GtkTreeIter *a, GtkTreeI
 }
 
 void AbstractView::show_error_modal(const gchar *error) {
+    GtkWidget *image = gtk_image_new_from_icon_name("dialog-error", GTK_ICON_SIZE_DIALOG);
+    GtkWidget *label = gtk_label_new(error);
+    GtkWidget *hbox  = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
+
+    gtk_container_set_border_width(GTK_CONTAINER(hbox), 10);
+    gtk_box_pack_start(GTK_BOX(hbox), image, FALSE, FALSE, 0);
+    gtk_box_pack_end(GTK_BOX(hbox), label, TRUE, FALSE, 0);
+
     GtkDialogFlags flags = GTK_DIALOG_DESTROY_WITH_PARENT;
-    GtkWidget *dialog    = gtk_message_dialog_new(GTK_WINDOW(main_window),
-                                                  flags,
-                                                  GTK_MESSAGE_ERROR,
-                                                  GTK_BUTTONS_CLOSE,
-                                                  "%s",
-                                                  error);
+    GtkWidget *dialog    = gtk_dialog_new_with_buttons("",
+                                                       GTK_WINDOW(main_window),
+                                                       flags,
+                                                       "OK",
+                                                       GTK_RESPONSE_OK,
+                                                       NULL);
+
+    GtkWidget *content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
+    gtk_box_pack_start(GTK_BOX(content_area), hbox, TRUE, FALSE, 0);
+    gtk_widget_show_all(dialog);
+
     gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
 }
