@@ -114,7 +114,7 @@ void MenuBar::setup_help_menu() {
     // Setup menu items
     gtk_menu_shell_append(GTK_MENU_SHELL(help_menu), check_for_updates_mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(help_menu), about_mi);
-    g_signal_connect(G_OBJECT(about_mi), "activate", G_CALLBACK(AboutDialog::activate), NULL);
+    g_signal_connect(G_OBJECT(about_mi), "activate", G_CALLBACK(AboutDialog::activate), window);
 
     // Add the menu to the menu shell
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), help_mi);

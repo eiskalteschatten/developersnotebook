@@ -7,7 +7,7 @@
 #include "../constants.hpp"
 
 
-void AboutDialog::activate() {
+void AboutDialog::activate(GtkWidget *menu_item, GtkWidget *main_window) {
     const std::string copyright = "(c) Alex Seifert 2018";
     const std::string comments  = "A digital notebook for developers";
     const std::string website   = "https://www.alexseifert.com";
@@ -21,6 +21,7 @@ void AboutDialog::activate() {
     GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file(icon_path, &error);
     GtkWidget *dialog = gtk_about_dialog_new();
 
+    gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(main_window));
     gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
     gtk_window_set_icon_from_file(GTK_WINDOW(dialog), icon_path, NULL);
 
@@ -30,6 +31,7 @@ void AboutDialog::activate() {
     gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dialog), comments.c_str());
     gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(dialog), website.c_str());
 
+    gtk_about_dialog_set_logo_icon_name(GTK_ABOUT_DIALOG(dialog), NULL);
     gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(dialog), pixbuf);
     g_object_unref(pixbuf);
 
