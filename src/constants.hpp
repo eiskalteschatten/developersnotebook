@@ -19,7 +19,7 @@ namespace Constants {
     const std::string default_date_format      = "%a, %d %B %Y";
     const std::string default_date_time_format = default_date_format + " %T";
 
-    const char *application_icon_path = "/resources/images/icon.png";
+    const std::string application_icon_path = "/resources/images/icon.png";
 }
 
 #endif /* Constants_hpp */

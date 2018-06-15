@@ -27,7 +27,7 @@ void MainWindow::activate(GtkApplication *app, MainWindow *mw) {
     char cwd[1024];
     getcwd(cwd, sizeof(cwd));
 
-    const char *icon_path = std::strcat(cwd, Constants::application_icon_path);
+    const char *icon_path = std::strcat(cwd, Constants::application_icon_path.c_str());
 
     mw->window = gtk_application_window_new(app);
     gtk_window_set_title(GTK_WINDOW(mw->window), Constants::application_name.c_str());
