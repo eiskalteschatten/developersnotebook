@@ -30,22 +30,42 @@ enum {
 // Friends
 
 void save_project(GtkWidget *widget, ProjectsView *pv) {
-    bool is_complete           = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(pv->is_complete_checkbox));
-    auto now                   = std::chrono::system_clock::now();
-    std::time_t now_time       = std::chrono::system_clock::to_time_t(now);
-    std::string now_str        = std::string(std::ctime(&now_time));
-    const gchar *name          = gtk_entry_get_text(GTK_ENTRY(pv->project_name_input));
-    std::string date_completed = is_complete ? now_str : "";
+    GtkTreeModel *model = nullptr;
+    GtkTreeIter tree_iter;
+
+    // Now datetime object
+    auto now             = std::chrono::system_clock::now();
+    std::time_t now_time = std::chrono::system_clock::to_time_t(now);
+    std::string now_str  = std::string(std::ctime(&now_time));
+
+    // Form values
     int id                     = -1;
     gchar *id_char             = nullptr;
-    GtkTreeModel *model        = nullptr;
-    GtkTreeIter tree_iter;
+    bool is_complete           = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(pv->is_complete_checkbox));
+    const gchar *name          = gtk_entry_get_text(GTK_ENTRY(pv->project_name_input));
+    std::string date_completed = is_complete ? now_str : "";
 
     if (name && !name[0]) {
         pv->show_error_modal("You must enter a project name.");
         return;
     }
 
+    // Start date calendar values
+    struct tm start_date_tm = {0};
+    guint year;
+    guint month;
+    guint day;
+
+    gtk_calendar_get_date(GTK_CALENDAR(pv->start_date_input), &year, &month, &day);
+
+    start_date_tm.tm_year = year;
+    start_date_tm.tm_mon  = month;
+    start_date_tm.tm_mday = day;
+
+    gchar *start_date_gchar = nullptr;
+    std::strftime(start_date_gchar, 1000, "%a, %d %B %Y", &start_date_tm);
+
+    // Start saving
     if (gtk_tree_selection_get_selected(pv->select, &model, &tree_iter)) {
         gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id_char, -1);
         id = std::stoi(id_char);
@@ -62,12 +82,14 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     const ProjectsRow row = {
         std::to_string(projects_model->get_id()).c_str(),
         name,
-        gtk_entry_get_text(GTK_ENTRY(pv->start_date_input)),
+        start_date_gchar,
         gtk_entry_get_text(GTK_ENTRY(pv->end_date_input)),
         is_complete,
         date_completed.c_str(),
         now_str.c_str()
     };
+
+    g_free(start_date_gchar);
 
     projects_model->set_name(row.name);
     projects_model->set_start_date(row.start_date);
@@ -368,10 +390,9 @@ void ProjectsView::setup_form_sidebar() {
     GtkWidget *start_date_label = gtk_label_new("Start Date");
     gtk_widget_set_halign(start_date_label, GTK_ALIGN_START);
 
-    start_date_input = gtk_entry_new();
+    start_date_input = gtk_calendar_new();
     g_object_set(start_date_input, "hexpand", TRUE, NULL);
     gtk_widget_set_margin_bottom(start_date_input, field_margin_bottom);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(start_date_input), placeholder_date);
 
     gtk_grid_insert_row(GTK_GRID(form_grid), 2);
     gtk_grid_insert_row(GTK_GRID(form_grid), 3);
@@ -444,15 +465,21 @@ void ProjectsView::empty_sidebar() {
 
     fill_in_sidebar(row);
 
+    gtk_calendar_clear_marks(GTK_CALENDAR(start_date_input));
+
     gtk_button_set_label(GTK_BUTTON(save_button), "Create New Project");
     gtk_widget_set_sensitive(delete_button, FALSE);
 }
 
 void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
     gtk_entry_set_text(GTK_ENTRY(project_name_input), row.name);
-    gtk_entry_set_text(GTK_ENTRY(start_date_input), row.start_date);
     gtk_entry_set_text(GTK_ENTRY(end_date_input), row.end_date);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(is_complete_checkbox), row.is_complete);
+
+    if (row.start_date && row.start_date[0]) {
+        gtk_calendar_select_month(GTK_CALENDAR(start_date_input), 10, 2025);
+        gtk_calendar_select_day(GTK_CALENDAR(start_date_input), 10);
+    }
 
     gtk_button_set_label(GTK_BUTTON(save_button), "Save Project");
     gtk_widget_set_sensitive(delete_button, TRUE);
