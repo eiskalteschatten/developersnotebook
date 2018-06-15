@@ -114,3 +114,14 @@ void AbstractView::show_error_modal(const gchar *error) {
     gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
 }
+
+void AbstractView::reset_calender(GtkWidget *calendar) {
+    auto now               = std::time(nullptr);
+    struct std::tm *now_tm = std::localtime(&now);
+    guint year             = now_tm->tm_year + 1900;
+
+    gtk_calendar_select_month(GTK_CALENDAR(calendar), now_tm->tm_mon, year);
+    gtk_calendar_select_day(GTK_CALENDAR(calendar), now_tm->tm_mday);
+
+    gtk_calendar_select_day(GTK_CALENDAR(calendar), 0);
+}

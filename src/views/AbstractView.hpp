@@ -25,6 +25,7 @@ protected:
     static std::tm get_date_from_string(std::string *date_str);
 
     void show_error_modal(const gchar *error);
+    void reset_calender(GtkWidget *calendar);
 
 public:
     AbstractView();

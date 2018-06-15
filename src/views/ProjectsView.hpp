@@ -31,6 +31,7 @@ private:
     // Form
     GtkWidget *project_name_input;
     GtkWidget *start_date_input;
+    GtkWidget *start_date_clear_button;
     GtkWidget *end_date_input;
     GtkWidget *is_complete_checkbox;
     GtkWidget *save_button;
@@ -40,6 +41,7 @@ private:
     friend void delete_project(GtkWidget *widget, ProjectsView *pv);
     friend void create_new_project(GtkWidget *widget, ProjectsView *pv);
     friend void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv);
+    friend void clear_start_date_selection(GtkWidget *widget, ProjectsView *pv);
 
     void setup_list_store();
     void setup_list_view();
