@@ -1,6 +1,7 @@
 #include <string>
 #include <cstring>
 #include <unistd.h>
+#include <fstream>
 #include <gtk/gtk.h>
 
 #include "AboutDialog.hpp"
@@ -15,10 +16,14 @@ void AboutDialog::activate(GtkWidget *menu_item, GtkWidget *main_window) {
     char cwd[1024];
     getcwd(cwd, sizeof(cwd));
 
-    const char *icon_path = std::strcat(cwd, Constants::application_icon_path.c_str());
+    const char *icon_path = std::strcat(cwd, "/resources/images/icon128x128.svg");
 
-    GError *error;
-    GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file(icon_path, &error);
+    std::ifstream ifs(icon_path);
+    std::string icon_svg_content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
+
+    GInputStream *stream = g_memory_input_stream_new_from_data(icon_svg_content.c_str(), -1, g_free);
+    GdkPixbuf *logo      = gdk_pixbuf_new_from_stream(stream, NULL, NULL);
+
     GtkWidget *dialog = gtk_about_dialog_new();
 
     gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(main_window));
@@ -32,8 +37,8 @@ void AboutDialog::activate(GtkWidget *menu_item, GtkWidget *main_window) {
     gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(dialog), website.c_str());
 
     gtk_about_dialog_set_logo_icon_name(GTK_ABOUT_DIALOG(dialog), NULL);
-    gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(dialog), pixbuf);
-    g_object_unref(pixbuf);
+    gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(dialog), logo);
+    g_object_unref(logo);
 
     gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
