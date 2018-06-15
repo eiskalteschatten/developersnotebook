@@ -3,6 +3,7 @@
 #include <iomanip>
 
 #include "AbstractView.hpp"
+#include "../constants.hpp"
 
 AbstractView::AbstractView() {}
 
@@ -70,13 +71,13 @@ std::string AbstractView::format_date(const guint *year, const guint *month, con
 
 std::string AbstractView::format_date(const tm *date_tm) {
     std::stringstream ss;
-    ss << std::put_time(date_tm, "%a, %d %B %Y");
+    ss << std::put_time(date_tm, Constants::default_date_format.c_str());
     return ss.str();
 }
 
 std::string AbstractView::format_date_time(const tm *date_tm) {
     std::stringstream ss;
-    ss << std::put_time(date_tm, "%a, %d %B %Y %T");
+    ss << std::put_time(date_tm, Constants::default_date_time_format.c_str());
     return ss.str();
 }
 
