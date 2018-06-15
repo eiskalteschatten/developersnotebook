@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <map>
+#include <string>
 #include <gtk/gtk.h>
 
 typedef std::map<std::string, std::string> tableRowMap;
@@ -16,6 +17,8 @@ protected:
 
     static gint sort_by_string(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer data);
     static gint sort_by_boolean(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer data);
+
+    std::string format_date(const guint *year, const guint *month, const guint *day);
     void show_error_modal(const gchar *error);
 
 public:

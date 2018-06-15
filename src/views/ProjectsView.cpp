@@ -2,8 +2,6 @@
 #include <chrono>
 #include <ctime>
 #include <cstring>
-#include <sstream>
-#include <iomanip>
 #include <gtk/gtk.h>
 
 #include "ProjectsView.hpp"
@@ -53,20 +51,13 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     }
 
     // Start date calendar values
-    struct tm start_date_tm = {0};
     guint year;
     guint month;
     guint day;
 
     gtk_calendar_get_date(GTK_CALENDAR(pv->start_date_input), &year, &month, &day);
 
-    start_date_tm.tm_year = year - 1900;
-    start_date_tm.tm_mon  = month;
-    start_date_tm.tm_mday = day;
-
-    std::stringstream ss;
-    ss << std::put_time(&start_date_tm, "%a, %d %B %Y");
-    std::string start_date_str = ss.str();
+    std::string start_date_str = pv->format_date(&year, &month, &day);
 
     // Start saving
     if (gtk_tree_selection_get_selected(pv->select, &model, &tree_iter)) {

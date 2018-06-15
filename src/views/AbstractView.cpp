@@ -1,3 +1,7 @@
+#include <ctime>
+#include <sstream>
+#include <iomanip>
+
 #include "AbstractView.hpp"
 
 AbstractView::AbstractView() {}
@@ -52,6 +56,18 @@ gint AbstractView::sort_by_boolean(GtkTreeModel *model, GtkTreeIter *a, GtkTreeI
     }
 
     return 0;
+}
+
+std::string AbstractView::format_date(const guint *year, const guint *month, const guint *day) {
+    struct tm date_tm = {0};
+
+    date_tm.tm_year = *year - 1900;
+    date_tm.tm_mon  = *month;
+    date_tm.tm_mday = *day;
+
+    std::stringstream ss;
+    ss << std::put_time(&date_tm, "%a, %d %B %Y");
+    return ss.str();
 }
 
 void AbstractView::show_error_modal(const gchar *error) {
