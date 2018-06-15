@@ -85,4 +85,4 @@ create-mac-bundle: all
 	@echo APPLnone > ./$(BIN_DIR)/$(MAC_BUNDLE)/Contents/PkgInfo
 	@cp ./$(BIN_DIR)/$(TARGET) ./$(BIN_DIR)/$(MAC_BUNDLE)/Contents/MacOS/.
 	@cp ./resources/macos/Info.plist ./$(BIN_DIR)/$(MAC_BUNDLE)/Contents/.
-	@cp ./resources/macos/tempicon.icns ./$(BIN_DIR)/$(MAC_BUNDLE)/Contents/Resources/.
+	@cp ./resources/macos/icon.icns ./$(BIN_DIR)/$(MAC_BUNDLE)/Contents/Resources/.

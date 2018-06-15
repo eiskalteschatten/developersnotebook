@@ -8,7 +8,7 @@
     <string>Developer's Notebook</string>
 
     <key>CFBundleIconFile</key>
-    <string>tempicon.icns</string>
+    <string>icon.icns</string>
     <key>CFBundleIdentifier</key>
     <string>com.alexseifert.developersnotebook</string>
 

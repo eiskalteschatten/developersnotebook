@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="1024" height="1024" viewBox="0, 0, 1024, 1024">
+  <g id="Background">
+    <rect x="0" y="0" width="1024" height="1024" fill="#000000" fill-opacity="0"/>
+  </g>
+  <defs>
+    <clipPath id="Clip_1">
+      <path d="M50,48.667 L974,48.667 L974,975.333 L50,975.333 z M917.171,64.667 L106.829,64.667 C83.175,64.667 64,84.198 64,108.292 L64,915.708 C64,939.802 83.175,959.333 106.828,959.333 L917.171,959.333 C940.825,959.333 960,939.802 960,915.708 L960,108.292 C960,84.198 940.825,64.667 917.171,64.667 z"/>
+    </clipPath>
+    <filter id="Shadow_2">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="6.5"/>
+      <feOffset dx="0" dy="2" result="offsetblur"/>
+      <feFlood flood-color="#000000"/>
+      <feComposite in2="offsetblur" operator="in"/>
+    </filter>
+    <linearGradient id="Gradient_1" gradientUnits="userSpaceOnUse" x1="512" y1="959.333" x2="512" y2="64.667">
+      <stop offset="0" stop-color="#333333"/>
+      <stop offset="1" stop-color="#666666"/>
+    </linearGradient>
+    <linearGradient id="Gradient_2" gradientUnits="userSpaceOnUse" x1="358.333" y1="760.167" x2="358.333" y2="263.833">
+      <stop offset="0" stop-color="#BFC127"/>
+      <stop offset="1" stop-color="#FEFF00"/>
+    </linearGradient>
+    <linearGradient id="Gradient_3" gradientUnits="userSpaceOnUse" x1="532.333" y1="760.167" x2="532.333" y2="263.833">
+      <stop offset="0" stop-color="#BFC127"/>
+      <stop offset="1" stop-color="#FEFF00"/>
+    </linearGradient>
+    <clipPath id="Clip_3">
+      <path d="M589,258.833 L645,258.833 L645,349.111 L589,349.111 z M642,263.833 L592,263.833 L592,344.111 L605.884,335.055 L617,327.806 L628.116,335.055 L642,344.111 L642,326.333 L642,326.333 L642,263.833 z"/>
+    </clipPath>
+    <filter id="Shadow_4">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="1"/>
+      <feOffset dx="0" dy="2" result="offsetblur"/>
+      <feFlood flood-color="#000000"/>
+      <feComposite in2="offsetblur" operator="in"/>
+    </filter>
+    <linearGradient id="Gradient_4" gradientUnits="userSpaceOnUse" x1="617" y1="344.111" x2="617" y2="263.833">
+      <stop offset="0" stop-color="#9D0404"/>
+      <stop offset="1" stop-color="#BE0000"/>
+    </linearGradient>
+  </defs>
+  <g id="Layer_2">
+    <g>
+      <path d="M917.171,64.667 C940.825,64.667 960,84.198 960,108.292 L960,915.708 C960,939.802 940.825,959.333 917.171,959.333 L106.828,959.333 C83.175,959.333 64,939.802 64,915.708 L64,108.292 C64,84.198 83.175,64.667 106.829,64.667 L917.171,64.667 z" clip-path="url(#Clip_1)" filter="url(#Shadow_2)" fill="rgba(0,0,0,0.75)"/>
+      <path d="M106.829,64.667 L917.171,64.667 C940.825,64.667 960,84.198 960,108.292 L960,915.708 C960,939.802 940.825,959.333 917.171,959.333 L106.829,959.333 C83.175,959.333 64,939.802 64,915.708 L64,108.292 C64,84.198 83.175,64.667 106.829,64.667 z" fill="url(#Gradient_1)"/>
+    </g>
+  </g>
+  <g id="Layer_3">
+    <path d="M350.333,263.833 L366.333,263.833 C368.542,263.833 370.333,265.638 370.333,267.863 L370.333,756.137 C370.333,758.362 368.542,760.167 366.333,760.167 L350.333,760.167 C348.124,760.167 346.333,758.362 346.333,756.137 L346.333,267.863 C346.333,265.638 348.124,263.833 350.333,263.833 z" fill="url(#Gradient_2)"/>
+    <path d="M391,263.833 L673.667,263.833 C675.876,263.833 677.667,265.624 677.667,267.833 L677.667,756.167 C677.667,758.376 675.876,760.167 673.667,760.167 L391,760.167 C388.791,760.167 387,758.376 387,756.167 L387,267.833 C387,265.624 388.791,263.833 391,263.833 z" fill="url(#Gradient_3)"/>
+    <g>
+      <path d="M642,263.833 L642,326.333 L642,326.333 L642,344.111 L628.116,335.055 L617,327.806 L605.884,335.055 L592,344.111 L592,263.833 L642,263.833 z" clip-path="url(#Clip_3)" filter="url(#Shadow_4)" fill="rgba(0,0,0,0.75)"/>
+      <path d="M592,263.833 L642,263.833 L642,326.333 L642,326.333 L642,344.111 L628.116,335.055 L617,327.806 L605.884,335.055 L592,344.111 L592,263.833 z" fill="url(#Gradient_4)"/>
+    </g>
+  </g>
+</svg>
