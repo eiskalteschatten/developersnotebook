@@ -2,6 +2,8 @@
 #include <chrono>
 #include <ctime>
 #include <cstring>
+#include <sstream>
+#include <iomanip>
 #include <gtk/gtk.h>
 
 #include "ProjectsView.hpp"
@@ -62,8 +64,9 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     start_date_tm.tm_mon  = month;
     start_date_tm.tm_mday = day;
 
-    gchar *start_date_gchar = nullptr;
-    std::strftime(start_date_gchar, 1000, "%a, %d %B %Y", &start_date_tm);
+    std::stringstream ss;
+    ss << std::put_time(&start_date_tm, "%a, %d %B %Y");
+    std::string start_date_str = ss.str();
 
     // Start saving
     if (gtk_tree_selection_get_selected(pv->select, &model, &tree_iter)) {
@@ -82,14 +85,12 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     const ProjectsRow row = {
         std::to_string(projects_model->get_id()).c_str(),
         name,
-        start_date_gchar,
+        start_date_str.c_str(),
         gtk_entry_get_text(GTK_ENTRY(pv->end_date_input)),
         is_complete,
         date_completed.c_str(),
         now_str.c_str()
     };
-
-    g_free(start_date_gchar);
 
     projects_model->set_name(row.name);
     projects_model->set_start_date(row.start_date);
