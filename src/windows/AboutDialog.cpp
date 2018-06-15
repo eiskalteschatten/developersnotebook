@@ -42,7 +42,6 @@ void AboutDialog::activate(GtkWidget *menu_item, GtkWidget *main_window) {
 
     gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(main_window));
     gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
-    gtk_window_set_icon_from_file(GTK_WINDOW(dialog), icon_path, NULL);
 
     gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(dialog), Constants::application_name.c_str());
     gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), Constants::application_version.c_str());
