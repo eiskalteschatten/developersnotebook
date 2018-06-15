@@ -28,7 +28,7 @@ void AboutDialog::activate(GtkWidget *menu_item, GtkWidget *main_window) {
     #else
         char cwd[1024];
         getcwd(cwd, sizeof(cwd));
-        const std::string path = Constants::path_to_resources + "/icon128x128.svg";
+        const std::string path = Constants::path_to_resources + "/images/icon128x128.svg";
         icon_path              = std::strcat(cwd, path.c_str());
     #endif
 
