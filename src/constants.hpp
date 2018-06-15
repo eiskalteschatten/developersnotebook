@@ -11,17 +11,9 @@ namespace Constants {
         const std::string path_to_config = "C:\\";
     #endif
 
-    #if defined(__APPLE__)
-        const std::string path_to_resources         = "/../Resources";
-        const std::string application_icon_path     = path_to_resources + "/icon.png";
-        const std::string application_icon_path_svg = path_to_resources + "/icon.svg";
-    #elif defined(__linux__)
-        const std::string path_to_resources         = "/resources";
-        const std::string application_icon_path     = path_to_resources + "/images/icon.png";
-        const std::string application_icon_path_svg = path_to_resources + "/images/icon.svg";
-    #else
-        // Windows
-    #endif
+    const std::string path_to_resources         = "/resources";
+    const std::string application_icon_path     = path_to_resources + "/images/icon.png";
+    const std::string application_icon_path_svg = path_to_resources + "/images/icon.svg";
 
     const std::string path_to_db = path_to_config + "developersnotebook.db";
 
