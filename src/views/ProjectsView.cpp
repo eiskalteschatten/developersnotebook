@@ -38,8 +38,6 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     struct tm *now_tm   = std::localtime(&now);
     std::string now_str = pv->format_date_time(now_tm);
 
-    delete now_tm;
-
     // Form values
     int id                     = -1;
     gchar *id_char             = nullptr;
