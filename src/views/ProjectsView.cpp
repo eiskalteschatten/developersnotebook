@@ -90,7 +90,7 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     ProjectsModel *projects_model = id != -1 ? new ProjectsModel(id) : new ProjectsModel();
 
     if (id == -1) {
-        projects_model->set_date_created(now_str);
+        projects_model->set_date_created(now_str, FALSE);
         pv->prepend_to_list_store(&tree_iter);
     }
 
@@ -106,13 +106,15 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
         now_str.c_str()
     };
 
-    projects_model->set_name(row.name);
-    projects_model->set_start_date(row.start_date);
-    projects_model->set_end_date(row.end_date);
-    projects_model->set_url(row.url);
-    projects_model->set_notes(row.notes);
-    projects_model->set_is_complete(is_complete);
-    projects_model->set_date_completed(date_completed);
+    projects_model->set_name(row.name, FALSE);
+    projects_model->set_start_date(row.start_date, FALSE);
+    projects_model->set_end_date(row.end_date, FALSE);
+    projects_model->set_url(row.url, FALSE);
+    projects_model->set_notes(row.notes, FALSE);
+    projects_model->set_is_complete(is_complete, FALSE);
+    projects_model->set_date_completed(date_completed, FALSE);
+
+    projects_model->save_all();
 
     pv->set_list_store(row, &tree_iter);
     pv->select_row_in_list_view(&tree_iter);

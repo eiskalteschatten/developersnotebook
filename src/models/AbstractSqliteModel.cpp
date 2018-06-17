@@ -189,6 +189,42 @@ tableVector const& AbstractSqliteModel::select_all() {
     return full_table;
 }
 
+void AbstractSqliteModel::save_all() {
+    try {
+        if (!id) {
+            insert_new_row();
+        }
+
+        std::string set;
+
+        for (auto const &column : contents) {
+            set.append(column.first);
+            set.append("=\"");
+            set.append(column.second);
+            set.append("\",");
+        }
+
+        set = set.substr(0, set.size()-1); // Remove the dangling comma
+
+        SqliteConnectionManager connection_manager;
+
+        char *error_message = 0;
+        int connection;
+        std::string sql = "UPDATE " + table_schema->table_name +
+                          " SET " + set +
+                          " WHERE id=" + std::to_string(id) + ";";
+
+        connection = sqlite3_exec(connection_manager.get_db(), sql.c_str(), NULL, 0, &error_message);
+
+        if(connection != SQLITE_OK) {
+            fprintf(stderr, "SQL error: %s\n", error_message);
+            sqlite3_free(error_message);
+        }
+    }
+    catch(const std::exception& e) {
+        fprintf(stderr, "An exception occured while trying to save to the database: %s\n", e.what());
+    }
+}
 
 // Setters
 

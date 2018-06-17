@@ -25,35 +25,44 @@ void ProjectsModel::setup() {
 
 // Setters
 
-void ProjectsModel::set_name(const std::string name) {
-    update_single_text("name", name, true);
+void ProjectsModel::set_name(const std::string name, bool update_db) {
+    abstract_set_value("name", name, update_db);
 }
 
-void ProjectsModel::set_start_date(const std::string start_date) {
-    update_single_text("start_date", start_date, true);
+void ProjectsModel::set_start_date(const std::string start_date, bool update_db) {
+    abstract_set_value("start_date", start_date, update_db);
 }
 
-void ProjectsModel::set_end_date(const std::string end_date) {
-    update_single_text("end_date", end_date, true);
+void ProjectsModel::set_end_date(const std::string end_date, bool update_db) {
+    abstract_set_value("end_date", end_date, update_db);
 }
 
-void ProjectsModel::set_url(const std::string url) {
-    update_single_text("url", url, true);
+void ProjectsModel::set_url(const std::string url, bool update_db) {
+    abstract_set_value("url", url, update_db);
 }
 
-void ProjectsModel::set_notes(const std::string notes) {
-    update_single_text("notes", notes, true);
+void ProjectsModel::set_notes(const std::string notes, bool update_db) {
+    abstract_set_value("notes", notes, update_db);
 }
 
-void ProjectsModel::set_is_complete(const bool is_complete) {
+void ProjectsModel::set_is_complete(const bool is_complete, bool update_db) {
     int int_value = is_complete ? 1 : 0;
-    update_single_int("is_complete", int_value, true);
+    abstract_set_value("is_complete", std::to_string(int_value), update_db);
 }
 
-void ProjectsModel::set_date_completed(const std::string date_completed) {
-    update_single_text("date_completed", date_completed, true);
+void ProjectsModel::set_date_completed(const std::string date_completed, bool update_db) {
+    abstract_set_value("date_completed", date_completed, update_db);
 }
 
-void ProjectsModel::set_date_created(const std::string date_created) {
-    update_single_text("date_created", date_created, true);
+void ProjectsModel::set_date_created(const std::string date_created, bool update_db) {
+    abstract_set_value("date_created", date_created, update_db);
+}
+
+void ProjectsModel::abstract_set_value(const std::string &column_name, const std::string &value, bool update_db) {
+    if (update_db) {
+        update_single_text(column_name, value, true);
+    }
+    else {
+        contents[column_name] = value;
+    }
 }

@@ -26,6 +26,8 @@ protected:
     void update_single_text(const std::string insert_column_name, const std::string &value, bool update_contents);
     void update_single_int(const std::string insert_column_name, const int &value, bool update_contents);
 
+    virtual void abstract_set_value(const std::string &column_name, const std::string &value, bool update_db) {};
+
 public:
     AbstractSqliteModel();
     AbstractSqliteModel(const int &select_id);
@@ -34,6 +36,7 @@ public:
     void delete_single();
     void select_one();
     tableVector const& select_all();
+    void save_all();
 
     // Getters and setters
 

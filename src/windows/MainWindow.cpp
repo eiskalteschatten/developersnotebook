@@ -101,15 +101,17 @@ void MainWindow::save_window(GtkWidget *window, gpointer user_data) {
     PreferencesModel *preferences_model = new PreferencesModel();
 
     if (gtk_window_is_maximized(GTK_WINDOW(window))) {
-        preferences_model->set_window_maximized(true);
+        preferences_model->set_window_maximized(true, false);
     }
     else {
         gtk_window_get_size(GTK_WINDOW(window), &width, &height);
 
-        preferences_model->set_window_width(width);
-        preferences_model->set_window_height(height);
-        preferences_model->set_window_maximized(false);
+        preferences_model->set_window_width(width, false);
+        preferences_model->set_window_height(height, false);
+        preferences_model->set_window_maximized(false, false);
     }
+
+    preferences_model->save_all();
 
     gtk_widget_destroy(window);
 }
