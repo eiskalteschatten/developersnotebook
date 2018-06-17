@@ -608,20 +608,18 @@ void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
         reset_calender(end_date_input);
     }
 
-     if (row.notes && row.notes[0]) {
-        GtkTextIter text_iter;
-        GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(notes_input));
-        gtk_text_buffer_get_start_iter(buffer, &text_iter);
-        gtk_text_buffer_insert(buffer, &text_iter, row.notes, -1);
-    }
-    else {
-        GtkTextIter start;
-        GtkTextIter end;
-        GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(notes_input));
-        gtk_text_buffer_get_bounds(buffer, &start, &end);
-        gtk_text_buffer_delete(buffer, &start, &end);
-    }
 
+    GtkTextIter start;
+    GtkTextIter end;
+    GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(notes_input));
+    gtk_text_buffer_get_bounds(buffer, &start, &end);
+    gtk_text_buffer_delete(buffer, &start, &end);
+
+    if (row.notes && row.notes[0]) {
+        GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(notes_input));
+        gtk_text_buffer_get_start_iter(buffer, &start);
+        gtk_text_buffer_insert(buffer, &start, row.notes, -1);
+    }
 
     gtk_button_set_label(GTK_BUTTON(save_button), "Save Project");
     gtk_widget_set_sensitive(delete_button, TRUE);
