@@ -20,6 +20,7 @@ private:
     GtkWidget *list_scrolled_window;
     GtkWidget *list_view;
     GtkWidget *form_grid;
+    GtkWidget *form_scrolled_window;
     GtkListStore *list_store;
     GtkTreeSelection *select;
 

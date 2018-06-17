@@ -228,7 +228,7 @@ ProjectsView::ProjectsView(GtkWidget *window) : AbstractView(window) {
 
     // Attach everything to the panes
     gtk_paned_pack1(GTK_PANED(main_widget), list_view_grid, TRUE, FALSE);
-    gtk_paned_pack2(GTK_PANED(main_widget), form_grid, FALSE, FALSE);
+    gtk_paned_pack2(GTK_PANED(main_widget), form_scrolled_window, FALSE, FALSE);
 
     empty_sidebar();
 
@@ -378,7 +378,6 @@ void ProjectsView::setup_form_sidebar() {
 
     form_grid = gtk_grid_new();
     g_object_set(form_grid, "hexpand", TRUE, NULL);
-    gtk_widget_set_size_request(form_grid, 300, -1);
 
     gtk_grid_set_column_spacing(GTK_GRID(form_grid), grid_spacing);
     gtk_grid_set_row_spacing(GTK_GRID(form_grid), grid_spacing);
@@ -484,6 +483,16 @@ void ProjectsView::setup_form_sidebar() {
     // Add the button grid to the form grid
     gtk_grid_insert_row(GTK_GRID(form_grid), 9);
     gtk_grid_attach(GTK_GRID(form_grid), button_grid, 0, 9, 1, 1);
+
+
+    // Setup the scrollbar
+    form_scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+    g_object_set(form_scrolled_window, "hexpand", TRUE, NULL);
+    g_object_set(form_scrolled_window, "vexpand", TRUE, NULL);
+    gtk_widget_set_halign(form_scrolled_window, GTK_ALIGN_FILL);
+    gtk_widget_set_valign(form_scrolled_window, GTK_ALIGN_FILL);
+    gtk_widget_set_size_request(form_scrolled_window, 300, -1);
+    gtk_container_add(GTK_CONTAINER(form_scrolled_window), form_grid);
 }
 
 void ProjectsView::empty_sidebar() {
