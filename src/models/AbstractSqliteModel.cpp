@@ -195,7 +195,7 @@ void AbstractSqliteModel::save_all() {
             insert_new_row();
         }
 
-        std::string set;
+        std::string set = "";
 
         for (auto const &column : contents) {
             set.append(column.first);
@@ -204,21 +204,26 @@ void AbstractSqliteModel::save_all() {
             set.append("\",");
         }
 
-        set = set.substr(0, set.size()-1); // Remove the dangling comma
+        if (set != "") {
+            set = set.substr(0, set.size()-1); // Remove the dangling comma
 
-        SqliteConnectionManager connection_manager;
+            SqliteConnectionManager connection_manager;
 
-        char *error_message = 0;
-        int connection;
-        std::string sql = "UPDATE " + table_schema->table_name +
-                          " SET " + set +
-                          " WHERE id=" + std::to_string(id) + ";";
+            char *error_message = 0;
+            int connection;
+            std::string sql = "UPDATE " + table_schema->table_name +
+                            " SET " + set +
+                            " WHERE id=" + std::to_string(id) + ";";
 
-        connection = sqlite3_exec(connection_manager.get_db(), sql.c_str(), NULL, 0, &error_message);
+            connection = sqlite3_exec(connection_manager.get_db(), sql.c_str(), NULL, 0, &error_message);
 
-        if(connection != SQLITE_OK) {
-            fprintf(stderr, "SQL error: %s\n", error_message);
-            sqlite3_free(error_message);
+            if(connection != SQLITE_OK) {
+                fprintf(stderr, "SQL error: %s\n", error_message);
+                sqlite3_free(error_message);
+            }
+        }
+        else {
+            fprintf(stderr, "There are no contents to save!");
         }
     }
     catch(const std::exception& e) {
