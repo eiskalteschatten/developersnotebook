@@ -22,6 +22,8 @@ SqliteSchema::TableSchema SqliteSchema::projects_table {
         {"name", "TEXT", "NULL", ""},
         {"start_date", "TEXT", "NULL", ""},
         {"end_date", "TEXT", "NULL", ""},
+        {"url", "TEXT", "NULL", ""},
+        {"notes", "TEXT", "NULL", ""},
         {"is_complete", "INT", "NULL", "0"},
         {"date_completed", "TEXT", "NULL", ""},
         {"date_created", "TEXT", "NULL", ""}

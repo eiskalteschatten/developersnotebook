@@ -37,6 +37,14 @@ void ProjectsModel::set_end_date(const std::string end_date) {
     update_single_text("end_date", end_date, true);
 }
 
+void ProjectsModel::set_url(const std::string url) {
+    update_single_text("url", url, true);
+}
+
+void ProjectsModel::set_notes(const std::string notes) {
+    update_single_text("notes", notes, true);
+}
+
 void ProjectsModel::set_is_complete(const bool is_complete) {
     int int_value = is_complete ? 1 : 0;
     update_single_int("is_complete", int_value, true);

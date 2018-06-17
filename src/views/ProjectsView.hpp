@@ -8,6 +8,8 @@ typedef struct {
     const gchar *name;
     const gchar *start_date;
     const gchar *end_date;
+    const gchar *url;
+    const gchar *notes;
     const bool is_complete;
     const gchar *date_completed;
     const gchar *date_created;
@@ -35,6 +37,8 @@ private:
     GtkWidget *start_date_clear_button;
     GtkWidget *end_date_input;
     GtkWidget *end_date_clear_button;
+    GtkWidget *url_input;
+    GtkWidget *notes_input;
     GtkWidget *is_complete_checkbox;
     GtkWidget *save_button;
     GtkWidget *delete_button;

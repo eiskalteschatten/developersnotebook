@@ -12,6 +12,8 @@ enum {
     NAME_COLUMN,
     START_DATE_COLUMN,
     END_DATE_COLUMN,
+    URL_COLUMN,
+    NOTES_COLUMN,
     IS_COMPLETE_COLUMN,
     DATE_COMPLETED_COLUMN,
     DATE_CREATED_COLUMN,
@@ -22,6 +24,8 @@ enum {
     SORT_NAME_COLUMN,
     SORT_START_DATE_COLUMN,
     SORT_END_DATE_COLUMN,
+    SORT_URL_COLUMN,
+    SORT_NOTES_COLUMN,
     SORT_IS_COMPLETE_COLUMN,
     SORT_DATE_COMPLETED_COLUMN
 };
@@ -41,9 +45,17 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     // Form values
     int id                     = -1;
     gchar *id_char             = nullptr;
-    bool is_complete           = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(pv->is_complete_checkbox));
     const gchar *name          = gtk_entry_get_text(GTK_ENTRY(pv->project_name_input));
+    bool is_complete           = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(pv->is_complete_checkbox));
     std::string date_completed = is_complete ? now_str : "";
+
+    GtkTextIter start;
+    GtkTextIter end;
+    GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(pv->notes_input));
+
+    gtk_text_buffer_get_bounds(buffer, &start, &end);
+
+    const gchar *notes = gtk_text_buffer_get_text(buffer, &start, &end, FALSE);
 
     if (name && !name[0]) {
         pv->show_error_modal("You must enter a project name.");
@@ -87,6 +99,8 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
         name,
         start_date_str.c_str(),
         end_date_str.c_str(),
+        gtk_entry_get_text(GTK_ENTRY(pv->url_input)),
+        notes,
         is_complete,
         date_completed.c_str(),
         now_str.c_str()
@@ -95,6 +109,8 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     projects_model->set_name(row.name);
     projects_model->set_start_date(row.start_date);
     projects_model->set_end_date(row.end_date);
+    projects_model->set_url(row.url);
+    projects_model->set_notes(row.notes);
     projects_model->set_is_complete(is_complete);
     projects_model->set_date_completed(date_completed);
 
@@ -173,6 +189,8 @@ void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv) {
     gchar *name           = nullptr;
     gchar *start_date     = nullptr;
     gchar *end_date       = nullptr;
+    gchar *url            = nullptr;
+    gchar *notes          = nullptr;
     gboolean is_complete;
 
     if (gtk_tree_selection_get_selected(selection, &model, &tree_iter)) {
@@ -180,6 +198,8 @@ void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv) {
                                               NAME_COLUMN, &name,
                                               START_DATE_COLUMN, &start_date,
                                               END_DATE_COLUMN, &end_date,
+                                              URL_COLUMN, &url,
+                                              NOTES_COLUMN, &notes,
                                               IS_COMPLETE_COLUMN, &is_complete,
                                               -1);
 
@@ -188,6 +208,8 @@ void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv) {
             name,
             start_date,
             end_date,
+            url,
+            notes,
             is_complete != 0
         };
 
@@ -197,6 +219,8 @@ void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv) {
         g_free(name);
         g_free(start_date);
         g_free(end_date);
+        g_free(url);
+        g_free(notes);
 
         gtk_widget_set_sensitive(pv->delete_toolbar_button, TRUE);
     }
@@ -245,6 +269,8 @@ void ProjectsView::setup_list_store() {
     ProjectsModel projects_model;
 
     list_store = gtk_list_store_new(N_COLUMNS,
+                                    G_TYPE_STRING,
+                                    G_TYPE_STRING,
                                     G_TYPE_STRING,
                                     G_TYPE_STRING,
                                     G_TYPE_STRING,
@@ -307,6 +333,16 @@ void ProjectsView::setup_list_view() {
     gtk_tree_view_column_set_sort_column_id(date_completed_column, SORT_DATE_COMPLETED_COLUMN);
     gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_DATE_COMPLETED_COLUMN, sort_by_string, GINT_TO_POINTER(DATE_COMPLETED_COLUMN), NULL);
 
+    GtkTreeViewColumn *url_column = gtk_tree_view_column_new_with_attributes("URL", text_renderer, "text", URL_COLUMN, NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), url_column);
+    gtk_tree_view_column_set_sort_column_id(url_column, SORT_URL_COLUMN);
+    gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_URL_COLUMN, sort_by_string, GINT_TO_POINTER(URL_COLUMN), NULL);
+
+    GtkTreeViewColumn *notes_column = gtk_tree_view_column_new_with_attributes("Notes", text_renderer, "text", NOTES_COLUMN, NULL);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), notes_column);
+    gtk_tree_view_column_set_sort_column_id(notes_column, SORT_NOTES_COLUMN);
+    gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_NOTES_COLUMN, sort_by_string, GINT_TO_POINTER(NOTES_COLUMN), NULL);
+
 
     gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(list_store), SORT_IS_COMPLETE_COLUMN, GTK_SORT_ASCENDING);
 }
@@ -361,6 +397,8 @@ void ProjectsView::set_list_store(const ProjectsRow &row, GtkTreeIter *tree_iter
                                                               NAME_COLUMN, row.name,
                                                               START_DATE_COLUMN, row.start_date,
                                                               END_DATE_COLUMN, row.end_date,
+                                                              URL_COLUMN, row.url,
+                                                              NOTES_COLUMN, row.notes,
                                                               IS_COMPLETE_COLUMN, row.is_complete,
                                                               DATE_COMPLETED_COLUMN, row.date_completed,
                                                               DATE_CREATED_COLUMN, row.date_created,
@@ -374,7 +412,7 @@ void ProjectsView::select_row_in_list_view(GtkTreeIter *tree_iter) {
 
 void ProjectsView::setup_form_sidebar() {
     const int grid_spacing        = 10;
-    const int field_margin_bottom = 15;
+    const int field_margin_bottom = 10;
 
     form_grid = gtk_grid_new();
     g_object_set(form_grid, "hexpand", TRUE, NULL);
@@ -446,12 +484,41 @@ void ProjectsView::setup_form_sidebar() {
     gtk_grid_attach(GTK_GRID(form_grid), end_date_clear_button, 0, 7, 1, 1);
 
 
+    // URL
+    GtkWidget *url_label = gtk_label_new("URL");
+    gtk_widget_set_halign(url_label, GTK_ALIGN_START);
+
+    url_input = gtk_entry_new();
+    g_object_set(url_input, "hexpand", TRUE, NULL);
+    gtk_widget_set_margin_bottom(url_input, field_margin_bottom);
+
+    gtk_grid_insert_row(GTK_GRID(form_grid), 8);
+    gtk_grid_insert_row(GTK_GRID(form_grid), 9);
+    gtk_grid_attach(GTK_GRID(form_grid), url_label, 0, 8, 1, 1);
+    gtk_grid_attach(GTK_GRID(form_grid), url_input, 0, 9, 1, 1);
+
+
+    // Notes
+    GtkWidget *notes_label = gtk_label_new("Notes");
+    gtk_widget_set_halign(notes_label, GTK_ALIGN_START);
+
+    notes_input = gtk_text_view_new();
+    g_object_set(notes_input, "hexpand", TRUE, NULL);
+    gtk_widget_set_size_request(notes_input, -1, 75);
+    gtk_widget_set_margin_bottom(notes_input, field_margin_bottom);
+
+    gtk_grid_insert_row(GTK_GRID(form_grid), 10);
+    gtk_grid_insert_row(GTK_GRID(form_grid), 11);
+    gtk_grid_attach(GTK_GRID(form_grid), notes_label, 0, 10, 1, 1);
+    gtk_grid_attach(GTK_GRID(form_grid), notes_input, 0, 11, 1, 1);
+
+
     // Is Complete
     is_complete_checkbox = gtk_check_button_new_with_label("Project is completed");
     gtk_widget_set_margin_bottom(is_complete_checkbox, field_margin_bottom);
 
-    gtk_grid_insert_row(GTK_GRID(form_grid), 8);
-    gtk_grid_attach(GTK_GRID(form_grid), is_complete_checkbox, 0, 8, 1, 1);
+    gtk_grid_insert_row(GTK_GRID(form_grid), 12);
+    gtk_grid_attach(GTK_GRID(form_grid), is_complete_checkbox, 0, 12, 1, 1);
 
 
     // Button Grid
@@ -481,8 +548,8 @@ void ProjectsView::setup_form_sidebar() {
 
 
     // Add the button grid to the form grid
-    gtk_grid_insert_row(GTK_GRID(form_grid), 9);
-    gtk_grid_attach(GTK_GRID(form_grid), button_grid, 0, 9, 1, 1);
+    gtk_grid_insert_row(GTK_GRID(form_grid), 13);
+    gtk_grid_attach(GTK_GRID(form_grid), button_grid, 0, 13, 1, 1);
 
 
     // Setup the scrollbar
@@ -501,6 +568,8 @@ void ProjectsView::empty_sidebar() {
         "",
         "",
         "",
+        "",
+        "",
         false
     };
 
@@ -512,6 +581,7 @@ void ProjectsView::empty_sidebar() {
 
 void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
     gtk_entry_set_text(GTK_ENTRY(project_name_input), row.name);
+    gtk_entry_set_text(GTK_ENTRY(url_input), row.url);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(is_complete_checkbox), row.is_complete);
 
     if (row.start_date && row.start_date[0]) {
@@ -538,6 +608,21 @@ void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
         reset_calender(end_date_input);
     }
 
+     if (row.notes && row.notes[0]) {
+        GtkTextIter text_iter;
+        GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(notes_input));
+        gtk_text_buffer_get_start_iter(buffer, &text_iter);
+        gtk_text_buffer_insert(buffer, &text_iter, row.notes, -1);
+    }
+    else {
+        GtkTextIter start;
+        GtkTextIter end;
+        GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(notes_input));
+        gtk_text_buffer_get_bounds(buffer, &start, &end);
+        gtk_text_buffer_delete(buffer, &start, &end);
+    }
+
+
     gtk_button_set_label(GTK_BUTTON(save_button), "Save Project");
     gtk_widget_set_sensitive(delete_button, TRUE);
 }
@@ -550,6 +635,8 @@ ProjectsRow ProjectsView::convert_table_row_map_to_struct(const tableRowMap &map
         map.at("name").c_str(),
         map.at("start_date").c_str(),
         map.at("end_date").c_str(),
+        map.at("url").c_str(),
+        map.at("notes").c_str(),
         is_complete,
         map.at("date_completed").c_str(),
         map.at("date_created").c_str()

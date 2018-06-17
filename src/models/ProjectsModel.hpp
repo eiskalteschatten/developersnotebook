@@ -45,6 +45,24 @@ public:
         return "";
     }
 
+    void set_url(const std::string url);
+    std::string const get_url() const {
+        if (contents.find("url") != contents.end()) {
+            return contents.at("url");
+        }
+
+        return "";
+    }
+
+    void set_notes(const std::string notes);
+    std::string const get_notes() const {
+        if (contents.find("notes") != contents.end()) {
+            return contents.at("notes");
+        }
+
+        return "";
+    }
+
     void set_is_complete(const bool maximized);
     bool const get_is_complete() const {
         if (contents.find("is_complete") != contents.end()) {
