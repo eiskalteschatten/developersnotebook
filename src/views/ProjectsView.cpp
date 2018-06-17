@@ -94,8 +94,8 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
         pv->prepend_to_list_store(&tree_iter);
     }
 
-    const ProjectsRow row = {
-        std::to_string(projects_model->get_id()).c_str(),
+    ProjectsRow row = {
+        "",
         name,
         start_date_str.c_str(),
         end_date_str.c_str(),
@@ -115,6 +115,8 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     projects_model->set_date_completed(date_completed, FALSE);
 
     projects_model->save_all();
+
+    row.id = std::to_string(projects_model->get_id()).c_str();
 
     pv->set_list_store(row, &tree_iter);
     pv->select_row_in_list_view(&tree_iter);
