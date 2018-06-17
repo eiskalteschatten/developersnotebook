@@ -51,13 +51,22 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     }
 
     // Start date calendar values
-    guint year;
-    guint month;
-    guint day;
+    guint start_year;
+    guint start_month;
+    guint start_day;
 
-    gtk_calendar_get_date(GTK_CALENDAR(pv->start_date_input), &year, &month, &day);
+    gtk_calendar_get_date(GTK_CALENDAR(pv->start_date_input), &start_year, &start_month, &start_day);
 
-    std::string start_date_str = day == 0 ? "" : pv->format_date(&year, &month, &day);
+    std::string start_date_str = start_day == 0 ? "" : pv->format_date(&start_year, &start_month, &start_day);
+
+    // End date calendar values
+    guint end_year;
+    guint end_month;
+    guint end_day;
+
+    gtk_calendar_get_date(GTK_CALENDAR(pv->end_date_input), &end_year, &end_month, &end_day);
+
+    std::string end_date_str = end_day == 0 ? "" : pv->format_date(&end_year, &end_month, &end_day);
 
     // Start saving
     if (gtk_tree_selection_get_selected(pv->select, &model, &tree_iter)) {
@@ -77,7 +86,7 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
         std::to_string(projects_model->get_id()).c_str(),
         name,
         start_date_str.c_str(),
-        gtk_entry_get_text(GTK_ENTRY(pv->end_date_input)),
+        end_date_str.c_str(),
         is_complete,
         date_completed.c_str(),
         now_str.c_str()
@@ -199,6 +208,10 @@ void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv) {
 
 void clear_start_date_selection(GtkWidget *widget, ProjectsView *pv) {
     pv->reset_calender(pv->start_date_input);
+}
+
+void clear_end_date_selection(GtkWidget *widget, ProjectsView *pv) {
+    pv->reset_calender(pv->end_date_input);
 }
 
 
@@ -362,7 +375,6 @@ void ProjectsView::select_row_in_list_view(GtkTreeIter *tree_iter) {
 void ProjectsView::setup_form_sidebar() {
     const int grid_spacing        = 10;
     const int field_margin_bottom = 15;
-    const gchar *placeholder_date = "DD-MM-YYYY";
 
     form_grid = gtk_grid_new();
     g_object_set(form_grid, "hexpand", TRUE, NULL);
@@ -415,10 +427,8 @@ void ProjectsView::setup_form_sidebar() {
     GtkWidget *end_date_label = gtk_label_new("End Date");
     gtk_widget_set_halign(end_date_label, GTK_ALIGN_START);
 
-    end_date_input = gtk_entry_new();
+    end_date_input = gtk_calendar_new();
     g_object_set(end_date_input, "hexpand", TRUE, NULL);
-    gtk_widget_set_margin_bottom(end_date_input, field_margin_bottom);
-    gtk_entry_set_placeholder_text(GTK_ENTRY(end_date_input), placeholder_date);
 
     gtk_grid_insert_row(GTK_GRID(form_grid), 5);
     gtk_grid_insert_row(GTK_GRID(form_grid), 6);
@@ -426,12 +436,23 @@ void ProjectsView::setup_form_sidebar() {
     gtk_grid_attach(GTK_GRID(form_grid), end_date_input, 0, 6, 1, 1);
 
 
+    // Clear end date selection button
+    end_date_clear_button = gtk_button_new_with_label("Clear Selection");
+    gtk_widget_set_halign(end_date_clear_button, GTK_ALIGN_END);
+    g_object_set(end_date_clear_button, "hexpand", FALSE, NULL);
+    gtk_widget_set_margin_bottom(end_date_clear_button, field_margin_bottom);
+    g_signal_connect(G_OBJECT(end_date_clear_button), "clicked", G_CALLBACK(clear_end_date_selection), this);
+
+    gtk_grid_insert_row(GTK_GRID(form_grid), 7);
+    gtk_grid_attach(GTK_GRID(form_grid), end_date_clear_button, 0, 7, 1, 1);
+
+
     // Is Complete
     is_complete_checkbox = gtk_check_button_new_with_label("Project is completed");
     gtk_widget_set_margin_bottom(is_complete_checkbox, field_margin_bottom);
 
-    gtk_grid_insert_row(GTK_GRID(form_grid), 7);
-    gtk_grid_attach(GTK_GRID(form_grid), is_complete_checkbox, 0, 7, 1, 1);
+    gtk_grid_insert_row(GTK_GRID(form_grid), 8);
+    gtk_grid_attach(GTK_GRID(form_grid), is_complete_checkbox, 0, 8, 1, 1);
 
 
     // Button Grid
@@ -461,8 +482,8 @@ void ProjectsView::setup_form_sidebar() {
 
 
     // Add the button grid to the form grid
-    gtk_grid_insert_row(GTK_GRID(form_grid), 8);
-    gtk_grid_attach(GTK_GRID(form_grid), button_grid, 0, 8, 1, 1);
+    gtk_grid_insert_row(GTK_GRID(form_grid), 9);
+    gtk_grid_attach(GTK_GRID(form_grid), button_grid, 0, 9, 1, 1);
 }
 
 void ProjectsView::empty_sidebar() {
@@ -482,7 +503,6 @@ void ProjectsView::empty_sidebar() {
 
 void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
     gtk_entry_set_text(GTK_ENTRY(project_name_input), row.name);
-    gtk_entry_set_text(GTK_ENTRY(end_date_input), row.end_date);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(is_complete_checkbox), row.is_complete);
 
     if (row.start_date && row.start_date[0]) {
@@ -495,6 +515,18 @@ void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
     }
     else {
         reset_calender(start_date_input);
+    }
+
+    if (row.end_date && row.end_date[0]) {
+        std::string end_date_str = std::string(row.end_date);
+        std::tm end_date_tm      = get_date_from_string(&end_date_str);
+        guint year                 = end_date_tm.tm_year + 1900;
+
+        gtk_calendar_select_month(GTK_CALENDAR(end_date_input), end_date_tm.tm_mon, year);
+        gtk_calendar_select_day(GTK_CALENDAR(end_date_input), end_date_tm.tm_mday);
+    }
+    else {
+        reset_calender(end_date_input);
     }
 
     gtk_button_set_label(GTK_BUTTON(save_button), "Save Project");
