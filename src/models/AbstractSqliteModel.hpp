@@ -31,7 +31,7 @@ protected:
 public:
     AbstractSqliteModel();
     AbstractSqliteModel(const int &select_id);
-    ~AbstractSqliteModel();
+    virtual ~AbstractSqliteModel();
 
     void delete_single();
     void select_one();
