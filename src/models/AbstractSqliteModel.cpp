@@ -153,7 +153,7 @@ void AbstractSqliteModel::select_one() {
     }
 }
 
-tableVector const& AbstractSqliteModel::select_all() {
+void AbstractSqliteModel::select_all() {
     try {
         SqliteConnectionManager connection_manager;
 
@@ -185,8 +185,6 @@ tableVector const& AbstractSqliteModel::select_all() {
     catch(const std::exception& e) {
         fprintf(stderr, "An exception occured while trying to set up the database: %s\n", e.what());
     }
-
-    return full_table;
 }
 
 void AbstractSqliteModel::save_all() {

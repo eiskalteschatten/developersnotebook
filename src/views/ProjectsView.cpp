@@ -284,7 +284,8 @@ void ProjectsView::setup_list_store() {
                                     G_TYPE_STRING);
 
 
-    const tableVector &contents = projects_model.select_all();
+    projects_model.select_all();
+    const tableVector &contents = projects_model.get_full_table();
 
     for (auto const &row_map : contents) {
         const ProjectsRow row = convert_table_row_map_to_struct(row_map);

@@ -35,7 +35,7 @@ public:
 
     void delete_single();
     void select_one();
-    tableVector const& select_all();
+    void select_all();
     void save_all();
 
     // Getters and setters
