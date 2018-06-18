@@ -190,41 +190,19 @@ void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv) {
     GtkTreeIter tree_iter;
     GtkTreeModel *model   = nullptr;
     gchar *id             = nullptr;
-    gchar *name           = nullptr;
-    gchar *start_date     = nullptr;
-    gchar *end_date       = nullptr;
-    gchar *url            = nullptr;
-    gchar *notes          = nullptr;
-    gboolean is_complete;
 
     if (gtk_tree_selection_get_selected(selection, &model, &tree_iter)) {
-        gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id,
-                                              NAME_COLUMN, &name,
-                                              START_DATE_COLUMN, &start_date,
-                                              END_DATE_COLUMN, &end_date,
-                                              URL_COLUMN, &url,
-                                              NOTES_COLUMN, &notes,
-                                              IS_COMPLETE_COLUMN, &is_complete,
-                                              -1);
+        gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id, -1);
 
-        const ProjectsRow row = {
-            id,
-            name,
-            start_date,
-            end_date,
-            url,
-            notes,
-            is_complete != 0
-        };
-
-        pv->fill_in_sidebar(row);
+        ProjectsModel projects_model(std::stoi(id));
+        projects_model.select_one();
 
         g_free(id);
-        g_free(name);
-        g_free(start_date);
-        g_free(end_date);
-        g_free(url);
-        g_free(notes);
+
+        const tableRowMap &row_map = projects_model.get_contents();
+        const ProjectsRow row = pv->convert_table_row_map_to_struct(row_map);
+
+        pv->fill_in_sidebar(row);
 
         gtk_widget_set_sensitive(pv->delete_toolbar_button, TRUE);
     }

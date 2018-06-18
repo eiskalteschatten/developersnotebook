@@ -136,8 +136,7 @@ void AbstractSqliteModel::select_one() {
         }
 
         while ((connection = sqlite3_step(stmt)) == SQLITE_ROW) {
-            // i = 1 to skip the "id" column
-            for (int i = 1; i < sqlite3_column_count(stmt); i++) {
+            for (int i = 0; i < sqlite3_column_count(stmt); i++) {
                 std::string column_name = std::string(reinterpret_cast<const char*>(sqlite3_column_name(stmt, i)));
                 std::string column_text = std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, i)));
                 contents[column_name]   = column_text;
