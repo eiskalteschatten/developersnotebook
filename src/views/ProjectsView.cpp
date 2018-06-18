@@ -658,10 +658,10 @@ ProjectsRow ProjectsView::convert_table_row_map_to_struct_truncate_notes(const t
 }
 
 void ProjectsView::truncate_notes(std::string &notes) {
-    notes = std::regex_replace(notes, std::regex("\\n"), "");
+    notes = std::regex_replace(notes, std::regex("\\n"), " ");
     notes = std::regex_replace(notes, std::regex("\\r"), "");
 
     if (notes != "" && notes.length() >= 50) {
-        notes = notes.substr(0, 97) + "...";
+        notes = notes.substr(0, 47) + "...";
     }
 }
