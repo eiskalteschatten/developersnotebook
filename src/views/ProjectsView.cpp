@@ -1,3 +1,5 @@
+#include <regex>
+#include <map>
 #include <vector>
 #include <chrono>
 #include <ctime>
@@ -266,7 +268,7 @@ void ProjectsView::setup_list_store() {
     const tableVector &contents = projects_model.get_full_table();
 
     for (auto const &row_map : contents) {
-        const ProjectsRow row = convert_table_row_map_to_struct(row_map);
+        const ProjectsRow row = convert_table_row_map_to_struct_truncate_notes(row_map);
         append_to_list_store(&tree_iter);
         set_list_store(row, &tree_iter);
     }
@@ -618,6 +620,32 @@ ProjectsRow ProjectsView::convert_table_row_map_to_struct(const tableRowMap &map
         map.at("end_date").c_str(),
         map.at("url").c_str(),
         map.at("notes").c_str(),
+        is_complete,
+        map.at("date_completed").c_str(),
+        map.at("date_created").c_str()
+    };
+
+    return row;
+}
+
+ProjectsRow ProjectsView::convert_table_row_map_to_struct_truncate_notes(const tableRowMap &map) {
+    std::string notes = map.at("notes");
+    notes = std::regex_replace(notes, std::regex("\\n"), "");
+    notes = std::regex_replace(notes, std::regex("\\r"), "");
+
+    if (notes != "" && notes.length() >= 50) {
+        notes = notes.substr(0, 97) + "...";
+    }
+
+    bool is_complete = std::strncmp(map.at("is_complete").c_str(), "0", 1) != 0;
+
+    const ProjectsRow row = {
+        map.at("id").c_str(),
+        map.at("name").c_str(),
+        map.at("start_date").c_str(),
+        map.at("end_date").c_str(),
+        map.at("url").c_str(),
+        notes.c_str(),
         is_complete,
         map.at("date_completed").c_str(),
         map.at("date_created").c_str()
