@@ -491,14 +491,19 @@ void ProjectsView::setup_form_sidebar() {
     gtk_widget_set_halign(notes_label, GTK_ALIGN_START);
 
     notes_input = gtk_text_view_new();
-    g_object_set(notes_input, "hexpand", TRUE, NULL);
+
+    GtkWidget *notes_scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+    g_object_set(notes_scrolled_window, "hexpand", TRUE, NULL);
+    gtk_container_add(GTK_CONTAINER(notes_scrolled_window), notes_input);
+
     gtk_widget_set_size_request(notes_input, -1, 75);
-    gtk_widget_set_margin_bottom(notes_input, field_margin_bottom);
+    gtk_widget_set_size_request(notes_scrolled_window, -1, 75);
+    gtk_widget_set_margin_bottom(notes_scrolled_window, field_margin_bottom);
 
     gtk_grid_insert_row(GTK_GRID(form_grid), 10);
     gtk_grid_insert_row(GTK_GRID(form_grid), 11);
     gtk_grid_attach(GTK_GRID(form_grid), notes_label, 0, 10, 1, 1);
-    gtk_grid_attach(GTK_GRID(form_grid), notes_input, 0, 11, 1, 1);
+    gtk_grid_attach(GTK_GRID(form_grid), notes_scrolled_window, 0, 11, 1, 1);
 
 
     // Is Complete
