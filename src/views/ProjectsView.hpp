@@ -63,6 +63,7 @@ private:
     void fill_in_sidebar(const ProjectsRow &row);
     ProjectsRow convert_table_row_map_to_struct(const tableRowMap &map);
     ProjectsRow convert_table_row_map_to_struct_truncate_notes(const tableRowMap &map);
+    void truncate_notes(std::string &notes);
 
 public:
     ProjectsView(GtkWidget *window);

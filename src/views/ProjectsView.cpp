@@ -96,13 +96,16 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
         pv->prepend_to_list_store(&tree_iter);
     }
 
+    std::string notes_str = std::string(notes);
+    pv->truncate_notes(notes_str);
+
     ProjectsRow row = {
         "",
         name,
         start_date_str.c_str(),
         end_date_str.c_str(),
         gtk_entry_get_text(GTK_ENTRY(pv->url_input)),
-        notes,
+        notes_str.c_str(),
         is_complete,
         date_completed.c_str(),
         now_str.c_str()
@@ -630,12 +633,7 @@ ProjectsRow ProjectsView::convert_table_row_map_to_struct(const tableRowMap &map
 
 ProjectsRow ProjectsView::convert_table_row_map_to_struct_truncate_notes(const tableRowMap &map) {
     std::string notes = map.at("notes");
-    notes = std::regex_replace(notes, std::regex("\\n"), "");
-    notes = std::regex_replace(notes, std::regex("\\r"), "");
-
-    if (notes != "" && notes.length() >= 50) {
-        notes = notes.substr(0, 97) + "...";
-    }
+    truncate_notes(notes);
 
     bool is_complete = std::strncmp(map.at("is_complete").c_str(), "0", 1) != 0;
 
@@ -652,4 +650,13 @@ ProjectsRow ProjectsView::convert_table_row_map_to_struct_truncate_notes(const t
     };
 
     return row;
+}
+
+void ProjectsView::truncate_notes(std::string &notes) {
+    notes = std::regex_replace(notes, std::regex("\\n"), "");
+    notes = std::regex_replace(notes, std::regex("\\r"), "");
+
+    if (notes != "" && notes.length() >= 50) {
+        notes = notes.substr(0, 97) + "...";
+    }
 }
