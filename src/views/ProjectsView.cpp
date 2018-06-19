@@ -115,7 +115,7 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     projects_model->set_start_date(row.start_date, FALSE);
     projects_model->set_end_date(row.end_date, FALSE);
     projects_model->set_url(row.url, FALSE);
-    projects_model->set_notes(row.notes, FALSE);
+    projects_model->set_notes(notes, FALSE);
     projects_model->set_is_complete(is_complete, FALSE);
     projects_model->set_date_completed(date_completed, FALSE);
 
