@@ -39,9 +39,8 @@ std::string get_icon_path_mac() {
 }
 
 void AboutDialog::activate(GtkWidget *menu_item, GtkWidget *main_window) {
-    const std::string copyright = "(c) Alex Seifert 2018";
-    const std::string comments  = "A digital notebook for developers";
-    const std::string website   = "https://www.alexseifert.com";
+    const gchar *copyright = "(c) Alex Seifert 2018";
+    const gchar *website   = "https://www.alexseifert.com";
 
     std::string icon_path_str;
 
@@ -64,9 +63,9 @@ void AboutDialog::activate(GtkWidget *menu_item, GtkWidget *main_window) {
 
     gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(dialog), Constants::application_name.c_str());
     gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), Constants::application_version.c_str());
-    gtk_about_dialog_set_copyright(GTK_ABOUT_DIALOG(dialog), copyright.c_str());
-    gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dialog), comments.c_str());
-    gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(dialog), website.c_str());
+    gtk_about_dialog_set_copyright(GTK_ABOUT_DIALOG(dialog), copyright);
+    gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dialog), Constants::application_slogan.c_str());
+    gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(dialog), website);
 
     gtk_about_dialog_set_logo_icon_name(GTK_ABOUT_DIALOG(dialog), NULL);
     gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(dialog), logo);

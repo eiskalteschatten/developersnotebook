@@ -19,6 +19,7 @@ namespace Constants {
 
     const std::string application_name    = "Developer's Notebook";
     const std::string application_version = "0.1";
+    const std::string application_slogan  = "A digital notebook for developers";
 
     const std::string default_date_format      = "%a, %d %B %Y";
     const std::string default_date_time_format = default_date_format + " %T";
