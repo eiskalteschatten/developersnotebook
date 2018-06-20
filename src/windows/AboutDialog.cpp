@@ -1,5 +1,4 @@
 #include <string>
-#include <cstring>
 #include <gtk/gtk.h>
 
 #include "AboutDialog.hpp"

@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <fstream>
+#include <cstring>
 #include <gtk/gtk.h>
 
 #ifdef __APPLE__
