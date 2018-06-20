@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <regex>
 #include <sqlite3.h>
 
 #include "ProjectsModel.hpp"
@@ -64,5 +65,25 @@ void ProjectsModel::abstract_set_value(const std::string &column_name, const std
     }
     else {
         contents[column_name] = value;
+    }
+}
+
+void ProjectsModel::fill_model() {
+    name          = contents["name"];
+    start_date    = contents["start_date"];
+    end_date      = contents["end_date"];
+    url           = contents["url"];
+    notes         = contents["notes"];
+    is_complete   = std::stoi(contents["is_complete"]) == 1 ? true : false;
+    date_complete = contents["date_complete"];
+    date_created  = contents["date_created"];
+}
+
+void ProjectsModel::truncate_notes() {
+    notes = std::regex_replace(notes, std::regex("\\n"), " ");
+    notes = std::regex_replace(notes, std::regex("\\r"), "");
+
+    if (notes != "" && notes.length() >= 50) {
+        notes = notes.substr(0, 47) + "...";
     }
 }

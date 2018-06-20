@@ -146,6 +146,8 @@ void AbstractSqliteModel::select_one() {
         }
 
         sqlite3_finalize(stmt);
+
+        fill_model();
     }
     catch(const std::exception& e) {
         fprintf(stderr, "An exception occured while trying to set up the database: %s\n", e.what());
@@ -180,6 +182,8 @@ void AbstractSqliteModel::select_all() {
         }
 
         sqlite3_finalize(stmt);
+
+        fill_model();
     }
     catch(const std::exception& e) {
         fprintf(stderr, "An exception occured while trying to set up the database: %s\n", e.what());

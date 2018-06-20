@@ -59,3 +59,9 @@ void PreferencesModel::abstract_set_value(const std::string &column_name, const 
         contents[column_name] = value;
     }
 }
+
+void PreferencesModel::fill_model() {
+    window_width     = std::stoi(contents["window_width"]);
+    window_height    = std::stoi(contents["window_height"]);
+    window_maximized = std::stoi(contents["window_maximized"]) == 1 ? true : false;
+}

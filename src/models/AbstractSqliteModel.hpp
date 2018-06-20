@@ -27,6 +27,7 @@ protected:
     void update_single_int(const std::string insert_column_name, const int &value, bool update_contents);
 
     virtual void abstract_set_value(const std::string &column_name, const std::string &value, bool update_db) {};
+    virtual void fill_model() {};
 
 public:
     AbstractSqliteModel();

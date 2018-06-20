@@ -14,17 +14,7 @@ typedef struct {
     const gchar *date_completed;
     const gchar *date_created;
 
-    void truncate_notes() {
-        std::string notes_str = std::string(notes);
-        notes_str             = std::regex_replace(notes_str, std::regex("\\n"), " ");
-        notes_str             = std::regex_replace(notes_str, std::regex("\\r"), "");
-
-        if (notes_str != "" && notes_str.length() >= 50) {
-            notes_str = notes_str.substr(0, 47) + "...";
-        }
-
-        notes = notes_str.c_str();
-    }
+    void truncate_notes() {}
 } ProjectsRow;
 
 
