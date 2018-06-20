@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <regex>
 #include <stdio.h>
 #include <sqlite3.h>
 
@@ -197,7 +198,7 @@ void AbstractSqliteModel::abstract_save_all() {
         for (auto const &column : contents) {
             set.append(column.first);
             set.append("=\"");
-            set.append(column.second);
+            set.append(text_escape(column.second));
             set.append("\",");
         }
 
@@ -209,8 +210,8 @@ void AbstractSqliteModel::abstract_save_all() {
             char *error_message = 0;
             int connection;
             std::string sql = "UPDATE " + table_schema->table_name +
-                            " SET " + set +
-                            " WHERE id=" + std::to_string(id) + ";";
+                              " SET " + set +
+                              " WHERE id=" + std::to_string(id) + ";";
 
             connection = sqlite3_exec(connection_manager.get_db(), sql.c_str(), NULL, 0, &error_message);
 
@@ -226,6 +227,10 @@ void AbstractSqliteModel::abstract_save_all() {
     catch(const std::exception& e) {
         fprintf(stderr, "An exception occured while trying to save to the database: %s\n", e.what());
     }
+}
+
+std::string AbstractSqliteModel::text_escape(std::string text) {
+    return std::regex_replace(text, std::regex("\""), "\"\"");
 }
 
 // Setters

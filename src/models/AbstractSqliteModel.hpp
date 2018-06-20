@@ -26,6 +26,7 @@ protected:
     void update_single_text(const std::string insert_column_name, const std::string &value);
     void update_single_int(const std::string insert_column_name, const int &value);
     void abstract_save_all();
+    std::string text_escape(std::string text);
 
     virtual void fill_model() {}
 
