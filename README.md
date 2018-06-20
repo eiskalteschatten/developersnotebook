@@ -41,7 +41,7 @@ After building, the binaries can be found in the `build` directory. They can eit
 
 ### 0.1
 
-- Home
+- Dashboard
 - Projects
 - Preferences
 - Check for updates
@@ -57,14 +57,14 @@ After building, the binaries can be found in the `build` directory. They can eit
 
 - To dos
 - Issues
-- Updated home
+- Updated dashboard
 
 
 ### 0.4
 
 - Tools (color picker/converter, image and file compression, etc)
 - Bookmarks
-- Updated home
+- Updated dashboard
 
 
 ### 0.5
@@ -72,7 +72,7 @@ After building, the binaries can be found in the `build` directory. They can eit
 - Journal
 - Notes
 - Code cache
-- Updated home
+- Updated dashboard
 
 
 ### 1.0
@@ -80,7 +80,7 @@ After building, the binaries can be found in the `build` directory. They can eit
 - Icons in the menu on the left
 - Command palette
 - Search
-- Updated home
+- Updated dashboard
 
 
 ### 2.0

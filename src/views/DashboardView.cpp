@@ -1,9 +1,9 @@
 #include <gtk/gtk.h>
 
-#include "HomeView.hpp"
+#include "DashboardView.hpp"
 #include "../constants.hpp"
 
-HomeView::HomeView() {
+DashboardView::DashboardView() {
     const int grid_spacing = 35;
 
     main_widget = gtk_grid_new();

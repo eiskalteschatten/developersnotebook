@@ -4,7 +4,7 @@
 #include "MainWindow.hpp"
 #include "MenuBar.hpp"
 #include "../constants.hpp"
-#include "../views/HomeView.hpp"
+#include "../views/DashboardView.hpp"
 #include "../views/ProjectsView.hpp"
 #include "../models/PreferencesModel.hpp"
 
@@ -69,8 +69,8 @@ void MainWindow::setup_grid() {
 
 void MainWindow::setup_stack() {
     // Views for the stack
-    HomeView *home_view         = new HomeView();
-    GtkWidget *home_view_widget = home_view->get_widget();
+    DashboardView *dashboard_view         = new DashboardView();
+    GtkWidget *dashboard_view_widget = dashboard_view->get_widget();
 
     ProjectsView *projects_view     = new ProjectsView(window);
     GtkWidget *projects_view_widget = projects_view->get_widget();
@@ -88,7 +88,7 @@ void MainWindow::setup_stack() {
     gtk_widget_set_vexpand(sidebar, TRUE);
 
     // Add the elements to the stack
-    gtk_stack_add_titled(GTK_STACK(stack), home_view_widget, "home", "Home");
+    gtk_stack_add_titled(GTK_STACK(stack), dashboard_view_widget, "dashboard", "Dashboard");
     gtk_stack_add_titled(GTK_STACK(stack), projects_view_widget, "projects", "Projects");
 
     gtk_grid_attach(GTK_GRID(grid), sidebar, 0, 1, 1, 1);
