@@ -10,9 +10,8 @@ void AboutDialog::activate(GtkWidget *menu_item, GtkWidget *main_window) {
     const gchar *copyright = "(c) Alex Seifert 2018";
     const gchar *website   = "https://www.alexseifert.com";
 
-    Image *logo         = new Image("icon128x128", "svg");
-    GdkPixbuf *logo_buf = logo->get_pixbuf();
-    delete logo;
+    Image logo("icon128x128", "svg");
+    GdkPixbuf *logo_buf = logo.get_pixbuf();
 
     GtkWidget *dialog = gtk_about_dialog_new();
 
