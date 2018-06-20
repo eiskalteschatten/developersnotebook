@@ -22,12 +22,12 @@ protected:
     int id;
 
     void insert_new_row();
-    void update_single(const std::string insert_column_name, const std::string &value, bool update_contents);
-    void update_single_text(const std::string insert_column_name, const std::string &value, bool update_contents);
-    void update_single_int(const std::string insert_column_name, const int &value, bool update_contents);
+    void update_single(const std::string insert_column_name, const std::string &value);
+    void update_single_text(const std::string insert_column_name, const std::string &value);
+    void update_single_int(const std::string insert_column_name, const int &value);
+    void abstract_save_all();
 
-    virtual void abstract_set_value(const std::string &column_name, const std::string &value, bool update_db) {};
-    virtual void fill_model() {};
+    virtual void fill_model() {}
 
 public:
     AbstractSqliteModel();
@@ -37,7 +37,8 @@ public:
     void delete_single();
     void select_one();
     void select_all();
-    void save_all();
+
+    virtual void save_all() { abstract_save_all(); }
 
     // Getters and setters
 

@@ -20,7 +20,7 @@ public:
     ~PreferencesModel();
 
     void setup();
-    void abstract_set_value(const std::string &column_name, const std::string &value, bool update_db);
+    void save_all();
 
     // Getters and setters
 
@@ -30,7 +30,7 @@ public:
     void set_window_height(const int &new_height, bool update_db);
     int const get_window_height() const { return window_height; }
 
-    void set_window_maximized(const bool maximized, bool update_db);
+    void set_window_maximized(const bool new_maximized, bool update_db);
     bool const get_window_maximized() const { return window_maximized; }
 };
 

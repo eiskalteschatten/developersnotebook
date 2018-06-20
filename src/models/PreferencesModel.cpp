@@ -38,25 +38,28 @@ void PreferencesModel::setup() {
 
 // Setters
 
-void PreferencesModel::set_window_width(const int &width, bool update_db) {
-    abstract_set_value("window_width", std::to_string(width), update_db);
-}
+void PreferencesModel::set_window_width(const int &new_width, bool update_db) {
+    window_width = new_width;
 
-void PreferencesModel::set_window_height(const int &height, bool update_db) {
-    abstract_set_value("window_height", std::to_string(height), update_db);
-}
-
-void PreferencesModel::set_window_maximized(const bool maximized, bool update_db) {
-    int int_value = maximized ? 1 : 0;
-    abstract_set_value("window_maximized", std::to_string(int_value), update_db);
-}
-
-void PreferencesModel::abstract_set_value(const std::string &column_name, const std::string &value, bool update_db) {
     if (update_db) {
-        update_single_text(column_name, value, true);
+        update_single_int("window_width", window_width);
     }
-    else {
-        contents[column_name] = value;
+}
+
+void PreferencesModel::set_window_height(const int &new_height, bool update_db) {
+    window_height = new_height;
+
+    if (update_db) {
+        update_single_int("window_height", window_height);
+    }
+}
+
+void PreferencesModel::set_window_maximized(const bool new_maximized, bool update_db) {
+    int int_value    = new_maximized ? 1 : 0;
+    window_maximized = new_maximized;
+
+    if (update_db) {
+        update_single_int("window_maximized", int_value);
     }
 }
 
@@ -64,4 +67,12 @@ void PreferencesModel::fill_model() {
     window_width     = std::stoi(contents["window_width"]);
     window_height    = std::stoi(contents["window_height"]);
     window_maximized = std::stoi(contents["window_maximized"]) == 1 ? true : false;
+}
+
+void PreferencesModel::save_all() {
+    contents["window_width"]     = std::to_string(window_width);
+    contents["window_height"]    = std::to_string(window_height);
+    contents["window_maximized"] = window_maximized ? "1" : "0";
+
+    abstract_save_all();
 }

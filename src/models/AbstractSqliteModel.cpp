@@ -56,7 +56,7 @@ void AbstractSqliteModel::insert_new_row() {
     }
 }
 
-void AbstractSqliteModel::update_single(const std::string insert_column_name, const std::string &value, bool update_contents) {
+void AbstractSqliteModel::update_single(const std::string insert_column_name, const std::string &value) {
     try {
         if (!id) {
             insert_new_row();
@@ -77,22 +77,18 @@ void AbstractSqliteModel::update_single(const std::string insert_column_name, co
             fprintf(stderr, "SQL error: %s\n", error_message);
             sqlite3_free(error_message);
         }
-
-        if (update_contents) {
-            contents[insert_column_name] = value;
-        }
     }
     catch(const std::exception& e) {
         fprintf(stderr, "An exception occured while trying to save to the database: %s\n", e.what());
     }
 }
 
-void AbstractSqliteModel::update_single_text(const std::string insert_column_name, const std::string &value, bool update_contents) {
-    update_single(insert_column_name, value, update_contents);
+void AbstractSqliteModel::update_single_text(const std::string insert_column_name, const std::string &value) {
+    update_single(insert_column_name, value);
 }
 
-void AbstractSqliteModel::update_single_int(const std::string insert_column_name, const int &value, bool update_contents) {
-    update_single(insert_column_name, std::to_string(value), update_contents);
+void AbstractSqliteModel::update_single_int(const std::string insert_column_name, const int &value) {
+    update_single(insert_column_name, std::to_string(value));
 }
 
 void AbstractSqliteModel::delete_single() {
@@ -190,7 +186,7 @@ void AbstractSqliteModel::select_all() {
     }
 }
 
-void AbstractSqliteModel::save_all() {
+void AbstractSqliteModel::abstract_save_all() {
     try {
         if (!id) {
             insert_new_row();
