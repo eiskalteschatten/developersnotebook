@@ -13,6 +13,18 @@ typedef struct {
     const bool is_complete;
     const gchar *date_completed;
     const gchar *date_created;
+
+    void truncate_notes() {
+        std::string notes_str = std::string(notes);
+        notes_str             = std::regex_replace(notes_str, std::regex("\\n"), " ");
+        notes_str             = std::regex_replace(notes_str, std::regex("\\r"), "");
+
+        if (notes_str != "" && notes_str.length() >= 50) {
+            notes_str = notes_str.substr(0, 47) + "...";
+        }
+
+        notes = notes_str.c_str();
+    }
 } ProjectsRow;
 
 
@@ -62,8 +74,6 @@ private:
     void empty_sidebar();
     void fill_in_sidebar(const ProjectsRow &row);
     ProjectsRow convert_table_row_map_to_struct(const tableRowMap &map);
-    ProjectsRow convert_table_row_map_to_struct_truncate_notes(const tableRowMap &map);
-    void truncate_notes(std::string &notes);
 
 public:
     ProjectsView(GtkWidget *window);

@@ -96,20 +96,19 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
         pv->prepend_to_list_store(&tree_iter);
     }
 
-    std::string notes_str = std::string(notes);
-    pv->truncate_notes(notes_str);
-
     ProjectsRow row = {
         "",
         name,
         start_date_str.c_str(),
         end_date_str.c_str(),
         gtk_entry_get_text(GTK_ENTRY(pv->url_input)),
-        notes_str.c_str(),
+        notes,
         is_complete,
         date_completed.c_str(),
         now_str.c_str()
     };
+
+    row.truncate_notes();
 
     projects_model->set_name(row.name, FALSE);
     projects_model->set_start_date(row.start_date, FALSE);
@@ -271,7 +270,8 @@ void ProjectsView::setup_list_store() {
     const tableVector &contents = projects_model.get_full_table();
 
     for (auto const &row_map : contents) {
-        const ProjectsRow row = convert_table_row_map_to_struct_truncate_notes(row_map);
+        ProjectsRow row = convert_table_row_map_to_struct(row_map);
+        row.truncate_notes();
         append_to_list_store(&tree_iter);
         set_list_store(row, &tree_iter);
     }
@@ -634,34 +634,4 @@ ProjectsRow ProjectsView::convert_table_row_map_to_struct(const tableRowMap &map
     };
 
     return row;
-}
-
-ProjectsRow ProjectsView::convert_table_row_map_to_struct_truncate_notes(const tableRowMap &map) {
-    std::string notes = map.at("notes");
-    truncate_notes(notes);
-
-    bool is_complete = std::strncmp(map.at("is_complete").c_str(), "0", 1) != 0;
-
-    const ProjectsRow row = {
-        map.at("id").c_str(),
-        map.at("name").c_str(),
-        map.at("start_date").c_str(),
-        map.at("end_date").c_str(),
-        map.at("url").c_str(),
-        notes.c_str(),
-        is_complete,
-        map.at("date_completed").c_str(),
-        map.at("date_created").c_str()
-    };
-
-    return row;
-}
-
-void ProjectsView::truncate_notes(std::string &notes) {
-    notes = std::regex_replace(notes, std::regex("\\n"), " ");
-    notes = std::regex_replace(notes, std::regex("\\r"), "");
-
-    if (notes != "" && notes.length() >= 50) {
-        notes = notes.substr(0, 47) + "...";
-    }
 }
