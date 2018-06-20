@@ -69,7 +69,7 @@ void AbstractSqliteModel::update_single(const std::string insert_column_name, co
         int connection;
         std::string sql = "UPDATE " + table_schema->table_name +
                           " SET " + (std::string)insert_column_name +
-                          " = \"" + value + "\"" +
+                          " = \"" + text_escape(value) + "\"" +
                           " WHERE id=" + std::to_string(id) + ";";
 
         connection = sqlite3_exec(connection_manager.get_db(), sql.c_str(), NULL, 0, &error_message);
