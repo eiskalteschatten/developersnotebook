@@ -95,33 +95,19 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
         pv->prepend_to_list_store(&tree_iter);
     }
 
-    ProjectsRow row = {
-        "",
-        name,
-        start_date_str.c_str(),
-        end_date_str.c_str(),
-        gtk_entry_get_text(GTK_ENTRY(pv->url_input)),
-        notes,
-        is_complete,
-        date_completed.c_str(),
-        now_str.c_str()
-    };
-
-    row.truncate_notes();
-
-    projects_model->set_name(row.name, FALSE);
-    projects_model->set_start_date(row.start_date, FALSE);
-    projects_model->set_end_date(row.end_date, FALSE);
-    projects_model->set_url(row.url, FALSE);
+    projects_model->set_name(name, FALSE);
+    projects_model->set_start_date(start_date_str, FALSE);
+    projects_model->set_end_date(end_date_str, FALSE);
+    projects_model->set_url(std::string(gtk_entry_get_text(GTK_ENTRY(pv->url_input))), FALSE);
     projects_model->set_notes(notes, FALSE);
     projects_model->set_is_complete(is_complete, FALSE);
     projects_model->set_date_completed(date_completed, FALSE);
 
     projects_model->save_all();
 
-    row.id = std::to_string(projects_model->get_id()).c_str();
+    projects_model->truncate_notes();
 
-    pv->set_list_store(row, &tree_iter);
+    pv->set_list_store(projects_model, &tree_iter);
     pv->select_row_in_list_view(&tree_iter);
 
     delete projects_model;
@@ -197,15 +183,13 @@ void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv) {
     if (gtk_tree_selection_get_selected(selection, &model, &tree_iter)) {
         gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id, -1);
 
-        ProjectsModel projects_model(std::stoi(id));
-        projects_model.select_one();
+        ProjectsModel *projects_model = new ProjectsModel(std::stoi(id));
+        projects_model->select_one();
+
+        pv->fill_in_sidebar(projects_model);
 
         g_free(id);
-
-        const tableRowMap &row_map = projects_model.get_contents();
-        const ProjectsRow row = pv->convert_table_row_map_to_struct(row_map);
-
-        pv->fill_in_sidebar(row);
+        delete projects_model;
 
         gtk_widget_set_sensitive(pv->delete_toolbar_button, TRUE);
     }
@@ -251,7 +235,7 @@ ProjectsView::~ProjectsView() {
 
 void ProjectsView::setup_list_store() {
     GtkTreeIter tree_iter;
-    ProjectsModel projects_model;
+    ProjectsModel all_projects;
 
     list_store = gtk_list_store_new(N_COLUMNS,
                                     G_TYPE_STRING,
@@ -265,14 +249,15 @@ void ProjectsView::setup_list_store() {
                                     G_TYPE_STRING);
 
 
-    projects_model.select_all();
-    const tableVector &contents = projects_model.get_full_table();
+    all_projects.select_all();
+    const tableVector &contents = all_projects.get_full_table();
 
     for (auto const &row_map : contents) {
-        ProjectsRow row = convert_table_row_map_to_struct(row_map);
-        row.truncate_notes();
+        ProjectsModel *row = new ProjectsModel(row_map);
+        row->truncate_notes();
         append_to_list_store(&tree_iter);
         set_list_store(row, &tree_iter);
+        delete row;
     }
 }
 
@@ -379,16 +364,18 @@ void ProjectsView::remove_from_list_store(GtkTreeIter *tree_iter) {
     gtk_list_store_remove(GTK_LIST_STORE(list_store), tree_iter);
 }
 
-void ProjectsView::set_list_store(const ProjectsRow &row, GtkTreeIter *tree_iter) {
-    gtk_list_store_set(GTK_LIST_STORE(list_store), tree_iter, ID_COLUMN, row.id,
-                                                              NAME_COLUMN, row.name,
-                                                              START_DATE_COLUMN, row.start_date,
-                                                              END_DATE_COLUMN, row.end_date,
-                                                              URL_COLUMN, row.url,
-                                                              NOTES_COLUMN, row.notes,
-                                                              IS_COMPLETE_COLUMN, row.is_complete,
-                                                              DATE_COMPLETED_COLUMN, row.date_completed,
-                                                              DATE_CREATED_COLUMN, row.date_created,
+void ProjectsView::set_list_store(const ProjectsModel *row, GtkTreeIter *tree_iter) {
+    const std::string id_str = std::to_string(row->get_id());
+
+    gtk_list_store_set(GTK_LIST_STORE(list_store), tree_iter, ID_COLUMN, id_str.c_str(),
+                                                              NAME_COLUMN, row->get_name().c_str(),
+                                                              START_DATE_COLUMN, row->get_start_date().c_str(),
+                                                              END_DATE_COLUMN, row->get_end_date().c_str(),
+                                                              URL_COLUMN, row->get_url().c_str(),
+                                                              NOTES_COLUMN, row->get_notes().c_str(),
+                                                              IS_COMPLETE_COLUMN, row->get_is_complete(),
+                                                              DATE_COMPLETED_COLUMN, row->get_date_completed().c_str(),
+                                                              DATE_CREATED_COLUMN, row->get_date_created().c_str(),
                                                               -1);
 }
 
@@ -555,31 +542,34 @@ void ProjectsView::setup_form_sidebar() {
 }
 
 void ProjectsView::empty_sidebar() {
-    const ProjectsRow row = {
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        false
-    };
+    tableRowMap row_map;
 
+    row_map["name"]           = "";
+    row_map["start_date"]     = "";
+    row_map["end_date"]       = "";
+    row_map["url"]            = "";
+    row_map["notes"]          = "";
+    row_map["is_complete"]    = "";
+    row_map["date_completed"] = "";
+    row_map["date_created"]   = "";
+
+    ProjectsModel *row = new ProjectsModel(row_map);
     fill_in_sidebar(row);
+    delete row;
 
     gtk_button_set_label(GTK_BUTTON(save_button), "Create New Project");
     gtk_widget_set_sensitive(delete_button, FALSE);
 }
 
-void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
-    gtk_entry_set_text(GTK_ENTRY(project_name_input), row.name);
-    gtk_entry_set_text(GTK_ENTRY(url_input), row.url);
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(is_complete_checkbox), row.is_complete);
+void ProjectsView::fill_in_sidebar(const ProjectsModel *row) {
+    gtk_entry_set_text(GTK_ENTRY(project_name_input), row->get_name().c_str());
+    gtk_entry_set_text(GTK_ENTRY(url_input), row->get_url().c_str());
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(is_complete_checkbox), row->get_is_complete());
 
-    if (row.start_date && row.start_date[0]) {
-        std::string start_date_str = std::string(row.start_date);
-        std::tm start_date_tm      = get_date_from_string(&start_date_str);
-        guint year                 = start_date_tm.tm_year + 1900;
+    if (row->get_start_date() != "") {
+        std::string date_str  = row->get_start_date();
+        std::tm start_date_tm = get_date_from_string(&date_str);
+        guint year            = start_date_tm.tm_year + 1900;
 
         gtk_calendar_select_month(GTK_CALENDAR(start_date_input), start_date_tm.tm_mon, year);
         gtk_calendar_select_day(GTK_CALENDAR(start_date_input), start_date_tm.tm_mday);
@@ -588,10 +578,10 @@ void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
         reset_calender(start_date_input);
     }
 
-    if (row.end_date && row.end_date[0]) {
-        std::string end_date_str = std::string(row.end_date);
-        std::tm end_date_tm      = get_date_from_string(&end_date_str);
-        guint year                 = end_date_tm.tm_year + 1900;
+    if (row->get_end_date() != "") {
+        std::string date_str = row->get_end_date();
+        std::tm end_date_tm  = get_date_from_string(&date_str);
+        guint year           = end_date_tm.tm_year + 1900;
 
         gtk_calendar_select_month(GTK_CALENDAR(end_date_input), end_date_tm.tm_mon, year);
         gtk_calendar_select_day(GTK_CALENDAR(end_date_input), end_date_tm.tm_mday);
@@ -607,30 +597,12 @@ void ProjectsView::fill_in_sidebar(const ProjectsRow &row) {
     gtk_text_buffer_get_bounds(buffer, &start, &end);
     gtk_text_buffer_delete(buffer, &start, &end);
 
-    if (row.notes && row.notes[0]) {
+    if (row->get_notes() != "") {
         GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(notes_input));
         gtk_text_buffer_get_start_iter(buffer, &start);
-        gtk_text_buffer_insert(buffer, &start, row.notes, -1);
+        gtk_text_buffer_insert(buffer, &start, row->get_notes().c_str(), -1);
     }
 
     gtk_button_set_label(GTK_BUTTON(save_button), "Save Project");
     gtk_widget_set_sensitive(delete_button, TRUE);
-}
-
-ProjectsRow ProjectsView::convert_table_row_map_to_struct(const tableRowMap &map) {
-    bool is_complete = std::strncmp(map.at("is_complete").c_str(), "0", 1) != 0;
-
-    const ProjectsRow row = {
-        map.at("id").c_str(),
-        map.at("name").c_str(),
-        map.at("start_date").c_str(),
-        map.at("end_date").c_str(),
-        map.at("url").c_str(),
-        map.at("notes").c_str(),
-        is_complete,
-        map.at("date_completed").c_str(),
-        map.at("date_created").c_str()
-    };
-
-    return row;
 }

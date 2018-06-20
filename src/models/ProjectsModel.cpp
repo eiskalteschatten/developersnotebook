@@ -15,6 +15,18 @@ ProjectsModel::ProjectsModel(const int &select_id) : AbstractSqliteModel(select_
 	setup();
 }
 
+ProjectsModel::ProjectsModel(const tableRowMap &new_contents) {
+    contents = new_contents;
+    fill_model();
+
+    if (contents.find("id") != contents.end() && contents["id"] != "") {
+        std::string fuckvs = contents["id"];
+        id = std::stoi(contents["id"]);
+    }
+
+    setup();
+}
+
 ProjectsModel::~ProjectsModel() {
 
 }
@@ -97,7 +109,7 @@ void ProjectsModel::fill_model() {
     end_date       = contents["end_date"];
     url            = contents["url"];
     notes          = contents["notes"];
-    is_complete    = std::stoi(contents["is_complete"]) == 1 ? true : false;
+    is_complete    = contents["is_complete"] == "1" ? true : false;
     date_completed = contents["date_completed"];
     date_created   = contents["date_created"];
 }

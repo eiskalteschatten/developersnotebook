@@ -2,20 +2,7 @@
 #define ProjectsView_hpp
 
 #include "AbstractView.hpp"
-
-typedef struct {
-    const gchar *id;
-    const gchar *name;
-    const gchar *start_date;
-    const gchar *end_date;
-    const gchar *url;
-    const gchar *notes;
-    const bool is_complete;
-    const gchar *date_completed;
-    const gchar *date_created;
-
-    void truncate_notes() {}
-} ProjectsRow;
+#include "../models/ProjectsModel.hpp"
 
 
 class ProjectsView : public AbstractView {
@@ -58,12 +45,11 @@ private:
     void append_to_list_store(GtkTreeIter *tree_iter);
     void prepend_to_list_store(GtkTreeIter *tree_iter);
     void remove_from_list_store(GtkTreeIter *tree_iter);
-    void set_list_store(const ProjectsRow &row, GtkTreeIter *tree_iter);
+    void set_list_store(const ProjectsModel *row, GtkTreeIter *tree_iter);
     void select_row_in_list_view(GtkTreeIter *tree_iter);
     void setup_form_sidebar();
     void empty_sidebar();
-    void fill_in_sidebar(const ProjectsRow &row);
-    ProjectsRow convert_table_row_map_to_struct(const tableRowMap &map);
+    void fill_in_sidebar(const ProjectsModel *row);
 
 public:
     ProjectsView(GtkWidget *window);

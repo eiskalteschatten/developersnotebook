@@ -66,7 +66,7 @@ void PreferencesModel::set_window_maximized(const bool new_maximized, bool updat
 void PreferencesModel::fill_model() {
     window_width     = std::stoi(contents["window_width"]);
     window_height    = std::stoi(contents["window_height"]);
-    window_maximized = std::stoi(contents["window_maximized"]) == 1 ? true : false;
+    window_maximized = contents["window_maximized"] == "1" ? true : false;
 }
 
 void PreferencesModel::save_all() {

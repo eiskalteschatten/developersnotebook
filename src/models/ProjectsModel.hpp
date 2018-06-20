@@ -22,6 +22,7 @@ private:
 public:
     ProjectsModel();
     ProjectsModel(const int &select_id);
+    ProjectsModel(const tableRowMap &new_contents);
     ~ProjectsModel();
 
     void setup();
