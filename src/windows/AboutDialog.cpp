@@ -8,7 +8,6 @@
 
 void AboutDialog::activate(GtkWidget *menu_item, GtkWidget *main_window) {
     const gchar *copyright = "(c) Alex Seifert 2018";
-    const gchar *website   = "https://www.alexseifert.com";
 
     Image logo("icon128x128", "svg");
     GdkPixbuf *logo_buf = logo.get_pixbuf();
@@ -22,7 +21,7 @@ void AboutDialog::activate(GtkWidget *menu_item, GtkWidget *main_window) {
     gtk_about_dialog_set_version(GTK_ABOUT_DIALOG(dialog), Constants::application_version.c_str());
     gtk_about_dialog_set_copyright(GTK_ABOUT_DIALOG(dialog), copyright);
     gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dialog), Constants::application_slogan.c_str());
-    gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(dialog), website);
+    gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(dialog), Constants::application_website.c_str());
 
     gtk_about_dialog_set_logo_icon_name(GTK_ABOUT_DIALOG(dialog), NULL);
     gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(dialog), logo_buf);

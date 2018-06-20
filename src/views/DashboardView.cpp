@@ -21,6 +21,8 @@ DashboardView::DashboardView() {
     GtkWidget *title_grid = gtk_grid_new();
 
     gtk_grid_insert_row(GTK_GRID(title_grid), 0);
+    gtk_grid_insert_row(GTK_GRID(title_grid), 1);
+    gtk_grid_insert_row(GTK_GRID(title_grid), 2);
     gtk_grid_insert_column(GTK_GRID(title_grid), 0);
     gtk_grid_insert_column(GTK_GRID(title_grid), 1);
 
@@ -29,7 +31,7 @@ DashboardView::DashboardView() {
     GdkPixbuf *logo_buf = logo_image.get_pixbuf();
     GtkWidget *logo     = gtk_image_new_from_pixbuf(logo_buf);
     g_object_unref(logo_buf);
-    gtk_grid_attach(GTK_GRID(title_grid), logo, 0, 0, 1, 2);
+    gtk_grid_attach(GTK_GRID(title_grid), logo, 0, 0, 1, 3);
 
     gchar *markup = nullptr;
 
@@ -55,6 +57,14 @@ DashboardView::DashboardView() {
     gtk_widget_set_halign(slogan, GTK_ALIGN_START);
     gtk_widget_set_valign(slogan, GTK_ALIGN_START);
     gtk_grid_attach(GTK_GRID(title_grid), slogan, 1, 1, 1, 1);
+
+    // -- Website
+    GtkWidget *website = gtk_link_button_new(Constants::application_website.c_str());
+    g_object_set(website, "hexpand", TRUE, NULL);
+    gtk_widget_set_halign(website, GTK_ALIGN_START);
+    gtk_widget_set_valign(website, GTK_ALIGN_START);
+    gtk_grid_attach(GTK_GRID(title_grid), website, 1, 2, 1, 1);
+
 
     g_free(markup);
 
