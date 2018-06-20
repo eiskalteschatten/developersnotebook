@@ -17,12 +17,14 @@ DashboardView::DashboardView() {
     gtk_grid_insert_row(GTK_GRID(main_widget), 0);
     gtk_grid_insert_column(GTK_GRID(main_widget), 0);
 
+    // Application logo, title, etc
     GtkWidget *title_grid = gtk_grid_new();
 
     gtk_grid_insert_row(GTK_GRID(title_grid), 0);
     gtk_grid_insert_column(GTK_GRID(title_grid), 0);
     gtk_grid_insert_column(GTK_GRID(title_grid), 1);
 
+    // -- Logo
     Image logo_image("icon128x128", "svg");
     GdkPixbuf *logo_buf = logo_image.get_pixbuf();
     GtkWidget *logo     = gtk_image_new_from_pixbuf(logo_buf);
@@ -31,6 +33,7 @@ DashboardView::DashboardView() {
 
     gchar *markup = nullptr;
 
+    // -- Title
     GtkWidget *title          = gtk_label_new(NULL);
     const gchar *app_name     = Constants::application_name.c_str();
     const gchar *format_title = "<span font_weight=\"heavy\" font_size=\"xx-large\">\%s</span>";
@@ -41,6 +44,7 @@ DashboardView::DashboardView() {
     gtk_widget_set_halign(title, GTK_ALIGN_START);
     gtk_grid_attach(GTK_GRID(title_grid), title, 1, 0, 1, 1);
 
+    // -- Slogan
     GtkWidget *slogan          = gtk_label_new(NULL);
     const gchar *app_slogan    = Constants::application_slogan.c_str();
     const gchar *format_slogan = "<span font_size=\"large\">\%s</span>";
