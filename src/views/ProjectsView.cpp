@@ -7,6 +7,7 @@
 
 #include "ProjectsView.hpp"
 #include "../models/ProjectsModel.hpp"
+#include "../util/Modal.hpp"
 
 enum {
     ID_COLUMN,
@@ -59,7 +60,8 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     const gchar *notes = gtk_text_buffer_get_text(buffer, &start, &end, FALSE);
 
     if (name && !name[0]) {
-        pv->show_error_modal("You must enter a project name.");
+        Modal modal("You must enter a project name.", "", pv->main_window);
+        modal.show_error_modal();
         return;
     }
 
@@ -156,7 +158,8 @@ void delete_project(GtkWidget *widget, ProjectsView *pv) {
             }
 
             if (!gtk_tree_selection_get_selected(pv->select, &model, &tree_iter) || id == -1) {
-                pv->show_error_modal("No project selected.");
+                Modal modal("No project selected.", "", pv->main_window);
+                modal.show_error_modal();
                 break;
             }
 
