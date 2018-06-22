@@ -14,7 +14,7 @@ MAC_BUNDLE=Developer\'s\ Notebook.app
 ifeq ($(OS_TYPE), Darwin)
 
 CXXINCLUDES=-I/usr/local/Cellar/gtk-mac-integration/2.0.8_2/include/gtkmacintegration/
-CXXLINKED=-lgtkmacintegration-gtk3.2
+CXXLINKED=-framework Foundation -lgtkmacintegration-gtk3.2
 PKG_CONFIG_LOC=pkg-config
 BUILD_RUN_TARGET=all
 BUILD_RUN_OPEN=./$(BIN_DIR)/$(TARGET)
@@ -38,7 +38,6 @@ $(BUILD_DIR)/%.m.o: $(SRC_DIR)/%.m
 	@mkdir -p $(BUILD_DIR);
 	@mkdir -p ${@D};
 	clang \
-		-fobjc-arc -framework Cocoa \
 		-o $@ \
 		-c $<
 
