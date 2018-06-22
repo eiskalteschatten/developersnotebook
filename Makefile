@@ -5,8 +5,8 @@ CXXFLAGS=-Wall -g
 BUILD_DIR=build
 BIN_DIR=bin
 SRC_DIR=src
-SOURCES:=$(shell find $(SRC_DIR) -type f -name *.cpp)
-OBJECTS:=$(patsubst $(SRC_DIR)/%,$(BUILD_DIR)/%,$(SOURCES:.cpp=.o))
+CPPSOURCES:=$(shell find $(SRC_DIR) -type f -name *.cpp)
+CPPOBJECTS:=$(patsubst $(SRC_DIR)/%,$(BUILD_DIR)/%,$(CPPSOURCES:.cpp=.o))
 TARGET=developersnotebook
 OS_TYPE:=$(shell uname)
 MAC_BUNDLE=Developer\'s\ Notebook.app
@@ -18,6 +18,8 @@ CXXLINKED=-lgtkmacintegration-gtk3.2
 PKG_CONFIG_LOC=pkg-config
 BUILD_RUN_TARGET=all
 BUILD_RUN_OPEN=./$(BIN_DIR)/$(TARGET)
+OBJCSOURCES:=$(shell find $(SRC_DIR) -type f -name *.m)
+OBJECTS:=$(patsubst $(SRC_DIR)/%,$(BUILD_DIR)/%,$(OBJCSOURCES:.m=.m.o) $(CPPOBJECTS))
 
 else ifeq ($(OS_TYPE), Linux)
 
@@ -26,9 +28,19 @@ CXXLINKED=
 PKG_CONFIG_LOC=pkg-config
 BUILD_RUN_TARGET=all
 BUILD_RUN_OPEN=./$(BIN_DIR)/$(TARGET)
+OBJECTS:=$(CPPOBJECTS)
 
 endif
 
+# Objective C
+$(BUILD_DIR)/%.m.o: $(SRC_DIR)/%.m
+	@echo "Compiling $@...";
+	@mkdir -p $(BUILD_DIR);
+	@mkdir -p ${@D};
+	clang \
+		-fobjc-arc -framework Cocoa \
+		-o $@ \
+		-c $<
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@echo "Compiling $@...";
