@@ -43,13 +43,11 @@ void Modal::show_error_modal() {
         gtk_grid_insert_column(GTK_GRID(grid), 0);
         gtk_grid_insert_column(GTK_GRID(grid), 1);
 
+        // Image
         GtkWidget *image = gtk_image_new_from_icon_name("dialog-error", GTK_ICON_SIZE_DIALOG);
         gtk_grid_attach(GTK_GRID(grid), image, 0, 0, 1, 2);
 
-
-        GtkWidget *sub_message_label = gtk_label_new(sub_message.c_str());
-        // GtkWidget *hbox              = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
-
+        // Message
         GtkWidget *message_label = gtk_label_new(NULL);
         const gchar *format_msg  = "<span font_weight=\"heavy\">\%s</span>";
         const gchar *msg_markup  = g_markup_printf_escaped(format_msg, message.c_str());
@@ -57,6 +55,8 @@ void Modal::show_error_modal() {
         gtk_widget_set_halign(message_label, GTK_ALIGN_START);
         gtk_grid_attach(GTK_GRID(grid), message_label, 1, 0, 1, 1);
 
+        // Sub message
+        GtkWidget *sub_message_label = gtk_label_new(sub_message.c_str());
         gtk_widget_set_halign(sub_message_label, GTK_ALIGN_START);
         gtk_grid_attach(GTK_GRID(grid), sub_message_label, 1, 1, 1, 1);
 
