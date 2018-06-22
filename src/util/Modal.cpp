@@ -27,7 +27,7 @@ Modal::~Modal() {
 
 void Modal::show_error_modal() {
     #ifdef __APPLE__
-        //mac_show_error_modal(message, sub_message);
+        mac_show_error_modal(message, sub_message);
     #else
         GtkWidget *image = gtk_image_new_from_icon_name("dialog-error", GTK_ICON_SIZE_DIALOG);
         GtkWidget *label = gtk_label_new(message.c_str());
