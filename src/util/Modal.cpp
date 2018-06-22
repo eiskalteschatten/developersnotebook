@@ -40,11 +40,11 @@ void Modal::show_error_modal() {
 
         GtkDialogFlags flags = GTK_DIALOG_DESTROY_WITH_PARENT;
         GtkWidget *dialog    = gtk_dialog_new_with_buttons("",
-                                                        GTK_WINDOW(parent_window),
-                                                        flags,
-                                                        "OK",
-                                                        GTK_RESPONSE_OK,
-                                                        NULL);
+                                                           GTK_WINDOW(parent_window),
+                                                           flags,
+                                                           "OK",
+                                                           GTK_RESPONSE_OK,
+                                                           NULL);
 
         gtk_container_set_border_width(GTK_CONTAINER(dialog), 10);
 
