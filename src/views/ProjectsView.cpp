@@ -60,7 +60,7 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
     const gchar *notes = gtk_text_buffer_get_text(buffer, &start, &end, FALSE);
 
     if (name && !name[0]) {
-        Modal modal("You must enter a project name.", "", pv->main_window);
+        Modal modal("No project name", "You must enter a project name to create a new project.", pv->main_window);
         modal.show_error_modal();
         return;
     }
@@ -158,7 +158,7 @@ void delete_project(GtkWidget *widget, ProjectsView *pv) {
             }
 
             if (!gtk_tree_selection_get_selected(pv->select, &model, &tree_iter) || id == -1) {
-                Modal modal("No project selected.", "", pv->main_window);
+                Modal modal("No project selected", "No project was selected to delete.", pv->main_window);
                 modal.show_error_modal();
                 break;
             }
