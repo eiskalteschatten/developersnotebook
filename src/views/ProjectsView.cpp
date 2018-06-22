@@ -116,36 +116,11 @@ void save_project(GtkWidget *widget, ProjectsView *pv) {
 }
 
 void delete_project(GtkWidget *widget, ProjectsView *pv) {
-    GtkWidget *image = gtk_image_new_from_icon_name("dialog-warning", GTK_ICON_SIZE_DIALOG);
-    GtkWidget *label = gtk_label_new("Are you sure you want to delete the selected project?");
-    GtkWidget *hbox  = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 5);
-
-    gtk_container_set_border_width(GTK_CONTAINER(hbox), 10);
-    gtk_box_pack_start(GTK_BOX(hbox), image, FALSE, FALSE, 0);
-    gtk_box_pack_end(GTK_BOX(hbox), label, TRUE, FALSE, 0);
-
-    GtkDialogFlags flags = GTK_DIALOG_DESTROY_WITH_PARENT;
-    GtkWidget *dialog    = gtk_dialog_new_with_buttons("",
-                                                       GTK_WINDOW(pv->main_window),
-                                                       flags,
-                                                       "Delete Project",
-                                                       GTK_RESPONSE_ACCEPT,
-                                                       "Cancel",
-                                                       GTK_RESPONSE_REJECT,
-                                                       NULL);
-
-    gtk_container_set_border_width(GTK_CONTAINER(dialog), 10);
-
-    GtkWidget *content_area = gtk_dialog_get_content_area(GTK_DIALOG(dialog));
-    gtk_box_pack_start(GTK_BOX(content_area), hbox, TRUE, FALSE, 0);
-    gtk_widget_show_all(dialog);
-
-    int result = gtk_dialog_run(GTK_DIALOG(dialog));
-
-    gtk_widget_destroy(dialog);
+    Modal modal("Delete project", "Are you sure you want to delete the selected project?", pv->main_window);
+    int result = modal.show_confirm_modal("Delete Project", "Cancel");
 
     switch(result) {
-        case GTK_RESPONSE_ACCEPT: {
+        case MODAL_RESPONSE_ACCEPT: {
             int id              = -1;
             gchar *id_char      = nullptr;
             GtkTreeModel *model = nullptr;
