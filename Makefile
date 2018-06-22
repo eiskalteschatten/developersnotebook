@@ -37,7 +37,7 @@ $(BUILD_DIR)/%.m.o: $(SRC_DIR)/%.m
 	@echo "Compiling $@...";
 	@mkdir -p $(BUILD_DIR);
 	@mkdir -p ${@D};
-	clang \
+	$(CXX) \
 		-o $@ \
 		-c $<
 
