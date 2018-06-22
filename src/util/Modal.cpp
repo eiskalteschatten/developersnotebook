@@ -3,7 +3,7 @@
 #include <gtk/gtk.h>
 
 #ifdef __APPLE__
-    #include <CoreFoundation/CoreFoundation.h>
+    #include "MacModalInterface.hpp"
 #endif
 
 #include "Modal.hpp"
@@ -27,8 +27,7 @@ Modal::~Modal() {
 
 void Modal::show_error_modal() {
     #ifdef __APPLE__
-        // DialogRef alert;
-        // CreateStandardAlert(kAlertStopAlert, CFSTR("some message"), CFSTR("some sub message"), NULL, &alert);
+        //mac_show_error_modal(message, sub_message);
     #else
         GtkWidget *image = gtk_image_new_from_icon_name("dialog-error", GTK_ICON_SIZE_DIALOG);
         GtkWidget *label = gtk_label_new(message.c_str());
