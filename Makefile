@@ -14,12 +14,12 @@ MAC_BUNDLE=Developer\'s\ Notebook.app
 ifeq ($(OS_TYPE), Darwin)
 
 CXXINCLUDES=-I/usr/local/Cellar/gtk-mac-integration/2.0.8_2/include/gtkmacintegration/
-CXXLINKED=-framework Foundation -lgtkmacintegration-gtk3.2
+CXXLINKED=-framework Foundation -framework Cocoa -lgtkmacintegration-gtk3.2
 PKG_CONFIG_LOC=pkg-config
 BUILD_RUN_TARGET=all
 BUILD_RUN_OPEN=./$(BIN_DIR)/$(TARGET)
-OBJCSOURCES:=$(shell find $(SRC_DIR) -type f -name *.m)
-OBJECTS:=$(patsubst $(SRC_DIR)/%,$(BUILD_DIR)/%,$(OBJCSOURCES:.m=.m.o) $(CPPOBJECTS))
+OBJCSOURCES:=$(shell find $(SRC_DIR) -type f -name *.mm)
+OBJECTS:=$(patsubst $(SRC_DIR)/%,$(BUILD_DIR)/%,$(OBJCSOURCES:.mm=.mm.o) $(CPPOBJECTS))
 
 else ifeq ($(OS_TYPE), Linux)
 
@@ -33,7 +33,7 @@ OBJECTS:=$(CPPOBJECTS)
 endif
 
 # Objective C
-$(BUILD_DIR)/%.m.o: $(SRC_DIR)/%.m
+$(BUILD_DIR)/%.mm.o: $(SRC_DIR)/%.mm
 	@echo "Compiling $@...";
 	@mkdir -p $(BUILD_DIR);
 	@mkdir -p ${@D};
