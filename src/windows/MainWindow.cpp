@@ -69,7 +69,7 @@ void MainWindow::setup_grid() {
 
 void MainWindow::setup_stack() {
     // Views for the stack
-    DashboardView *dashboard_view         = new DashboardView();
+    DashboardView *dashboard_view    = new DashboardView();
     GtkWidget *dashboard_view_widget = dashboard_view->get_widget();
 
     ProjectsView *projects_view     = new ProjectsView(window);
