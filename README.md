@@ -43,7 +43,6 @@ After building, the binaries can be found in the `build` directory. They can eit
 
 - Dashboard
 - Projects
-- Preferences
 - Check for updates
 
 
@@ -77,6 +76,7 @@ After building, the binaries can be found in the `build` directory. They can eit
 
 ### 1.0
 
+- Preferences
 - Icons in the menu on the left
 - Command palette
 - Search
