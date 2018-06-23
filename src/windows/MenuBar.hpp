@@ -5,7 +5,7 @@
 
 class MenuBar {
 private:
-    GtkWidget *window;
+    GtkWidget *main_window;
     GdkModifierType primary_mask_key;
     GtkAccelGroup *accel_group;
 
@@ -20,8 +20,8 @@ private:
     GtkWidget *dashboard_mi;
     GtkWidget *projects_mi;
 
-    static void close_window(GSimpleAction *action, GVariant *parameter, gpointer app);
-    static void quit_app(GSimpleAction *action, GVariant *parameter, gpointer app);
+    friend void close_window(GSimpleAction *action, GVariant *parameter, gpointer app);
+    friend void quit_app(GSimpleAction *action, GVariant *parameter, gpointer app);
 
     void setup_file_menu();
     void setup_edit_menu();

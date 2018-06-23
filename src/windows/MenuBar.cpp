@@ -9,7 +9,21 @@
 #include "AboutDialog.hpp"
 
 
-MenuBar::MenuBar(GtkWidget *window) : window(window) {
+// Friends
+
+void close_window(GSimpleAction *action, GVariant *parameter, GtkWidget *window) {
+    gtk_widget_destroy(GTK_WIDGET(window));
+}
+
+void quit_app(GSimpleAction *action, GVariant *parameter, gpointer app) {
+    exit(0);
+}
+
+
+// Class
+
+MenuBar::MenuBar(GtkWidget *window) {
+    main_window      = window;
     primary_mask_key = GDK_CONTROL_MASK;
 
     // Override the primary modifier key for macOS
@@ -21,7 +35,7 @@ MenuBar::MenuBar(GtkWidget *window) : window(window) {
 
     // Accelerators
     accel_group = gtk_accel_group_new();
-    gtk_window_add_accel_group(GTK_WINDOW(window), accel_group);
+    gtk_window_add_accel_group(GTK_WINDOW(main_window), accel_group);
 
     setup_file_menu();
     #ifdef __APPLE__
@@ -29,7 +43,6 @@ MenuBar::MenuBar(GtkWidget *window) : window(window) {
     #endif
     setup_view_menu();
     setup_help_menu();
-
 }
 
 MenuBar::~MenuBar() {
@@ -61,7 +74,7 @@ void MenuBar::setup_file_menu() {
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi_2);
 
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), file_quit_mi);
-    g_signal_connect(G_OBJECT(close_mi), "activate", G_CALLBACK(close_window), NULL);
+    g_signal_connect(G_OBJECT(close_mi), "activate", G_CALLBACK(close_window), main_window);
     gtk_widget_add_accelerator(close_mi, "activate", accel_group, GDK_KEY_w, primary_mask_key, GTK_ACCEL_VISIBLE);
 
     g_signal_connect(G_OBJECT(file_quit_mi), "activate", G_CALLBACK(quit_app), NULL);
@@ -128,7 +141,7 @@ void MenuBar::setup_help_menu() {
     // Setup menu items
     gtk_menu_shell_append(GTK_MENU_SHELL(help_menu), check_for_updates_mi);
     gtk_menu_shell_append(GTK_MENU_SHELL(help_menu), about_mi);
-    g_signal_connect(G_OBJECT(about_mi), "activate", G_CALLBACK(AboutDialog::activate), window);
+    g_signal_connect(G_OBJECT(about_mi), "activate", G_CALLBACK(AboutDialog::activate), main_window);
 
     // Add the menu to the menu shell
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), help_mi);
@@ -153,13 +166,4 @@ void MenuBar::setup_macos_menu_bar() {
 
         g_object_unref(osx_app);
     #endif
-}
-
-void MenuBar::close_window(GSimpleAction *action, GVariant *parameter, gpointer app) {
-    // GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    // gtk_widget_destroy(GTK_WIDGET(window));
-}
-
-void MenuBar::quit_app(GSimpleAction *action, GVariant *parameter, gpointer app) {
-    exit(0);
 }
