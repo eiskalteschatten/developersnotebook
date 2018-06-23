@@ -20,8 +20,8 @@ private:
     GtkWidget *dashboard_mi;
     GtkWidget *projects_mi;
 
-    friend void close_window(GSimpleAction *action, GVariant *parameter, gpointer app);
-    friend void quit_app(GSimpleAction *action, GVariant *parameter, gpointer app);
+    friend void close_window(GSimpleAction *action, GtkWidget *window);
+    friend void quit_app(GSimpleAction *action, gpointer app);
 
     void setup_file_menu();
     void setup_edit_menu();

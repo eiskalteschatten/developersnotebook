@@ -11,11 +11,11 @@
 
 // Friends
 
-void close_window(GSimpleAction *action, GVariant *parameter, GtkWidget *window) {
+void close_window(GSimpleAction *action, GtkWidget *window) {
     gtk_widget_destroy(GTK_WIDGET(window));
 }
 
-void quit_app(GSimpleAction *action, GVariant *parameter, gpointer app) {
+void quit_app(GSimpleAction *action, gpointer app) {
     exit(0);
 }
 
