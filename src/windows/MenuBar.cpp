@@ -19,6 +19,10 @@ void quit_app(GSimpleAction *action, gpointer app) {
     exit(0);
 }
 
+void switch_stack(GSimpleAction *action, GtkWidget *stack_child) {
+    gtk_stack_set_visible_child(GtkStack *stack, stack_child);
+}
+
 
 // Class
 
@@ -117,9 +121,12 @@ void MenuBar::setup_view_menu() {
     // Setup menu items
     gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), dashboard_mi);
     gtk_widget_add_accelerator(dashboard_mi, "activate", accel_group, GDK_KEY_1, primary_mask_key, GTK_ACCEL_VISIBLE);
+    g_signal_connect(G_OBJECT(dashboard_mi), "activate", G_CALLBACK(switch_stack), main_window_obj->get_dashboard_view_widget());
     gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(dashboard_mi), true);
+
     gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), projects_mi);
     gtk_widget_add_accelerator(projects_mi, "activate", accel_group, GDK_KEY_2, primary_mask_key, GTK_ACCEL_VISIBLE);
+    g_signal_connect(G_OBJECT(projects_mi), "activate", G_CALLBACK(switch_stack), main_window_obj->get_projects_view_widget());
 
     #ifdef __APPLE__
         GtkWidget *separator_mi_1 = gtk_separator_menu_item_new();

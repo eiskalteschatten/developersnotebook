@@ -24,6 +24,7 @@ private:
 
     friend void close_window(GSimpleAction *action, GtkWidget *window);
     friend void quit_app(GSimpleAction *action, gpointer app);
+    friend void switch_stack(GSimpleAction *action, GtkWidget *stack_child);
 
     void setup_file_menu();
     void setup_edit_menu();
