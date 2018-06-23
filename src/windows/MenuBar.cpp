@@ -24,9 +24,12 @@ MenuBar::MenuBar(GtkWidget *window) : window(window) {
     gtk_window_add_accel_group(GTK_WINDOW(window), accel_group);
 
     setup_file_menu();
-    setup_edit_menu();
-    setup_projects_menu();
+    #ifdef __APPLE__
+        setup_edit_menu();
+    #endif
+    setup_view_menu();
     setup_help_menu();
+
 }
 
 MenuBar::~MenuBar() {
@@ -38,7 +41,6 @@ void MenuBar::setup_file_menu() {
     GtkWidget *new_menu       = gtk_menu_new();
     GtkWidget *new_mi         = gtk_menu_item_new_with_label("New");
     GtkWidget *new_project_mi = gtk_menu_item_new_with_label("New Project");
-    GtkWidget *save_mi        = gtk_menu_item_new_with_label("Save");
     GtkWidget *separator_mi_1 = gtk_separator_menu_item_new();
     GtkWidget *close_mi       = gtk_menu_item_new_with_label("Close");
     GtkWidget *separator_mi_2 = gtk_separator_menu_item_new();
@@ -53,8 +55,6 @@ void MenuBar::setup_file_menu() {
 
     // Setup menu items
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), new_mi);
-    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), save_mi);
-    gtk_widget_add_accelerator(save_mi, "activate", accel_group, GDK_KEY_s, primary_mask_key, GTK_ACCEL_VISIBLE);
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi_1);
 
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), close_mi);
@@ -73,33 +73,47 @@ void MenuBar::setup_file_menu() {
 
 void MenuBar::setup_edit_menu() {
     GtkWidget *edit_menu = gtk_menu_new();
-    preferences_mi       = gtk_menu_item_new_with_label("Preferences");
+    // preferences_mi       = gtk_menu_item_new_with_label("Preferences");
     GtkWidget *edit_mi   = gtk_menu_item_new_with_label("Edit");
 
     // Setup submenu
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(edit_mi), edit_menu);
 
     // Setup menu items
-    gtk_menu_shell_append(GTK_MENU_SHELL(edit_menu), preferences_mi);
-    gtk_widget_add_accelerator(preferences_mi, "activate", accel_group, GDK_KEY_comma, primary_mask_key, GTK_ACCEL_VISIBLE);
+    // gtk_menu_shell_append(GTK_MENU_SHELL(edit_menu), preferences_mi);
+    // gtk_widget_add_accelerator(preferences_mi, "activate", accel_group, GDK_KEY_comma, primary_mask_key, GTK_ACCEL_VISIBLE);
 
     // Add the menu to the menu shell
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), edit_mi);
 }
 
-void MenuBar::setup_projects_menu() {
-    GtkWidget *projects_menu  = gtk_menu_new();
-    GtkWidget *projects_mi    = gtk_menu_item_new_with_label("Projects");
-    GtkWidget *new_project_mi = gtk_menu_item_new_with_label("New Project");
+void MenuBar::setup_view_menu() {
+    GSList *view_group   = nullptr;
+    GtkWidget *view_menu = gtk_menu_new();
+    GtkWidget *view_mi   = gtk_menu_item_new_with_label("View");
+
+    dashboard_mi = gtk_radio_menu_item_new_with_label(view_group, "Dashboard");
+    view_group   = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(dashboard_mi));
+    projects_mi  = gtk_radio_menu_item_new_with_label(view_group, "Projects");
+    view_group   = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(projects_mi));
 
     // Setup submenu
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(projects_mi), projects_menu);
+    gtk_menu_item_set_submenu(GTK_MENU_ITEM(view_mi), view_menu);
 
     // Setup menu items
-    gtk_menu_shell_append(GTK_MENU_SHELL(projects_menu), new_project_mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), dashboard_mi);
+    gtk_widget_add_accelerator(dashboard_mi, "activate", accel_group, GDK_KEY_1, primary_mask_key, GTK_ACCEL_VISIBLE);
+    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(dashboard_mi), true);
+    gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), projects_mi);
+    gtk_widget_add_accelerator(projects_mi, "activate", accel_group, GDK_KEY_2, primary_mask_key, GTK_ACCEL_VISIBLE);
+
+    #ifdef __APPLE__
+        GtkWidget *separator_mi_1 = gtk_separator_menu_item_new();
+        gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), separator_mi_1);
+    #endif
 
     // Add the menu to the menu shell
-    gtk_menu_shell_append(GTK_MENU_SHELL(menubar), projects_mi);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menubar), view_mi);
 }
 
 void MenuBar::setup_help_menu() {
@@ -135,7 +149,7 @@ void MenuBar::setup_macos_menu_bar() {
 
         gtkosx_application_insert_app_menu_item(osx_app, about_mi, 0);
         gtkosx_application_insert_app_menu_item(osx_app, separator_mi_app_menu_1, 1);
-        gtkosx_application_insert_app_menu_item(osx_app, preferences_mi, 2);
+        // gtkosx_application_insert_app_menu_item(osx_app, preferences_mi, 2);
 
         g_object_unref(osx_app);
     #endif

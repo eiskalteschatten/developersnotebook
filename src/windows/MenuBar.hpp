@@ -12,16 +12,20 @@ private:
     // The menu items that should be hidden in macOS
     GtkWidget *menubar;
     GtkWidget *file_quit_mi;
-    GtkWidget *preferences_mi;
+    // GtkWidget *preferences_mi;
     GtkWidget *about_mi;
     GtkWidget *help_mi;
+
+    // The "View" menu items that correspond to the main views
+    GtkWidget *dashboard_mi;
+    GtkWidget *projects_mi;
 
     static void close_window(GSimpleAction *action, GVariant *parameter, gpointer app);
     static void quit_app(GSimpleAction *action, GVariant *parameter, gpointer app);
 
     void setup_file_menu();
     void setup_edit_menu();
-    void setup_projects_menu();
+    void setup_view_menu();
     void setup_help_menu();
 
 public:
