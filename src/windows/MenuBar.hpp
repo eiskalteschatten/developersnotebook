@@ -1,10 +1,12 @@
 #ifndef MenuBar_hpp
 #define MenuBar_hpp
 
+#include "MainWindow.hpp"
 #include <gtk/gtk.h>
 
 class MenuBar {
 private:
+    MainWindow *main_window_obj;
     GtkWidget *main_window;
     GdkModifierType primary_mask_key;
     GtkAccelGroup *accel_group;
@@ -29,7 +31,7 @@ private:
     void setup_help_menu();
 
 public:
-    MenuBar(GtkWidget *window);
+    MenuBar(MainWindow *new_main_window_obj);
     ~MenuBar();
 
     GtkWidget *get_menu_bar() {return menubar;}

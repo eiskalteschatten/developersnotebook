@@ -45,7 +45,7 @@ void MainWindow::activate(GtkApplication *app, MainWindow *mw) {
     mw->setup_grid();
     mw->setup_stack();
 
-    MenuBar *menubar_obj = new MenuBar(mw->window);
+    MenuBar *menubar_obj = new MenuBar(mw);
     GtkWidget *menubar   = menubar_obj->get_menu_bar();
     gtk_grid_attach(GTK_GRID(mw->grid), menubar, 0, 0, 2, 1);
 
@@ -69,10 +69,10 @@ void MainWindow::setup_grid() {
 
 void MainWindow::setup_stack() {
     // Views for the stack
-    DashboardView *dashboard_view    = new DashboardView();
+    dashboard_view                   = new DashboardView();
     GtkWidget *dashboard_view_widget = dashboard_view->get_widget();
 
-    ProjectsView *projects_view     = new ProjectsView(window);
+    projects_view                   = new ProjectsView(window);
     GtkWidget *projects_view_widget = projects_view->get_widget();
 
     // Stack
