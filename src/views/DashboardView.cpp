@@ -1,5 +1,9 @@
 #include <gtk/gtk.h>
 
+#ifdef __APPLE__
+    #include <CoreFoundation/CoreFoundation.h>
+#endif
+
 #include "DashboardView.hpp"
 #include "../util/Image.hpp"
 #include "../constants.hpp"
@@ -104,4 +108,31 @@ DashboardView::DashboardView() {
 
         gtk_grid_attach(GTK_GRID(main_widget), release_notes_grid, 0, 1, 1, 1);
     }
+}
+
+std::string DashboardView::get_release_notes_path() {
+    char cwd[1024];
+    getcwd(cwd, sizeof(cwd));
+    const std::string path = Constants::path_to_resources + "/" + release_notes_file_name + "." + release_notes_extension;
+    return std::string(std::strcat(cwd, path.c_str()));
+}
+
+std::string DashboardView::get_release_notes_path_mac() {
+    #ifdef __APPLE__
+        CFStringRef apple_name      = CFStringCreateWithCString(NULL, release_notes_file_name.c_str(), kCFStringEncodingUTF8);
+        CFStringRef apple_extension = CFStringCreateWithCString(NULL, release_notes_extension.c_str(), kCFStringEncodingUTF8);
+        CFURLRef file_url_ref       = CFBundleCopyResourceURL(CFBundleGetMainBundle(), apple_name, apple_extension, NULL);
+
+        if (file_url_ref == NULL) {
+            return get_release_notes_path();
+        }
+
+        CFStringRef path                 = CFURLCopyFileSystemPath(file_url_ref, kCFURLPOSIXPathStyle);
+        CFStringEncoding encoding_method = CFStringGetSystemEncoding();
+        CFRelease(file_url_ref);
+
+        return std::string(CFStringGetCStringPtr(path, encoding_method));
+    #else
+        return get_release_notes_path();
+    #endif
 }

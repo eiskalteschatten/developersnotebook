@@ -30,7 +30,6 @@ std::string Image::get_icon_path() {
     char cwd[1024];
     getcwd(cwd, sizeof(cwd));
     const std::string path = Constants::path_to_resources + "/images/" + name + "." + extension;
-
     return std::string(std::strcat(cwd, path.c_str()));
 }
 
