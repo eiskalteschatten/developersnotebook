@@ -43,6 +43,7 @@ After building, the binaries can be found in the `build` directory. They can eit
 
 - Dashboard
 - Projects
+- License
 
 
 ### 0.2
