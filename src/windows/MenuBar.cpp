@@ -77,26 +77,39 @@ void MenuBar::setup_file_menu() {
     file_quit_mi              = gtk_menu_item_new_with_label("Quit");
 
     // Setup submenus
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(file_mi), file_menu);
-    gtk_menu_item_set_submenu(GTK_MENU_ITEM(new_mi), new_menu);
+    {
+        gtk_menu_item_set_submenu(GTK_MENU_ITEM(file_mi), file_menu);
+        gtk_menu_item_set_submenu(GTK_MENU_ITEM(new_mi), new_menu);
+    }
 
     // Setup New submenu
-    gtk_menu_shell_append(GTK_MENU_SHELL(new_menu), new_project_mi);
-    g_signal_connect(G_OBJECT(new_project_mi), "activate", G_CALLBACK(new_project), this);
+    {
+        gtk_menu_shell_append(GTK_MENU_SHELL(new_menu), new_project_mi);
+        g_signal_connect(G_OBJECT(new_project_mi), "activate", G_CALLBACK(new_project), this);
+    }
 
     // Setup menu items
-    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), new_mi);
-    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi_1);
 
-    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), close_mi);
-    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi_2);
+    // New
+    {
+        gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), new_mi);
+        gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi_1);
+    }
 
-    gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), file_quit_mi);
-    g_signal_connect(G_OBJECT(close_mi), "activate", G_CALLBACK(close_window), this);
-    gtk_widget_add_accelerator(close_mi, "activate", accel_group, GDK_KEY_w, primary_mask_key, GTK_ACCEL_VISIBLE);
+    // Close
+    {
+        gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), close_mi);
+        gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi_2);
+        g_signal_connect(G_OBJECT(close_mi), "activate", G_CALLBACK(close_window), this);
+        gtk_widget_add_accelerator(close_mi, "activate", accel_group, GDK_KEY_w, primary_mask_key, GTK_ACCEL_VISIBLE);
+    }
 
-    g_signal_connect(G_OBJECT(file_quit_mi), "activate", G_CALLBACK(quit_app), this);
-    gtk_widget_add_accelerator(file_quit_mi, "activate", accel_group, GDK_KEY_q, primary_mask_key, GTK_ACCEL_VISIBLE);
+    // Quit
+    {
+        gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), file_quit_mi);
+        g_signal_connect(G_OBJECT(file_quit_mi), "activate", G_CALLBACK(quit_app), this);
+        gtk_widget_add_accelerator(file_quit_mi, "activate", accel_group, GDK_KEY_q, primary_mask_key, GTK_ACCEL_VISIBLE);
+    }
 
     // Add the menu to the menu shell
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), file_mi);
