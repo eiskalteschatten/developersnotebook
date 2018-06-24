@@ -95,6 +95,7 @@ DashboardView::DashboardView() {
         // Release Notes Text View
         release_notes_text_view = gtk_text_view_new();
         gtk_text_view_set_editable(GTK_TEXT_VIEW(release_notes_text_view), false);
+        gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(release_notes_text_view), GTK_WRAP_WORD);
 
         GtkWidget *release_notes_scrolled_window = gtk_scrolled_window_new(NULL, NULL);
         g_object_set(release_notes_scrolled_window, "hexpand", TRUE, NULL);
