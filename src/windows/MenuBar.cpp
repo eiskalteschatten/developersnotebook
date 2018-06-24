@@ -12,11 +12,12 @@
 
 // Friends
 
-void close_window(GSimpleAction *action, GtkWidget *window) {
-    gtk_widget_destroy(GTK_WIDGET(window));
+void close_window(GSimpleAction *action, MenuBar *mb) {
+    mb->main_window_obj->save_and_close_window(mb->main_window);
 }
 
-void quit_app(GSimpleAction *action, gpointer app) {
+void quit_app(GSimpleAction *action, MenuBar *mb) {
+    mb->main_window_obj->save_and_close_window(mb->main_window);
     exit(0);
 }
 
@@ -84,10 +85,10 @@ void MenuBar::setup_file_menu() {
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), separator_mi_2);
 
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), file_quit_mi);
-    g_signal_connect(G_OBJECT(close_mi), "activate", G_CALLBACK(close_window), main_window);
+    g_signal_connect(G_OBJECT(close_mi), "activate", G_CALLBACK(close_window), this);
     gtk_widget_add_accelerator(close_mi, "activate", accel_group, GDK_KEY_w, primary_mask_key, GTK_ACCEL_VISIBLE);
 
-    g_signal_connect(G_OBJECT(file_quit_mi), "activate", G_CALLBACK(quit_app), NULL);
+    g_signal_connect(G_OBJECT(file_quit_mi), "activate", G_CALLBACK(quit_app), this);
     gtk_widget_add_accelerator(file_quit_mi, "activate", accel_group, GDK_KEY_q, primary_mask_key, GTK_ACCEL_VISIBLE);
 
     // Add the menu to the menu shell

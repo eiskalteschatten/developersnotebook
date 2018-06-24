@@ -23,8 +23,8 @@ private:
     GtkWidget *dashboard_mi;
     GtkWidget *projects_mi;
 
-    friend void close_window(GSimpleAction *action, GtkWidget *window);
-    friend void quit_app(GSimpleAction *action, gpointer app);
+    friend void close_window(GSimpleAction *action,  MenuBar *mb);
+    friend void quit_app(GSimpleAction *action,  MenuBar *mb);
     friend void switch_stack_dashboard(GSimpleAction *action, MenuBar *mb);
     friend void switch_stack_projects(GSimpleAction *action, MenuBar *mb);
 

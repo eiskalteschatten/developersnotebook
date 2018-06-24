@@ -40,7 +40,7 @@ void MainWindow::activate(GtkApplication *app, MainWindow *mw) {
         gtk_window_maximize(GTK_WINDOW(mw->window));
     }
 
-    g_signal_connect(mw->window, "delete_event", G_CALLBACK(mw->save_window), NULL);
+    g_signal_connect(mw->window, "delete_event", G_CALLBACK(mw->save_and_close_window), NULL);
 
     mw->setup_grid();
     mw->setup_stack();
@@ -95,7 +95,7 @@ void MainWindow::setup_stack() {
     gtk_grid_attach(GTK_GRID(grid), stack, 1, 1, 1, 1);
 }
 
-void MainWindow::save_window(GtkWidget *window, gpointer user_data) {
+void MainWindow::save_and_close_window(GtkWidget *window) {
     int width;
     int height;
     PreferencesModel *preferences_model = new PreferencesModel();
