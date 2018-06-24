@@ -169,6 +169,7 @@ void MenuBar::setup_view_menu() {
 void MenuBar::setup_help_menu() {
     GtkWidget *help_menu            = gtk_menu_new();
     about_mi                        = gtk_menu_item_new_with_label("About");
+    GtkWidget *release_notes_mi     = gtk_menu_item_new_with_label("Release Notes");
     // GtkWidget *check_for_updates_mi = gtk_menu_item_new_with_label("Check for Updates");
     help_mi                         = gtk_menu_item_new_with_label("Help");
 
@@ -176,9 +177,23 @@ void MenuBar::setup_help_menu() {
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(help_mi), help_menu);
 
     // Setup menu items
-    // gtk_menu_shell_append(GTK_MENU_SHELL(help_menu), check_for_updates_mi);
-    gtk_menu_shell_append(GTK_MENU_SHELL(help_menu), about_mi);
-    g_signal_connect(G_OBJECT(about_mi), "activate", G_CALLBACK(AboutDialog::activate), main_window);
+
+    // Check for updates
+    // {
+    //     gtk_menu_shell_append(GTK_MENU_SHELL(help_menu), check_for_updates_mi);
+    // }
+
+    // Release Notes
+    {
+        gtk_menu_shell_append(GTK_MENU_SHELL(help_menu), release_notes_mi);
+        g_signal_connect(G_OBJECT(release_notes_mi), "activate", G_CALLBACK(switch_stack_dashboard), this);
+    }
+
+    // About
+    {
+        gtk_menu_shell_append(GTK_MENU_SHELL(help_menu), about_mi);
+        g_signal_connect(G_OBJECT(about_mi), "activate", G_CALLBACK(AboutDialog::activate), main_window);
+    }
 
     // Add the menu to the menu shell
     gtk_menu_shell_append(GTK_MENU_SHELL(menubar), help_mi);
