@@ -254,45 +254,68 @@ void ProjectsView::setup_list_view() {
     GtkCellRenderer *text_renderer = gtk_cell_renderer_text_new();
     GtkCellRenderer *toggle_renderer = gtk_cell_renderer_toggle_new();
 
-    GtkTreeViewColumn *id_column = gtk_tree_view_column_new_with_attributes("Id", text_renderer, "text", ID_COLUMN, NULL);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), id_column);
-    gtk_tree_view_column_set_visible(id_column, FALSE);
+    // ID Column
+    {
+        GtkTreeViewColumn *id_column = gtk_tree_view_column_new_with_attributes("Id", text_renderer, "text", ID_COLUMN, NULL);
+        gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), id_column);
+        gtk_tree_view_column_set_visible(id_column, FALSE);
+    }
 
-    GtkTreeViewColumn *is_complete_column = gtk_tree_view_column_new_with_attributes("", toggle_renderer, "active", IS_COMPLETE_COLUMN, NULL);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), is_complete_column);
-    gtk_tree_view_column_set_sort_column_id(is_complete_column, SORT_IS_COMPLETE_COLUMN);
-    gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_IS_COMPLETE_COLUMN, sort_by_boolean, GINT_TO_POINTER(IS_COMPLETE_COLUMN), NULL);
+    // Is Complete Column
+    {
+        GtkTreeViewColumn *is_complete_column = gtk_tree_view_column_new_with_attributes("", toggle_renderer, "active", IS_COMPLETE_COLUMN, NULL);
+        gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), is_complete_column);
+        gtk_tree_view_column_set_sort_column_id(is_complete_column, SORT_IS_COMPLETE_COLUMN);
+        gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_IS_COMPLETE_COLUMN, sort_by_boolean, GINT_TO_POINTER(IS_COMPLETE_COLUMN), NULL);
+    }
 
-    GtkTreeViewColumn *name_column = gtk_tree_view_column_new_with_attributes("Name", text_renderer, "text", NAME_COLUMN, NULL);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), name_column);
-    gtk_tree_view_column_set_sort_column_id(name_column, SORT_NAME_COLUMN);
-    gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_NAME_COLUMN, sort_by_string, GINT_TO_POINTER(NAME_COLUMN), NULL);
+    // Name Column
+    {
+        GtkTreeViewColumn *name_column = gtk_tree_view_column_new_with_attributes("Name", text_renderer, "text", NAME_COLUMN, NULL);
+        gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), name_column);
+        gtk_tree_view_column_set_sort_column_id(name_column, SORT_NAME_COLUMN);
+        gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_NAME_COLUMN, sort_by_string, GINT_TO_POINTER(NAME_COLUMN), NULL);
+    }
 
-    GtkTreeViewColumn *start_date_column = gtk_tree_view_column_new_with_attributes("Start Date", text_renderer, "text", START_DATE_COLUMN, NULL);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), start_date_column);
-    gtk_tree_view_column_set_sort_column_id(start_date_column, SORT_START_DATE_COLUMN);
-    gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_START_DATE_COLUMN, sort_by_string, GINT_TO_POINTER(START_DATE_COLUMN), NULL);
+    // Start Date Column
+    {
+        GtkTreeViewColumn *start_date_column = gtk_tree_view_column_new_with_attributes("Start Date", text_renderer, "text", START_DATE_COLUMN, NULL);
+        gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), start_date_column);
+        gtk_tree_view_column_set_sort_column_id(start_date_column, SORT_START_DATE_COLUMN);
+        gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_START_DATE_COLUMN, sort_by_string, GINT_TO_POINTER(START_DATE_COLUMN), NULL);
+    }
 
-    GtkTreeViewColumn *end_date_column = gtk_tree_view_column_new_with_attributes("End Date", text_renderer, "text", END_DATE_COLUMN, NULL);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), end_date_column);
-    gtk_tree_view_column_set_sort_column_id(end_date_column, SORT_END_DATE_COLUMN);
-    gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_END_DATE_COLUMN, sort_by_string, GINT_TO_POINTER(END_DATE_COLUMN), NULL);
+    // End Date Column
+    {
+        GtkTreeViewColumn *end_date_column = gtk_tree_view_column_new_with_attributes("End Date", text_renderer, "text", END_DATE_COLUMN, NULL);
+        gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), end_date_column);
+        gtk_tree_view_column_set_sort_column_id(end_date_column, SORT_END_DATE_COLUMN);
+        gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_END_DATE_COLUMN, sort_by_string, GINT_TO_POINTER(END_DATE_COLUMN), NULL);
+    }
 
-    GtkTreeViewColumn *date_completed_column = gtk_tree_view_column_new_with_attributes("Completion Date", text_renderer, "text", DATE_COMPLETED_COLUMN, NULL);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), date_completed_column);
-    gtk_tree_view_column_set_sort_column_id(date_completed_column, SORT_DATE_COMPLETED_COLUMN);
-    gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_DATE_COMPLETED_COLUMN, sort_by_string, GINT_TO_POINTER(DATE_COMPLETED_COLUMN), NULL);
+    // Date Completed Column
+    {
+        GtkTreeViewColumn *date_completed_column = gtk_tree_view_column_new_with_attributes("Completion Date", text_renderer, "text", DATE_COMPLETED_COLUMN, NULL);
+        gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), date_completed_column);
+        gtk_tree_view_column_set_sort_column_id(date_completed_column, SORT_DATE_COMPLETED_COLUMN);
+        gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_DATE_COMPLETED_COLUMN, sort_by_string, GINT_TO_POINTER(DATE_COMPLETED_COLUMN), NULL);
+    }
 
-    GtkTreeViewColumn *url_column = gtk_tree_view_column_new_with_attributes("URL", text_renderer, "text", URL_COLUMN, NULL);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), url_column);
-    gtk_tree_view_column_set_sort_column_id(url_column, SORT_URL_COLUMN);
-    gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_URL_COLUMN, sort_by_string, GINT_TO_POINTER(URL_COLUMN), NULL);
+    // URL Column
+    {
+        GtkTreeViewColumn *url_column = gtk_tree_view_column_new_with_attributes("URL", text_renderer, "text", URL_COLUMN, NULL);
+        gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), url_column);
+        gtk_tree_view_column_set_sort_column_id(url_column, SORT_URL_COLUMN);
+        gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_URL_COLUMN, sort_by_string, GINT_TO_POINTER(URL_COLUMN), NULL);
+    }
 
-    GtkTreeViewColumn *notes_column = gtk_tree_view_column_new_with_attributes("Notes", text_renderer, "text", NOTES_COLUMN, NULL);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), notes_column);
-    gtk_tree_view_column_set_sort_column_id(notes_column, SORT_NOTES_COLUMN);
-    gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_NOTES_COLUMN, sort_by_string, GINT_TO_POINTER(NOTES_COLUMN), NULL);
-
+    // Notes Column
+    {
+        GtkTreeViewColumn *notes_column = gtk_tree_view_column_new_with_attributes("Notes", text_renderer, "text", NOTES_COLUMN, NULL);
+        gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), notes_column);
+        gtk_tree_view_column_set_sort_column_id(notes_column, SORT_NOTES_COLUMN);
+        gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_NOTES_COLUMN, sort_by_string, GINT_TO_POINTER(NOTES_COLUMN), NULL);
+    }
 
     gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(list_store), SORT_IS_COMPLETE_COLUMN, GTK_SORT_ASCENDING);
 }
@@ -312,20 +335,23 @@ void ProjectsView::setup_list_view_toolbar() {
     toolbar_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
 
     // New button
-    new_toolbar_button = gtk_button_new_from_icon_name("document-new", GTK_ICON_SIZE_SMALL_TOOLBAR);
-    gtk_button_set_relief(GTK_BUTTON(new_toolbar_button), GTK_RELIEF_NONE);
-    g_object_set(new_toolbar_button, "hexpand", FALSE, NULL);
-    g_signal_connect(G_OBJECT(new_toolbar_button), "clicked", G_CALLBACK(create_new_project), this);
-    gtk_box_pack_start(GTK_BOX(toolbar_box), new_toolbar_button, FALSE, FALSE, 0);
+    {
+        new_toolbar_button = gtk_button_new_from_icon_name("document-new", GTK_ICON_SIZE_SMALL_TOOLBAR);
+        gtk_button_set_relief(GTK_BUTTON(new_toolbar_button), GTK_RELIEF_NONE);
+        g_object_set(new_toolbar_button, "hexpand", FALSE, NULL);
+        g_signal_connect(G_OBJECT(new_toolbar_button), "clicked", G_CALLBACK(create_new_project), this);
+        gtk_box_pack_start(GTK_BOX(toolbar_box), new_toolbar_button, FALSE, FALSE, 0);
+    }
 
     // Delete button
-    delete_toolbar_button = gtk_button_new_from_icon_name("edit-delete", GTK_ICON_SIZE_SMALL_TOOLBAR);
-    gtk_button_set_relief(GTK_BUTTON(delete_toolbar_button), GTK_RELIEF_NONE);
-    g_object_set(delete_toolbar_button, "hexpand", FALSE, NULL);
-    g_signal_connect(G_OBJECT(delete_toolbar_button), "clicked", G_CALLBACK(delete_project), this);
-    gtk_box_pack_start(GTK_BOX(toolbar_box), delete_toolbar_button, FALSE, FALSE, 0);
-    gtk_widget_set_sensitive(delete_toolbar_button, FALSE);
-
+    {
+        delete_toolbar_button = gtk_button_new_from_icon_name("edit-delete", GTK_ICON_SIZE_SMALL_TOOLBAR);
+        gtk_button_set_relief(GTK_BUTTON(delete_toolbar_button), GTK_RELIEF_NONE);
+        g_object_set(delete_toolbar_button, "hexpand", FALSE, NULL);
+        g_signal_connect(G_OBJECT(delete_toolbar_button), "clicked", G_CALLBACK(delete_project), this);
+        gtk_box_pack_start(GTK_BOX(toolbar_box), delete_toolbar_button, FALSE, FALSE, 0);
+        gtk_widget_set_sensitive(delete_toolbar_button, FALSE);
+    }
 
     gtk_grid_attach(GTK_GRID(list_view_grid), toolbar_box, 0, 1, 1, 1);
 }
@@ -375,148 +401,164 @@ void ProjectsView::setup_form_sidebar() {
 
 
     // Project Name
-    GtkWidget *project_name_label = gtk_label_new("Project Name");
-    gtk_widget_set_halign(project_name_label, GTK_ALIGN_START);
+    {
+        GtkWidget *project_name_label = gtk_label_new("Project Name");
+        gtk_widget_set_halign(project_name_label, GTK_ALIGN_START);
 
-    project_name_input = gtk_entry_new();
-    g_object_set(project_name_input, "hexpand", TRUE, NULL);
-    gtk_widget_set_margin_bottom(project_name_input, field_margin_bottom);
+        project_name_input = gtk_entry_new();
+        g_object_set(project_name_input, "hexpand", TRUE, NULL);
+        gtk_widget_set_margin_bottom(project_name_input, field_margin_bottom);
 
-    gtk_grid_insert_row(GTK_GRID(form_grid), 0);
-    gtk_grid_insert_row(GTK_GRID(form_grid), 1);
-    gtk_grid_attach(GTK_GRID(form_grid), project_name_label, 0, 0, 1, 1);
-    gtk_grid_attach(GTK_GRID(form_grid), project_name_input, 0, 1, 1, 1);
-
+        gtk_grid_insert_row(GTK_GRID(form_grid), 0);
+        gtk_grid_insert_row(GTK_GRID(form_grid), 1);
+        gtk_grid_attach(GTK_GRID(form_grid), project_name_label, 0, 0, 1, 1);
+        gtk_grid_attach(GTK_GRID(form_grid), project_name_input, 0, 1, 1, 1);
+    }
 
     // Start Date
-    GtkWidget *start_date_label = gtk_label_new("Start Date");
-    gtk_widget_set_halign(start_date_label, GTK_ALIGN_START);
+    {
+        GtkWidget *start_date_label = gtk_label_new("Start Date");
+        gtk_widget_set_halign(start_date_label, GTK_ALIGN_START);
 
-    start_date_input = gtk_calendar_new();
-    g_object_set(start_date_input, "hexpand", TRUE, NULL);
+        start_date_input = gtk_calendar_new();
+        g_object_set(start_date_input, "hexpand", TRUE, NULL);
 
-    gtk_grid_insert_row(GTK_GRID(form_grid), 2);
-    gtk_grid_insert_row(GTK_GRID(form_grid), 3);
-    gtk_grid_attach(GTK_GRID(form_grid), start_date_label, 0, 2, 1, 1);
-    gtk_grid_attach(GTK_GRID(form_grid), start_date_input, 0, 3, 1, 1);
-
+        gtk_grid_insert_row(GTK_GRID(form_grid), 2);
+        gtk_grid_insert_row(GTK_GRID(form_grid), 3);
+        gtk_grid_attach(GTK_GRID(form_grid), start_date_label, 0, 2, 1, 1);
+        gtk_grid_attach(GTK_GRID(form_grid), start_date_input, 0, 3, 1, 1);
+    }
 
     // Clear start date selection button
-    start_date_clear_button = gtk_button_new_with_label("Clear Selection");
-    gtk_widget_set_halign(start_date_clear_button, GTK_ALIGN_END);
-    g_object_set(start_date_clear_button, "hexpand", FALSE, NULL);
-    gtk_widget_set_margin_bottom(start_date_clear_button, field_margin_bottom);
-    g_signal_connect(G_OBJECT(start_date_clear_button), "clicked", G_CALLBACK(clear_start_date_selection), this);
+    {
+        start_date_clear_button = gtk_button_new_with_label("Clear Selection");
+        gtk_widget_set_halign(start_date_clear_button, GTK_ALIGN_END);
+        g_object_set(start_date_clear_button, "hexpand", FALSE, NULL);
+        gtk_widget_set_margin_bottom(start_date_clear_button, field_margin_bottom);
+        g_signal_connect(G_OBJECT(start_date_clear_button), "clicked", G_CALLBACK(clear_start_date_selection), this);
 
-    gtk_grid_insert_row(GTK_GRID(form_grid), 4);
-    gtk_grid_attach(GTK_GRID(form_grid), start_date_clear_button, 0, 4, 1, 1);
-
+        gtk_grid_insert_row(GTK_GRID(form_grid), 4);
+        gtk_grid_attach(GTK_GRID(form_grid), start_date_clear_button, 0, 4, 1, 1);
+    }
 
     // End Date
-    GtkWidget *end_date_label = gtk_label_new("End Date");
-    gtk_widget_set_halign(end_date_label, GTK_ALIGN_START);
+    {
+        GtkWidget *end_date_label = gtk_label_new("End Date");
+        gtk_widget_set_halign(end_date_label, GTK_ALIGN_START);
 
-    end_date_input = gtk_calendar_new();
-    g_object_set(end_date_input, "hexpand", TRUE, NULL);
+        end_date_input = gtk_calendar_new();
+        g_object_set(end_date_input, "hexpand", TRUE, NULL);
 
-    gtk_grid_insert_row(GTK_GRID(form_grid), 5);
-    gtk_grid_insert_row(GTK_GRID(form_grid), 6);
-    gtk_grid_attach(GTK_GRID(form_grid), end_date_label, 0, 5, 1, 1);
-    gtk_grid_attach(GTK_GRID(form_grid), end_date_input, 0, 6, 1, 1);
-
+        gtk_grid_insert_row(GTK_GRID(form_grid), 5);
+        gtk_grid_insert_row(GTK_GRID(form_grid), 6);
+        gtk_grid_attach(GTK_GRID(form_grid), end_date_label, 0, 5, 1, 1);
+        gtk_grid_attach(GTK_GRID(form_grid), end_date_input, 0, 6, 1, 1);
+    }
 
     // Clear end date selection button
-    end_date_clear_button = gtk_button_new_with_label("Clear Selection");
-    gtk_widget_set_halign(end_date_clear_button, GTK_ALIGN_END);
-    g_object_set(end_date_clear_button, "hexpand", FALSE, NULL);
-    gtk_widget_set_margin_bottom(end_date_clear_button, field_margin_bottom);
-    g_signal_connect(G_OBJECT(end_date_clear_button), "clicked", G_CALLBACK(clear_end_date_selection), this);
+    {
+        end_date_clear_button = gtk_button_new_with_label("Clear Selection");
+        gtk_widget_set_halign(end_date_clear_button, GTK_ALIGN_END);
+        g_object_set(end_date_clear_button, "hexpand", FALSE, NULL);
+        gtk_widget_set_margin_bottom(end_date_clear_button, field_margin_bottom);
+        g_signal_connect(G_OBJECT(end_date_clear_button), "clicked", G_CALLBACK(clear_end_date_selection), this);
 
-    gtk_grid_insert_row(GTK_GRID(form_grid), 7);
-    gtk_grid_attach(GTK_GRID(form_grid), end_date_clear_button, 0, 7, 1, 1);
+        gtk_grid_insert_row(GTK_GRID(form_grid), 7);
+        gtk_grid_attach(GTK_GRID(form_grid), end_date_clear_button, 0, 7, 1, 1);
+    }
 
 
     // URL
-    GtkWidget *url_label = gtk_label_new("URL");
-    gtk_widget_set_halign(url_label, GTK_ALIGN_START);
+    {
+        GtkWidget *url_label = gtk_label_new("URL");
+        gtk_widget_set_halign(url_label, GTK_ALIGN_START);
 
-    url_input = gtk_entry_new();
-    g_object_set(url_input, "hexpand", TRUE, NULL);
-    gtk_widget_set_margin_bottom(url_input, field_margin_bottom);
+        url_input = gtk_entry_new();
+        g_object_set(url_input, "hexpand", TRUE, NULL);
+        gtk_widget_set_margin_bottom(url_input, field_margin_bottom);
 
-    gtk_grid_insert_row(GTK_GRID(form_grid), 8);
-    gtk_grid_insert_row(GTK_GRID(form_grid), 9);
-    gtk_grid_attach(GTK_GRID(form_grid), url_label, 0, 8, 1, 1);
-    gtk_grid_attach(GTK_GRID(form_grid), url_input, 0, 9, 1, 1);
+        gtk_grid_insert_row(GTK_GRID(form_grid), 8);
+        gtk_grid_insert_row(GTK_GRID(form_grid), 9);
+        gtk_grid_attach(GTK_GRID(form_grid), url_label, 0, 8, 1, 1);
+        gtk_grid_attach(GTK_GRID(form_grid), url_input, 0, 9, 1, 1);
+    }
 
 
     // Notes
-    GtkWidget *notes_label = gtk_label_new("Notes");
-    gtk_widget_set_halign(notes_label, GTK_ALIGN_START);
+    {
+        GtkWidget *notes_label = gtk_label_new("Notes");
+        gtk_widget_set_halign(notes_label, GTK_ALIGN_START);
 
-    notes_input = gtk_text_view_new();
+        notes_input = gtk_text_view_new();
 
-    GtkWidget *notes_scrolled_window = gtk_scrolled_window_new(NULL, NULL);
-    g_object_set(notes_scrolled_window, "hexpand", TRUE, NULL);
-    gtk_container_add(GTK_CONTAINER(notes_scrolled_window), notes_input);
+        GtkWidget *notes_scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+        g_object_set(notes_scrolled_window, "hexpand", TRUE, NULL);
+        gtk_container_add(GTK_CONTAINER(notes_scrolled_window), notes_input);
 
-    gtk_widget_set_size_request(notes_input, -1, 75);
-    gtk_widget_set_size_request(notes_scrolled_window, -1, 75);
-    gtk_widget_set_margin_bottom(notes_scrolled_window, field_margin_bottom);
+        gtk_widget_set_size_request(notes_input, -1, 75);
+        gtk_widget_set_size_request(notes_scrolled_window, -1, 75);
+        gtk_widget_set_margin_bottom(notes_scrolled_window, field_margin_bottom);
 
-    gtk_grid_insert_row(GTK_GRID(form_grid), 10);
-    gtk_grid_insert_row(GTK_GRID(form_grid), 11);
-    gtk_grid_attach(GTK_GRID(form_grid), notes_label, 0, 10, 1, 1);
-    gtk_grid_attach(GTK_GRID(form_grid), notes_scrolled_window, 0, 11, 1, 1);
+        gtk_grid_insert_row(GTK_GRID(form_grid), 10);
+        gtk_grid_insert_row(GTK_GRID(form_grid), 11);
+        gtk_grid_attach(GTK_GRID(form_grid), notes_label, 0, 10, 1, 1);
+        gtk_grid_attach(GTK_GRID(form_grid), notes_scrolled_window, 0, 11, 1, 1);
+    }
 
 
     // Is Complete
-    is_complete_checkbox = gtk_check_button_new_with_label("Project is completed");
-    gtk_widget_set_margin_bottom(is_complete_checkbox, field_margin_bottom);
+    {
+        is_complete_checkbox = gtk_check_button_new_with_label("Project is completed");
+        gtk_widget_set_margin_bottom(is_complete_checkbox, field_margin_bottom);
 
-    gtk_grid_insert_row(GTK_GRID(form_grid), 12);
-    gtk_grid_attach(GTK_GRID(form_grid), is_complete_checkbox, 0, 12, 1, 1);
+        gtk_grid_insert_row(GTK_GRID(form_grid), 12);
+        gtk_grid_attach(GTK_GRID(form_grid), is_complete_checkbox, 0, 12, 1, 1);
+    }
 
 
     // Button Grid
-    GtkWidget *button_grid = gtk_grid_new();
-    g_object_set(button_grid, "hexpand", TRUE, NULL);
-    gtk_grid_insert_row(GTK_GRID(button_grid), 0);
+    {
+        GtkWidget *button_grid = gtk_grid_new();
+        g_object_set(button_grid, "hexpand", TRUE, NULL);
+        gtk_grid_insert_row(GTK_GRID(button_grid), 0);
 
 
-    // Create New Project / Save Button
-    save_button = gtk_button_new_with_label("Create New Project");
-    gtk_widget_set_halign(save_button, GTK_ALIGN_START);
-    g_object_set(save_button, "hexpand", FALSE, NULL);
-    g_signal_connect(G_OBJECT(save_button), "clicked", G_CALLBACK(save_project), this);
+        // Create New Project / Save Button
+        save_button = gtk_button_new_with_label("Create New Project");
+        gtk_widget_set_halign(save_button, GTK_ALIGN_START);
+        g_object_set(save_button, "hexpand", FALSE, NULL);
+        g_signal_connect(G_OBJECT(save_button), "clicked", G_CALLBACK(save_project), this);
 
-    gtk_grid_insert_column(GTK_GRID(button_grid), 0);
-    gtk_grid_attach(GTK_GRID(button_grid), save_button, 0, 0, 1, 1);
-
-
-    // Delete Button
-    delete_button = gtk_button_new_from_icon_name("edit-delete", GTK_ICON_SIZE_BUTTON);
-    gtk_widget_set_halign(delete_button, GTK_ALIGN_END);
-    g_object_set(delete_button, "hexpand", TRUE, NULL);
-    g_signal_connect(G_OBJECT(delete_button), "clicked", G_CALLBACK(delete_project), this);
-
-    gtk_grid_insert_column(GTK_GRID(button_grid), 1);
-    gtk_grid_attach(GTK_GRID(button_grid), delete_button, 1, 0, 1, 1);
+        gtk_grid_insert_column(GTK_GRID(button_grid), 0);
+        gtk_grid_attach(GTK_GRID(button_grid), save_button, 0, 0, 1, 1);
 
 
-    // Add the button grid to the form grid
-    gtk_grid_insert_row(GTK_GRID(form_grid), 13);
-    gtk_grid_attach(GTK_GRID(form_grid), button_grid, 0, 13, 1, 1);
+        // Delete Button
+        delete_button = gtk_button_new_from_icon_name("edit-delete", GTK_ICON_SIZE_BUTTON);
+        gtk_widget_set_halign(delete_button, GTK_ALIGN_END);
+        g_object_set(delete_button, "hexpand", TRUE, NULL);
+        g_signal_connect(G_OBJECT(delete_button), "clicked", G_CALLBACK(delete_project), this);
+
+        gtk_grid_insert_column(GTK_GRID(button_grid), 1);
+        gtk_grid_attach(GTK_GRID(button_grid), delete_button, 1, 0, 1, 1);
+
+
+        // Add the button grid to the form grid
+        gtk_grid_insert_row(GTK_GRID(form_grid), 13);
+        gtk_grid_attach(GTK_GRID(form_grid), button_grid, 0, 13, 1, 1);
+    }
 
 
     // Setup the scrollbar
-    form_scrolled_window = gtk_scrolled_window_new(NULL, NULL);
-    g_object_set(form_scrolled_window, "hexpand", TRUE, NULL);
-    g_object_set(form_scrolled_window, "vexpand", TRUE, NULL);
-    gtk_widget_set_halign(form_scrolled_window, GTK_ALIGN_FILL);
-    gtk_widget_set_valign(form_scrolled_window, GTK_ALIGN_FILL);
-    gtk_widget_set_size_request(form_scrolled_window, 300, -1);
-    gtk_container_add(GTK_CONTAINER(form_scrolled_window), form_grid);
+    {
+        form_scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+        g_object_set(form_scrolled_window, "hexpand", TRUE, NULL);
+        g_object_set(form_scrolled_window, "vexpand", TRUE, NULL);
+        gtk_widget_set_halign(form_scrolled_window, GTK_ALIGN_FILL);
+        gtk_widget_set_valign(form_scrolled_window, GTK_ALIGN_FILL);
+        gtk_widget_set_size_request(form_scrolled_window, 300, -1);
+        gtk_container_add(GTK_CONTAINER(form_scrolled_window), form_grid);
+    }
 }
 
 void ProjectsView::empty_sidebar() {
