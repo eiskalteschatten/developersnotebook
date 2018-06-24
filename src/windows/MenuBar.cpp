@@ -106,14 +106,11 @@ void MenuBar::setup_edit_menu() {
 }
 
 void MenuBar::setup_view_menu() {
-    GSList *view_group   = nullptr;
     GtkWidget *view_menu = gtk_menu_new();
     GtkWidget *view_mi   = gtk_menu_item_new_with_label("View");
 
-    dashboard_mi = gtk_radio_menu_item_new_with_label(view_group, "Dashboard");
-    view_group   = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(dashboard_mi));
-    projects_mi  = gtk_radio_menu_item_new_with_label(view_group, "Projects");
-    view_group   = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(projects_mi));
+    dashboard_mi = gtk_menu_item_new_with_label("Dashboard");
+    projects_mi  = gtk_menu_item_new_with_label("Projects");
 
     // Setup submenu
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(view_mi), view_menu);
@@ -122,7 +119,6 @@ void MenuBar::setup_view_menu() {
     gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), dashboard_mi);
     gtk_widget_add_accelerator(dashboard_mi, "activate", accel_group, GDK_KEY_1, primary_mask_key, GTK_ACCEL_VISIBLE);
     g_signal_connect(G_OBJECT(dashboard_mi), "activate", G_CALLBACK(switch_stack), main_window_obj->get_dashboard_view_widget());
-    gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(dashboard_mi), true);
 
     gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), projects_mi);
     gtk_widget_add_accelerator(projects_mi, "activate", accel_group, GDK_KEY_2, primary_mask_key, GTK_ACCEL_VISIBLE);
