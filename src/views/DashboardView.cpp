@@ -1,3 +1,4 @@
+#include <fstream>
 #include <gtk/gtk.h>
 
 #ifdef __APPLE__
@@ -9,7 +10,7 @@
 #include "../constants.hpp"
 
 DashboardView::DashboardView() {
-    const int grid_spacing = 35;
+    const int grid_spacing = 20;
 
     main_widget = gtk_grid_new();
     gtk_widget_set_halign(main_widget, GTK_ALIGN_FILL);
@@ -96,7 +97,7 @@ DashboardView::DashboardView() {
         gtk_grid_attach(GTK_GRID(release_notes_grid), title, 0, 0, 1, 1);
 
         // Release Notes Text View
-        GtkWidget *release_notes_text_view = gtk_text_view_new();
+        release_notes_text_view = gtk_text_view_new();
         gtk_text_view_set_editable(GTK_TEXT_VIEW(release_notes_text_view), false);
 
         GtkWidget *release_notes_scrolled_window = gtk_scrolled_window_new(NULL, NULL);
@@ -105,6 +106,8 @@ DashboardView::DashboardView() {
         gtk_container_add(GTK_CONTAINER(release_notes_scrolled_window), release_notes_text_view);
 
         gtk_grid_attach(GTK_GRID(release_notes_grid), release_notes_scrolled_window, 0, 1, 1, 1);
+
+        fill_release_notes();
 
         gtk_grid_attach(GTK_GRID(main_widget), release_notes_grid, 0, 1, 1, 1);
     }
@@ -135,4 +138,25 @@ std::string DashboardView::get_release_notes_path_mac() {
     #else
         return get_release_notes_path();
     #endif
+}
+
+void DashboardView::fill_release_notes() {
+    std::string path_to_release_notes;
+
+    #ifdef __APPLE__
+        path_to_release_notes = get_release_notes_path_mac();
+    #else
+        path_to_release_notes = get_release_notes_path();
+    #endif
+
+    std::ifstream ifs(path_to_release_notes.c_str());
+    std::string release_notes_str((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
+
+    const gchar *release_notes = release_notes_str.c_str();
+
+    GtkTextIter start;
+    GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(release_notes_text_view));
+
+    gtk_text_buffer_get_start_iter(buffer, &start);
+    gtk_text_buffer_insert_markup(buffer, &start, release_notes, -1);
 }

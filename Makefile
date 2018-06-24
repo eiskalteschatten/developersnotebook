@@ -98,4 +98,4 @@ create-mac-bundle: all
 	@cp ./resources/macos/Info.plist ./$(BIN_DIR)/$(MAC_BUNDLE)/Contents/.
 	@cp ./resources/macos/icon.icns ./$(BIN_DIR)/$(MAC_BUNDLE)/Contents/Resources/.
 	@cp ./resources/images/* ./$(BIN_DIR)/$(MAC_BUNDLE)/Contents/Resources/.
-	@cp ./resources/release-notes.rtf ./$(BIN_DIR)/$(MAC_BUNDLE)/Contents/Resources/.
+	@cp ./resources/release-notes.html ./$(BIN_DIR)/$(MAC_BUNDLE)/Contents/Resources/.
