@@ -8,7 +8,9 @@
 
 #include "DashboardView.hpp"
 #include "../util/Image.hpp"
+#include "../models/ProjectsModel.hpp"
 #include "../constants.hpp"
+
 
 DashboardView::DashboardView() {
     const int grid_spacing = 20;
@@ -23,6 +25,7 @@ DashboardView::DashboardView() {
     gtk_grid_insert_row(GTK_GRID(main_widget), 0);
     gtk_grid_insert_row(GTK_GRID(main_widget), 1);
     gtk_grid_insert_column(GTK_GRID(main_widget), 0);
+    gtk_grid_insert_column(GTK_GRID(main_widget), 1);
 
     // Setup grid for application title, logo, etc
     {
@@ -30,7 +33,6 @@ DashboardView::DashboardView() {
 
         gtk_grid_insert_row(GTK_GRID(title_grid), 0);
         gtk_grid_insert_row(GTK_GRID(title_grid), 1);
-        gtk_grid_insert_row(GTK_GRID(title_grid), 2);
         gtk_grid_insert_column(GTK_GRID(title_grid), 0);
         gtk_grid_insert_column(GTK_GRID(title_grid), 1);
 
@@ -39,7 +41,7 @@ DashboardView::DashboardView() {
         GdkPixbuf *logo_buf = logo_image.get_pixbuf();
         GtkWidget *logo     = gtk_image_new_from_pixbuf(logo_buf);
         g_object_unref(logo_buf);
-        gtk_grid_attach(GTK_GRID(title_grid), logo, 0, 0, 1, 3);
+        gtk_grid_attach(GTK_GRID(title_grid), logo, 0, 0, 1, 2);
 
         gchar *markup = nullptr;
 
@@ -66,16 +68,9 @@ DashboardView::DashboardView() {
         gtk_widget_set_valign(slogan, GTK_ALIGN_START);
         gtk_grid_attach(GTK_GRID(title_grid), slogan, 1, 1, 1, 1);
 
-        // Website
-        GtkWidget *website = gtk_link_button_new(Constants::application_website.c_str());
-        g_object_set(website, "hexpand", TRUE, NULL);
-        gtk_widget_set_halign(website, GTK_ALIGN_START);
-        gtk_widget_set_valign(website, GTK_ALIGN_START);
-        gtk_grid_attach(GTK_GRID(title_grid), website, 1, 2, 1, 1);
-
         g_free(markup);
 
-        gtk_grid_attach(GTK_GRID(main_widget), title_grid, 0, 0, 1, 1);
+        gtk_grid_attach(GTK_GRID(main_widget), title_grid, 0, 0, 2, 1);
     }
 
     // Release Notes
@@ -89,7 +84,7 @@ DashboardView::DashboardView() {
 
         // Title
         GtkWidget *title          = gtk_label_new(NULL);
-        const gchar *format_title = "<span font_weight=\"heavy\" font_size=\"xx-large\">\%s</span>";
+        const gchar *format_title = "<span font_weight=\"heavy\" font_size=\"x-large\">\%s</span>";
         const gchar *markup       = g_markup_printf_escaped(format_title, "Release Notes");
         gtk_label_set_markup(GTK_LABEL(title), markup);
 
@@ -112,6 +107,32 @@ DashboardView::DashboardView() {
 
         gtk_grid_attach(GTK_GRID(main_widget), release_notes_grid, 0, 1, 1, 1);
     }
+
+    // Grid for the right side
+    GtkWidget *right_side_grid = gtk_grid_new();
+    gtk_grid_set_row_spacing(GTK_GRID(right_side_grid), 10);
+
+    gtk_grid_insert_row(GTK_GRID(right_side_grid), 0);
+    gtk_grid_insert_row(GTK_GRID(right_side_grid), 1);
+    gtk_grid_insert_column(GTK_GRID(right_side_grid), 0);
+
+    // Projects Ending Soon
+    {
+        // Title
+        GtkWidget *title          = gtk_label_new(NULL);
+        const gchar *format_title = "<span font_weight=\"heavy\" font_size=\"x-large\">\%s</span>";
+        const gchar *markup       = g_markup_printf_escaped(format_title, "Projects Ending Soon");
+        gtk_label_set_markup(GTK_LABEL(title), markup);
+
+        g_object_set(title, "hexpand", TRUE, NULL);
+        gtk_widget_set_halign(title, GTK_ALIGN_START);
+        gtk_grid_attach(GTK_GRID(right_side_grid), title, 0, 0, 1, 1);
+
+        // Tree View
+        //projects_ending_soon_tree_view = ;
+    }
+
+    gtk_grid_attach(GTK_GRID(main_widget), right_side_grid, 1, 1, 1, 1);
 }
 
 std::string DashboardView::get_release_notes_path() {
@@ -160,4 +181,8 @@ void DashboardView::fill_release_notes() {
 
     gtk_text_buffer_get_start_iter(buffer, &start);
     gtk_text_buffer_insert_markup(buffer, &start, release_notes, -1);
+}
+
+void DashboardView::fill_projects_ending_soon() {
+
 }
