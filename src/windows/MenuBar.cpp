@@ -12,6 +12,12 @@
 
 // Friends
 
+void new_project(GSimpleAction *action, MenuBar *mb) {
+    MainWindow *mw = mb->main_window_obj;
+    mw->switch_stack("projects");
+    mw->get_projects_view()->create_new_project();
+}
+
 void close_window(GSimpleAction *action, MenuBar *mb) {
     mb->main_window_obj->save_and_close_window(mb->main_window);
 }
@@ -76,6 +82,7 @@ void MenuBar::setup_file_menu() {
 
     // Setup New submenu
     gtk_menu_shell_append(GTK_MENU_SHELL(new_menu), new_project_mi);
+    g_signal_connect(G_OBJECT(new_project_mi), "activate", G_CALLBACK(new_project), this);
 
     // Setup menu items
     gtk_menu_shell_append(GTK_MENU_SHELL(file_menu), new_mi);

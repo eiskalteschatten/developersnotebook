@@ -148,9 +148,8 @@ void delete_project(GtkWidget *widget, ProjectsView *pv) {
     }
 }
 
-void create_new_project(GtkWidget *widget, ProjectsView *pv) {
-    gtk_tree_selection_unselect_all(pv->select);
-    gtk_widget_grab_focus(pv->project_name_input);
+void create_new_project_static(GtkWidget *widget, ProjectsView *pv) {
+    pv->create_new_project();
 }
 
 void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv) {
@@ -339,7 +338,7 @@ void ProjectsView::setup_list_view_toolbar() {
         new_toolbar_button = gtk_button_new_from_icon_name("document-new", GTK_ICON_SIZE_SMALL_TOOLBAR);
         gtk_button_set_relief(GTK_BUTTON(new_toolbar_button), GTK_RELIEF_NONE);
         g_object_set(new_toolbar_button, "hexpand", FALSE, NULL);
-        g_signal_connect(G_OBJECT(new_toolbar_button), "clicked", G_CALLBACK(create_new_project), this);
+        g_signal_connect(G_OBJECT(new_toolbar_button), "clicked", G_CALLBACK(create_new_project_static), this);
         gtk_box_pack_start(GTK_BOX(toolbar_box), new_toolbar_button, FALSE, FALSE, 0);
     }
 
@@ -559,6 +558,11 @@ void ProjectsView::setup_form_sidebar() {
         gtk_widget_set_size_request(form_scrolled_window, 300, -1);
         gtk_container_add(GTK_CONTAINER(form_scrolled_window), form_grid);
     }
+}
+
+void ProjectsView::create_new_project() {
+    gtk_tree_selection_unselect_all(select);
+    gtk_widget_grab_focus(project_name_input);
 }
 
 void ProjectsView::empty_sidebar() {

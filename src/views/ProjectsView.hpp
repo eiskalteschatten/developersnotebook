@@ -34,7 +34,7 @@ private:
 
     friend void save_project(GtkWidget *widget, ProjectsView *pv);
     friend void delete_project(GtkWidget *widget, ProjectsView *pv);
-    friend void create_new_project(GtkWidget *widget, ProjectsView *pv);
+    friend void create_new_project_static(GtkWidget *widget, ProjectsView *pv);
     friend void list_selection_changed(GtkTreeSelection *selection, ProjectsView *pv);
     friend void clear_start_date_selection(GtkWidget *widget, ProjectsView *pv);
     friend void clear_end_date_selection(GtkWidget *widget, ProjectsView *pv);
@@ -54,6 +54,8 @@ private:
 public:
     ProjectsView(GtkWidget *window);
     ~ProjectsView();
+
+    void create_new_project();
 
     GtkWidget *get_list_view() {return list_view;}
     GtkWidget *get_form_grid() {return form_grid;}
