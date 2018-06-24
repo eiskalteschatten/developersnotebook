@@ -20,8 +20,12 @@ void quit_app(GSimpleAction *action, gpointer app) {
     exit(0);
 }
 
-void switch_stack(GSimpleAction *action, SwitchStackInfo *data) {
-    data->main_window->switch_stack(data->stack_child);
+void switch_stack_dashboard(GSimpleAction *action, MenuBar *mb) {
+    mb->main_window_obj->switch_stack("dashboard");
+}
+
+void switch_stack_projects(GSimpleAction *action, MenuBar *mb) {
+    mb->main_window_obj->switch_stack("projects");
 }
 
 
@@ -120,26 +124,16 @@ void MenuBar::setup_view_menu() {
 
     // Dashboard
     {
-        SwitchStackInfo data {
-            main_window_obj,
-            MAIN_STACK_DASHBOARD
-        };
-
         gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), dashboard_mi);
         gtk_widget_add_accelerator(dashboard_mi, "activate", accel_group, GDK_KEY_1, primary_mask_key, GTK_ACCEL_VISIBLE);
-        g_signal_connect(G_OBJECT(dashboard_mi), "activate", G_CALLBACK(switch_stack), &data);
+        g_signal_connect(G_OBJECT(dashboard_mi), "activate", G_CALLBACK(switch_stack_dashboard), this);
     }
 
     // Projects
     {
-        SwitchStackInfo data {
-            main_window_obj,
-            MAIN_STACK_PROJECTS
-        };
-
         gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), projects_mi);
         gtk_widget_add_accelerator(projects_mi, "activate", accel_group, GDK_KEY_2, primary_mask_key, GTK_ACCEL_VISIBLE);
-        g_signal_connect(G_OBJECT(projects_mi), "activate", G_CALLBACK(switch_stack), &data);
+        g_signal_connect(G_OBJECT(projects_mi), "activate", G_CALLBACK(switch_stack_projects), this);
     }
 
     #ifdef __APPLE__

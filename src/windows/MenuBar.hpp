@@ -4,11 +4,6 @@
 #include "MainWindow.hpp"
 #include <gtk/gtk.h>
 
-typedef struct {
-    MainWindow *main_window;
-    int stack_child;
-} SwitchStackInfo;
-
 
 class MenuBar {
 private:
@@ -30,7 +25,8 @@ private:
 
     friend void close_window(GSimpleAction *action, GtkWidget *window);
     friend void quit_app(GSimpleAction *action, gpointer app);
-    friend void switch_stack(GSimpleAction *action, SwitchStackInfo *data);
+    friend void switch_stack_dashboard(GSimpleAction *action, MenuBar *mb);
+    friend void switch_stack_projects(GSimpleAction *action, MenuBar *mb);
 
     void setup_file_menu();
     void setup_edit_menu();

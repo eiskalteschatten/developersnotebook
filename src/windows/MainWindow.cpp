@@ -69,11 +69,11 @@ void MainWindow::setup_grid() {
 
 void MainWindow::setup_stack() {
     // Views for the stack
-    dashboard_view        = new DashboardView();
-    dashboard_view_widget = dashboard_view->get_widget();
+    dashboard_view                   = new DashboardView();
+    GtkWidget *dashboard_view_widget = dashboard_view->get_widget();
 
-    projects_view        = new ProjectsView(window);
-    projects_view_widget = projects_view->get_widget();
+    projects_view                   = new ProjectsView(window);
+    GtkWidget *projects_view_widget = projects_view->get_widget();
 
     // Stack
     stack = gtk_stack_new();
@@ -116,20 +116,7 @@ void MainWindow::save_window(GtkWidget *window, gpointer user_data) {
     gtk_widget_destroy(window);
 }
 
-void MainWindow::switch_stack(int stack_child) {
-    GtkWidget *stack_child_widget = nullptr;
-
-    switch(stack_child) {
-        case MAIN_STACK_DASHBOARD:
-            stack_child_widget = dashboard_view_widget;
-        break;
-        case MAIN_STACK_PROJECTS:
-            stack_child_widget = projects_view_widget;
-        break;
-        default:
-            stack_child_widget = dashboard_view_widget;
-        break;
-    }
-
+void MainWindow::switch_stack(const gchar *child_name) {
+    GtkWidget *stack_child_widget = gtk_stack_get_child_by_name(GTK_STACK(stack), child_name);
     gtk_stack_set_visible_child(GTK_STACK(stack), stack_child_widget);
 }
