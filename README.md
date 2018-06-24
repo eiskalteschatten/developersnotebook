@@ -43,12 +43,12 @@ After building, the binaries can be found in the `build` directory. They can eit
 
 - Dashboard
 - Projects
-- Check for updates
 
 
 ### 0.2
 
 - Custom UI theme(s)
+- Icons in the menu on the left
 - Ability to have multiple databases and save them wherever the user wants
 
 
@@ -77,7 +77,7 @@ After building, the binaries can be found in the `build` directory. They can eit
 ### 1.0
 
 - Preferences
-- Icons in the menu on the left
+- Check for updates
 - Command palette
 - Search
 - Updated dashboard
