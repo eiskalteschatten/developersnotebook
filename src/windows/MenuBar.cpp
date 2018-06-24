@@ -6,6 +6,7 @@
 #endif
 
 #include "MenuBar.hpp"
+#include "MainWindow.hpp"
 #include "AboutDialog.hpp"
 
 
@@ -19,8 +20,8 @@ void quit_app(GSimpleAction *action, gpointer app) {
     exit(0);
 }
 
-void switch_stack(GSimpleAction *action, GtkWidget *stack_child) {
-    gtk_stack_set_visible_child(GtkStack *stack, stack_child);
+void switch_stack(GSimpleAction *action, SwitchStackInfo *data) {
+    data->main_window->switch_stack(data->stack_child);
 }
 
 
@@ -116,13 +117,30 @@ void MenuBar::setup_view_menu() {
     gtk_menu_item_set_submenu(GTK_MENU_ITEM(view_mi), view_menu);
 
     // Setup menu items
-    gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), dashboard_mi);
-    gtk_widget_add_accelerator(dashboard_mi, "activate", accel_group, GDK_KEY_1, primary_mask_key, GTK_ACCEL_VISIBLE);
-    g_signal_connect(G_OBJECT(dashboard_mi), "activate", G_CALLBACK(switch_stack), main_window_obj->get_dashboard_view_widget());
 
-    gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), projects_mi);
-    gtk_widget_add_accelerator(projects_mi, "activate", accel_group, GDK_KEY_2, primary_mask_key, GTK_ACCEL_VISIBLE);
-    g_signal_connect(G_OBJECT(projects_mi), "activate", G_CALLBACK(switch_stack), main_window_obj->get_projects_view_widget());
+    // Dashboard
+    {
+        SwitchStackInfo data {
+            main_window_obj,
+            MAIN_STACK_DASHBOARD
+        };
+
+        gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), dashboard_mi);
+        gtk_widget_add_accelerator(dashboard_mi, "activate", accel_group, GDK_KEY_1, primary_mask_key, GTK_ACCEL_VISIBLE);
+        g_signal_connect(G_OBJECT(dashboard_mi), "activate", G_CALLBACK(switch_stack), &data);
+    }
+
+    // Projects
+    {
+        SwitchStackInfo data {
+            main_window_obj,
+            MAIN_STACK_PROJECTS
+        };
+
+        gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), projects_mi);
+        gtk_widget_add_accelerator(projects_mi, "activate", accel_group, GDK_KEY_2, primary_mask_key, GTK_ACCEL_VISIBLE);
+        g_signal_connect(G_OBJECT(projects_mi), "activate", G_CALLBACK(switch_stack), &data);
+    }
 
     #ifdef __APPLE__
         GtkWidget *separator_mi_1 = gtk_separator_menu_item_new();

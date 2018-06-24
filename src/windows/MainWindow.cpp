@@ -115,3 +115,21 @@ void MainWindow::save_window(GtkWidget *window, gpointer user_data) {
 
     gtk_widget_destroy(window);
 }
+
+void MainWindow::switch_stack(int stack_child) {
+    GtkWidget *stack_child_widget = nullptr;
+
+    switch(stack_child) {
+        case MAIN_STACK_DASHBOARD:
+            stack_child_widget = dashboard_view_widget;
+        break;
+        case MAIN_STACK_PROJECTS:
+            stack_child_widget = projects_view_widget;
+        break;
+        default:
+            stack_child_widget = dashboard_view_widget;
+        break;
+    }
+
+    gtk_stack_set_visible_child(GTK_STACK(stack), stack_child_widget);
+}

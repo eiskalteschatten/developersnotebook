@@ -4,6 +4,11 @@
 #include "../views/DashboardView.hpp"
 #include "../views/ProjectsView.hpp"
 
+enum {
+    MAIN_STACK_DASHBOARD,
+    MAIN_STACK_PROJECTS
+};
+
 
 class MainWindow {
 private:
@@ -26,11 +31,9 @@ public:
     ~MainWindow();
 
     static void activate(GtkApplication *app, MainWindow *mw);
+    void switch_stack(int stack_child);
 
     GtkWidget *get_window() { return window; }
-    GtkWidget *get_stack() { return stack; }
-    GtkWidget *get_dashboard_view_widget() { return dashboard_view_widget; }
-    GtkWidget *get_projects_view_widget() { return projects_view_widget; }
 
     DashboardView *get_dashboard_view() { return dashboard_view; }
     ProjectsView *get_projects_view() { return projects_view; }
