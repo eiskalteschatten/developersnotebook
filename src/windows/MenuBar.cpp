@@ -20,7 +20,12 @@ void new_project(GSimpleAction *action, MenuBar *mb) {
 }
 
 void close_window(GSimpleAction *action, MenuBar *mb) {
-    mb->main_window_obj->save_and_close_window(mb->main_window);
+    if (mb->active_window == mb->main_window) {
+        mb->main_window_obj->save_and_close_window(mb->main_window);
+    }
+    else {
+        gtk_widget_destroy(mb->active_window);
+    }
 }
 
 void quit_app(GSimpleAction *action, MenuBar *mb) {
@@ -42,6 +47,7 @@ void switch_stack_projects(GSimpleAction *action, MenuBar *mb) {
 MenuBar::MenuBar(MainWindow *new_main_window_obj) {
     main_window_obj  = new_main_window_obj;
     main_window      = main_window_obj->get_window();
+    active_window    = main_window_obj->get_window();
     primary_mask_key = GDK_CONTROL_MASK;
 
     // Override the primary modifier key for macOS

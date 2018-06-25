@@ -35,6 +35,8 @@ void ReleaseNotesWindow::activate(GtkWidget *menu_item, GtkWidget *main_window) 
     gtk_box_pack_start(GTK_BOX(content_area), release_notes_scrolled_window, TRUE, TRUE, 0);
     gtk_widget_show_all(dialog);
 
+    // If focused, set active window in menubar
+
     gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
 }

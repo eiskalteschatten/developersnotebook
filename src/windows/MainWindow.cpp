@@ -41,6 +41,7 @@ void MainWindow::activate(GtkApplication *app, MainWindow *mw) {
     }
 
     g_signal_connect(mw->window, "delete_event", G_CALLBACK(mw->save_and_close_window), NULL);
+    // If focused, set active window in menubar
 
     mw->setup_grid();
     mw->setup_stack();
