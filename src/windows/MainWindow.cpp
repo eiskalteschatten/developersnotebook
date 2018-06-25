@@ -40,9 +40,6 @@ void MainWindow::activate(GtkApplication *app, MainWindow *mw) {
         gtk_window_maximize(GTK_WINDOW(mw->window));
     }
 
-    g_signal_connect(mw->window, "delete_event", G_CALLBACK(mw->save_and_close_window), NULL);
-    // If focused, set active window in menubar
-
     mw->setup_grid();
     mw->setup_stack();
 
@@ -53,6 +50,9 @@ void MainWindow::activate(GtkApplication *app, MainWindow *mw) {
     gtk_widget_show_all(mw->window);
 
     menubar_obj->setup_macos_menu_bar();
+
+    g_signal_connect(mw->window, "delete_event", G_CALLBACK(mw->save_and_close_window), NULL);
+    g_signal_connect(mw->window, "activate-focus", G_CALLBACK(menubar_obj->set_active_window), mw->window);
 }
 
 void MainWindow::setup_grid() {
