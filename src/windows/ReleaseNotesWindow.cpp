@@ -8,10 +8,18 @@
 #endif
 
 #include "ReleaseNotesWindow.hpp"
+#include "MenuBar.hpp"
 #include "../constants.hpp"
 
 
-void ReleaseNotesWindow::activate(GtkWidget *menu_item) {
+void set_active_window(GtkWidget *window, MenuBar *mb) {
+    mb->set_active_window(window);
+}
+
+
+// Class
+
+void ReleaseNotesWindow::activate(GtkWidget *menu_item, MenuBar *main_menu_bar) {
     GtkWidget *release_notes_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
     gtk_window_set_position(GTK_WINDOW(release_notes_window), GTK_WIN_POS_CENTER);
@@ -32,7 +40,7 @@ void ReleaseNotesWindow::activate(GtkWidget *menu_item) {
 
     gtk_container_add(GTK_CONTAINER(release_notes_window), release_notes_scrolled_window);
 
-    // If focused, set active window in menubar
+    g_signal_connect(release_notes_window, "set-focus", G_CALLBACK(set_active_window), main_menu_bar);
 
     gtk_widget_show_all(release_notes_window);
 }

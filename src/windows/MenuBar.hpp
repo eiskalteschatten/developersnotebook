@@ -43,6 +43,7 @@ public:
     GtkWidget *get_menu_bar() {return menubar;}
 
     void setup_macos_menu_bar();
+
     void set_active_window(GtkWidget *window) { active_window = window; };
 };
 

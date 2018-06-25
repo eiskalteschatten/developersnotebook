@@ -14,7 +14,6 @@ private:
     DashboardView *dashboard_view;
     ProjectsView *projects_view;
 
-    friend void set_active_window(GtkApplication *app, gpointer data);
 
     void setup_grid();
     void setup_stack();

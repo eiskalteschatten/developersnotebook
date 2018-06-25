@@ -3,6 +3,9 @@
 
 #include <gtk/gtk.h>
 
+#include "MenuBar.hpp"
+
+
 class ReleaseNotesWindow {
 private:
     std::string release_notes_file_name = "release-notes";
@@ -16,7 +19,7 @@ public:
     ReleaseNotesWindow();
     ~ReleaseNotesWindow();
 
-    static void activate(GtkWidget *menu_item);
+    static void activate(GtkWidget *menu_item, MenuBar *main_menu_bar);
 };
 
 #endif /* ReleaseNotesWindow_hpp */
