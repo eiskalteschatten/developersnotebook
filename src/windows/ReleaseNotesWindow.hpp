@@ -16,7 +16,7 @@ public:
     ReleaseNotesWindow();
     ~ReleaseNotesWindow();
 
-    static void activate(GtkWidget *menu_item, GtkWidget *main_window);
+    static void activate(GtkWidget *menu_item);
 };
 
 #endif /* ReleaseNotesWindow_hpp */

@@ -193,7 +193,7 @@ void MenuBar::setup_help_menu() {
     // Release Notes
     {
         gtk_menu_shell_append(GTK_MENU_SHELL(help_menu), release_notes_mi);
-        g_signal_connect(G_OBJECT(release_notes_mi), "activate", G_CALLBACK(ReleaseNotesWindow::activate), main_window);
+        g_signal_connect(G_OBJECT(release_notes_mi), "activate", G_CALLBACK(ReleaseNotesWindow::activate), NULL);
     }
 
     // About
