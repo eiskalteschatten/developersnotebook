@@ -18,6 +18,16 @@ enum {
 };
 
 
+// Friends
+
+void projects_ending_soon_row_activated(GtkTreeView *treeview, GtkTreePath *path, GtkTreeViewColumn *col, DashboardView *dv) {
+    g_print ("A row has been double-clicked!\n");
+}
+
+
+// Class
+
+
 DashboardView::DashboardView() {
     const int grid_spacing = 20;
 
@@ -117,7 +127,6 @@ void DashboardView::fill_projects_ending_soon() {
                                                              G_TYPE_STRING,
                                                              G_TYPE_STRING);
 
-
         projects.get_projects_ending_soon();
         const tableVector &contents = projects.get_full_table();
 
@@ -171,4 +180,6 @@ void DashboardView::fill_projects_ending_soon() {
     }
 
     gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(projects_ending_soon_list_store), SORT_END_DATE_COLUMN, GTK_SORT_ASCENDING);
+
+    g_signal_connect(projects_ending_soon_tree_view, "changed", G_CALLBACK(projects_ending_soon_row_activated), this);
 }
