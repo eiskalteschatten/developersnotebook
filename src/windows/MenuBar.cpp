@@ -3,6 +3,7 @@
 
 #ifdef __APPLE__
     #include <gtkosxapplication.h>
+    #include "MacWindowManagerInterface.hpp"
 #endif
 
 #include "MenuBar.hpp"
@@ -21,7 +22,7 @@ void new_project(GSimpleAction *action, MenuBar *mb) {
 
 void close_window(GSimpleAction *action, MenuBar *mb) {
     #ifdef __APPLE__
-
+        mac_close_active_window();
     #else
         mb->main_window_obj->save_and_close_window(mb->main_window);
     #endif
