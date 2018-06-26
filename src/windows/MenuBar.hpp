@@ -9,7 +9,6 @@ class MenuBar {
 private:
     MainWindow *main_window_obj;
     GtkWidget *main_window;
-    GtkWidget *active_window;
     GdkModifierType primary_mask_key;
     GtkAccelGroup *accel_group;
 
@@ -43,8 +42,6 @@ public:
     GtkWidget *get_menu_bar() {return menubar;}
 
     void setup_macos_menu_bar();
-
-    void set_active_window(GtkWidget *window) { active_window = window; };
 };
 
 #endif /* MenuBar_hpp */

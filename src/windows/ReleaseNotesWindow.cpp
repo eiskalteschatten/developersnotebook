@@ -12,13 +12,6 @@
 #include "../constants.hpp"
 
 
-void set_active_window(GtkWidget *window, MenuBar *mb) {
-    mb->set_active_window(window);
-}
-
-
-// Class
-
 void ReleaseNotesWindow::activate(GtkWidget *menu_item, MenuBar *main_menu_bar) {
     GtkWidget *release_notes_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
@@ -39,8 +32,6 @@ void ReleaseNotesWindow::activate(GtkWidget *menu_item, MenuBar *main_menu_bar) 
     rnw.fill_release_notes(buffer);
 
     gtk_container_add(GTK_CONTAINER(release_notes_window), release_notes_scrolled_window);
-
-    g_signal_connect(release_notes_window, "set-focus", G_CALLBACK(set_active_window), main_menu_bar);
 
     gtk_widget_show_all(release_notes_window);
 }

@@ -9,14 +9,6 @@
 #include "../models/PreferencesModel.hpp"
 
 
-void set_active_window(GtkWidget *window, gpointer data) {
-    MenuBar *mb = (MenuBar*)data;
-    mb->set_active_window(window);
-}
-
-
-// Class
-
 MainWindow::MainWindow() {
 
 }
@@ -60,7 +52,6 @@ void MainWindow::activate(GtkApplication *app, MainWindow *mw) {
     menubar_obj->setup_macos_menu_bar();
 
     g_signal_connect(mw->window, "delete_event", G_CALLBACK(mw->save_and_close_window), NULL);
-    g_signal_connect(mw->window, "set-focus", G_CALLBACK(set_active_window), menubar_obj);
 }
 
 void MainWindow::setup_grid() {
