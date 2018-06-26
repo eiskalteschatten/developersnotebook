@@ -3,7 +3,6 @@
 
 #ifdef __APPLE__
     #include <gtkosxapplication.h>
-    #include "MacWindowManagerInterface.hpp"
 #endif
 
 #include "MenuBar.hpp"
@@ -22,7 +21,18 @@ void new_project(GSimpleAction *action, MenuBar *mb) {
 
 void close_window(GSimpleAction *action, MenuBar *mb) {
     #ifdef __APPLE__
-        mac_close_active_window();
+        GList *top_levels;
+        GList *top_level;
+
+        top_levels = gtk_window_list_toplevels ();
+        for (top_level = top_levels; top_level; top_level = top_level->next) {
+            if (gtk_window_has_toplevel_focus(GTK_WINDOW(top_level->data))) {
+                gtk_widget_destroy(GTK_WIDGET(top_level->data));
+                break;
+            }
+        }
+
+        g_list_free(top_levels);
     #else
         mb->main_window_obj->save_and_close_window(mb->main_window);
     #endif
