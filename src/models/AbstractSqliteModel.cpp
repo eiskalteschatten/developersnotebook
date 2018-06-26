@@ -118,6 +118,40 @@ void AbstractSqliteModel::delete_single() {
     }
 }
 
+void AbstractSqliteModel::select_query(std::string sql) {
+    try {
+        SqliteConnectionManager connection_manager;
+
+        int connection;
+        sqlite3_stmt *stmt;
+
+        connection = sqlite3_prepare_v2(connection_manager.get_db(), sql.c_str(), -1, &stmt, NULL);
+
+        if(connection != SQLITE_OK) {
+            fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(connection_manager.get_db()));
+        }
+
+        while ((connection = sqlite3_step(stmt)) == SQLITE_ROW) {
+            tableRowMap row;
+
+            for (int i = 0; i < sqlite3_column_count(stmt); i++) {
+                std::string column_name = std::string(reinterpret_cast<const char*>(sqlite3_column_name(stmt, i)));
+                std::string column_text = std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, i)));
+                row[column_name]        = column_text;
+            }
+
+            full_table.push_back(row);
+        }
+
+        sqlite3_finalize(stmt);
+
+        fill_model();
+    }
+    catch(const std::exception& e) {
+        fprintf(stderr, "An exception occured while trying to set up the database: %s\n", e.what());
+    }
+}
+
 void AbstractSqliteModel::select_one() {
     try {
         SqliteConnectionManager connection_manager;
@@ -152,38 +186,8 @@ void AbstractSqliteModel::select_one() {
 }
 
 void AbstractSqliteModel::select_all() {
-    try {
-        SqliteConnectionManager connection_manager;
-
-        std::string sql = "SELECT * FROM " + table_schema->table_name + ";";
-        int connection;
-        sqlite3_stmt *stmt;
-
-        connection = sqlite3_prepare_v2(connection_manager.get_db(), sql.c_str(), -1, &stmt, NULL);
-
-        if(connection != SQLITE_OK) {
-            fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(connection_manager.get_db()));
-        }
-
-        while ((connection = sqlite3_step(stmt)) == SQLITE_ROW) {
-            tableRowMap row;
-
-            for (int i = 0; i < sqlite3_column_count(stmt); i++) {
-                std::string column_name = std::string(reinterpret_cast<const char*>(sqlite3_column_name(stmt, i)));
-                std::string column_text = std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, i)));
-                row[column_name]        = column_text;
-            }
-
-            full_table.push_back(row);
-        }
-
-        sqlite3_finalize(stmt);
-
-        fill_model();
-    }
-    catch(const std::exception& e) {
-        fprintf(stderr, "An exception occured while trying to set up the database: %s\n", e.what());
-    }
+    std::string sql = "SELECT * FROM " + table_schema->table_name + ";";
+    select_query(sql);
 }
 
 void AbstractSqliteModel::abstract_save_all() {

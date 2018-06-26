@@ -36,6 +36,7 @@ public:
     virtual ~AbstractSqliteModel();
 
     void delete_single();
+    void select_query(std::string sql);
     void select_one();
     void select_all();
 

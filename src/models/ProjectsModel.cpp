@@ -137,38 +137,8 @@ void ProjectsModel::truncate_notes() {
 }
 
 void ProjectsModel::get_projects_ending_soon() {
-    try {
-        SqliteConnectionManager connection_manager;
-
-        std::string sql = "SELECT * FROM " + table_schema->table_name +
-                          " WHERE end_date IS NOT NULL" +
-                          " ORDER BY date(end_date) DESC;";
-        int connection;
-        sqlite3_stmt *stmt;
-
-        connection = sqlite3_prepare_v2(connection_manager.get_db(), sql.c_str(), -1, &stmt, NULL);
-
-        if(connection != SQLITE_OK) {
-            fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(connection_manager.get_db()));
-        }
-
-        while ((connection = sqlite3_step(stmt)) == SQLITE_ROW) {
-            tableRowMap row;
-
-            for (int i = 0; i < sqlite3_column_count(stmt); i++) {
-                std::string column_name = std::string(reinterpret_cast<const char*>(sqlite3_column_name(stmt, i)));
-                std::string column_text = std::string(reinterpret_cast<const char*>(sqlite3_column_text(stmt, i)));
-                row[column_name]        = column_text;
-            }
-
-            full_table.push_back(row);
-        }
-
-        sqlite3_finalize(stmt);
-
-        fill_model();
-    }
-    catch(const std::exception& e) {
-        fprintf(stderr, "An exception occured while trying to set up the database: %s\n", e.what());
-    }
+    std::string sql = "SELECT * FROM " + table_schema->table_name +
+                        " WHERE end_date IS NOT NULL" +
+                        " ORDER BY date(end_date) DESC;";
+    select_query(sql);
 }
