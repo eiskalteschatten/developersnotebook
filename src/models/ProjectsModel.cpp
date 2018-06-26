@@ -139,6 +139,7 @@ void ProjectsModel::truncate_notes() {
 void ProjectsModel::get_projects_ending_soon() {
     std::string sql = "SELECT * FROM " + table_schema->table_name +
                         " WHERE end_date IS NOT NULL" +
-                        " ORDER BY date(end_date) DESC;";
+                        " AND end_date != \"\"" +
+                        " AND is_complete = 0;";
     select_query(sql);
 }

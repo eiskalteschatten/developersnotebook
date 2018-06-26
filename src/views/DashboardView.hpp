@@ -7,8 +7,9 @@
 
 class DashboardView : public AbstractView {
 private:
-    GtkWidget *release_notes_text_view;
     GtkWidget *projects_ending_soon_tree_view;
+    GtkWidget *projects_ending_soon_scrolled_window;
+    GtkListStore *projects_ending_soon_list_store;
 
     void fill_projects_ending_soon();
 
