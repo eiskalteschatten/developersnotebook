@@ -28,6 +28,7 @@ public:
     void setup();
     void save_all();
     void truncate_notes();
+    void get_projects_ending_soon();
 
     // Getters and setters
 
