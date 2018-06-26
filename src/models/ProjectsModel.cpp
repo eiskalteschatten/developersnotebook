@@ -141,7 +141,7 @@ void ProjectsModel::get_projects_ending_soon() {
         SqliteConnectionManager connection_manager;
 
         std::string sql = "SELECT * FROM " + table_schema->table_name +
-                          " WHERE end_date IS NOT NULL";
+                          " WHERE end_date IS NOT NULL" +
                           " ORDER BY date(end_date) DESC;";
         int connection;
         sqlite3_stmt *stmt;
