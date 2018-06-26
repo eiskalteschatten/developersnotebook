@@ -21,10 +21,9 @@ void new_project(GSimpleAction *action, MenuBar *mb) {
 
 void close_window(GSimpleAction *action, MenuBar *mb) {
     #ifdef __APPLE__
-        GList *top_levels;
+        GList *top_levels = gtk_window_list_toplevels();
         GList *top_level;
 
-        top_levels = gtk_window_list_toplevels ();
         for (top_level = top_levels; top_level; top_level = top_level->next) {
             if (gtk_window_has_toplevel_focus(GTK_WINDOW(top_level->data))) {
                 gtk_widget_destroy(GTK_WIDGET(top_level->data));
