@@ -152,7 +152,6 @@ void ProjectsModel::get_projects_ending_soon() {
             fprintf(stderr, "SQL error: %s\n", sqlite3_errmsg(connection_manager.get_db()));
         }
 
-
         while ((connection = sqlite3_step(stmt)) == SQLITE_ROW) {
             tableRowMap row;
 
