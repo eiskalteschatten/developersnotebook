@@ -19,6 +19,13 @@ void ReleaseNotesWindow::activate(GtkWidget *menu_item, MenuBar *main_menu_bar) 
     gtk_window_set_default_size(GTK_WINDOW(release_notes_window), 800, 500);
     gtk_window_set_title(GTK_WINDOW(release_notes_window), "Release Notes");
 
+    #ifndef __APPLE__
+        char cwd[1024];
+        getcwd(cwd, sizeof(cwd));
+        const char *icon_path = std::strcat(cwd, Constants::application_icon_path.c_str());
+        gtk_window_set_icon_from_file(GTK_WINDOW(release_notes_window), icon_path, NULL);
+    #endif
+
     GtkWidget *release_notes_text_view = gtk_text_view_new();
     gtk_text_view_set_editable(GTK_TEXT_VIEW(release_notes_text_view), false);
     gtk_text_view_set_wrap_mode(GTK_TEXT_VIEW(release_notes_text_view), GTK_WRAP_WORD);
