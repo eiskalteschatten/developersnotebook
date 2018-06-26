@@ -167,7 +167,7 @@ void DashboardView::fill_projects_ending_soon() {
         GtkTreeViewColumn *end_date_column = gtk_tree_view_column_new_with_attributes("End Date", text_renderer, "text", END_DATE_COLUMN, NULL);
         gtk_tree_view_append_column(GTK_TREE_VIEW(projects_ending_soon_tree_view), end_date_column);
         gtk_tree_view_column_set_sort_column_id(end_date_column, SORT_END_DATE_COLUMN);
-        gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(projects_ending_soon_list_store), SORT_END_DATE_COLUMN, sort_by_string, GINT_TO_POINTER(END_DATE_COLUMN), NULL);
+        gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(projects_ending_soon_list_store), SORT_END_DATE_COLUMN, sort_by_date, GINT_TO_POINTER(END_DATE_COLUMN), NULL);
     }
 
     gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(projects_ending_soon_list_store), SORT_END_DATE_COLUMN, GTK_SORT_ASCENDING);

@@ -281,7 +281,7 @@ void ProjectsView::setup_list_view() {
         GtkTreeViewColumn *start_date_column = gtk_tree_view_column_new_with_attributes("Start Date", text_renderer, "text", START_DATE_COLUMN, NULL);
         gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), start_date_column);
         gtk_tree_view_column_set_sort_column_id(start_date_column, SORT_START_DATE_COLUMN);
-        gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_START_DATE_COLUMN, sort_by_string, GINT_TO_POINTER(START_DATE_COLUMN), NULL);
+        gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_START_DATE_COLUMN, sort_by_date, GINT_TO_POINTER(START_DATE_COLUMN), NULL);
     }
 
     // End Date Column
@@ -289,7 +289,7 @@ void ProjectsView::setup_list_view() {
         GtkTreeViewColumn *end_date_column = gtk_tree_view_column_new_with_attributes("End Date", text_renderer, "text", END_DATE_COLUMN, NULL);
         gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), end_date_column);
         gtk_tree_view_column_set_sort_column_id(end_date_column, SORT_END_DATE_COLUMN);
-        gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_END_DATE_COLUMN, sort_by_string, GINT_TO_POINTER(END_DATE_COLUMN), NULL);
+        gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_END_DATE_COLUMN, sort_by_date, GINT_TO_POINTER(END_DATE_COLUMN), NULL);
     }
 
     // Date Completed Column
@@ -297,7 +297,7 @@ void ProjectsView::setup_list_view() {
         GtkTreeViewColumn *date_completed_column = gtk_tree_view_column_new_with_attributes("Completion Date", text_renderer, "text", DATE_COMPLETED_COLUMN, NULL);
         gtk_tree_view_append_column(GTK_TREE_VIEW(list_view), date_completed_column);
         gtk_tree_view_column_set_sort_column_id(date_completed_column, SORT_DATE_COMPLETED_COLUMN);
-        gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_DATE_COMPLETED_COLUMN, sort_by_string, GINT_TO_POINTER(DATE_COMPLETED_COLUMN), NULL);
+        gtk_tree_sortable_set_sort_func(GTK_TREE_SORTABLE(list_store), SORT_DATE_COMPLETED_COLUMN, sort_by_date, GINT_TO_POINTER(DATE_COMPLETED_COLUMN), NULL);
     }
 
     // URL Column

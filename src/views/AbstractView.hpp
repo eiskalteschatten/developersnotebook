@@ -18,6 +18,7 @@ protected:
 
     static gint sort_by_string(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer data);
     static gint sort_by_boolean(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer data);
+    static gint sort_by_date(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer data);
 
     static std::string format_date(const guint *year, const guint *month, const guint *day);
     static std::string format_date(const std::tm *date_tm);

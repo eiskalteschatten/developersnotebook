@@ -59,6 +59,26 @@ gint AbstractView::sort_by_boolean(GtkTreeModel *model, GtkTreeIter *a, GtkTreeI
     return 0;
 }
 
+gint AbstractView::sort_by_date(GtkTreeModel *model, GtkTreeIter *a, GtkTreeIter *b, gpointer user_data) {
+    gchar *string_char1;
+    gchar *string_char2;
+    gint sortcol = GPOINTER_TO_INT(user_data);
+
+    gtk_tree_model_get(model, a, sortcol, &string_char1, -1);
+    gtk_tree_model_get(model, b, sortcol, &string_char2, -1);
+
+    std::string string1 = std::string(string_char1);
+    std::string string2 = std::string(string_char2);
+
+    g_free(string_char1);
+    g_free(string_char2);
+
+    std::tm tm1 = get_date_from_string(&string1);
+    std::tm tm2 = get_date_from_string(&string2);
+
+    return difftime(mktime(&tm1), mktime(&tm2)) < 0 ? -1 : 1;
+}
+
 std::string AbstractView::format_date(const guint *year, const guint *month, const guint *day) {
     std::tm date_tm = {};
 
