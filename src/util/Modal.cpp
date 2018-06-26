@@ -92,10 +92,10 @@ int Modal::show_confirm_modal(std::string accept_button, std::string reject_butt
         GtkWidget *dialog    = gtk_dialog_new_with_buttons("",
                                                            GTK_WINDOW(parent_window),
                                                            flags,
-                                                           accept_button.c_str(),
-                                                           GTK_RESPONSE_ACCEPT,
                                                            reject_button.c_str(),
                                                            GTK_RESPONSE_REJECT,
+                                                           accept_button.c_str(),
+                                                           GTK_RESPONSE_ACCEPT,
                                                            NULL);
 
         gtk_container_set_border_width(GTK_CONTAINER(dialog), 10);
