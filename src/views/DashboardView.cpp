@@ -20,6 +20,10 @@ enum {
 
 // Friends
 
+void project_ending_soon_update(GtkWidget *widget, DashboardView *dv) {
+    dv->fill_projects_ending_soon();
+}
+
 void projects_ending_soon_row_activated(GtkTreeView *treeview, GtkTreePath *path, GtkTreeViewColumn *col, DashboardView *dv) {
     g_print ("A row has been double-clicked!\n");
 }
@@ -108,42 +112,22 @@ DashboardView::DashboardView() {
         gtk_grid_attach(GTK_GRID(projects_ending_soon_grid), title, 0, 0, 1, 1);
 
         // Tree View
-        fill_projects_ending_soon();
+        setup_projects_ending_soon();
         gtk_grid_attach(GTK_GRID(projects_ending_soon_grid), projects_ending_soon_scrolled_window, 0, 1, 1, 1);
 
         gtk_grid_attach(GTK_GRID(main_widget), projects_ending_soon_grid, 0, 1, 1, 1);
     }
 
+    g_signal_connect(main_widget, "show", G_CALLBACK(project_ending_soon_update), this);
 }
 
-void DashboardView::fill_projects_ending_soon() {
-    // Setup list store
-    {
-        GtkTreeIter tree_iter;
-        ProjectsModel projects;
+void DashboardView::setup_projects_ending_soon() {
+    projects_ending_soon_list_store = gtk_list_store_new(N_COLUMNS,
+                                                         G_TYPE_STRING,
+                                                         G_TYPE_STRING,
+                                                         G_TYPE_STRING);
 
-        projects_ending_soon_list_store = gtk_list_store_new(N_COLUMNS,
-                                                             G_TYPE_STRING,
-                                                             G_TYPE_STRING,
-                                                             G_TYPE_STRING);
-
-        projects.get_projects_ending_soon();
-        const tableVector &contents = projects.get_full_table();
-
-        for (auto const &row_map : contents) {
-            ProjectsModel *row       = new ProjectsModel(row_map);
-            const std::string id_str = std::to_string(row->get_id());
-
-            gtk_list_store_append(GTK_LIST_STORE(projects_ending_soon_list_store), &tree_iter);
-
-            gtk_list_store_set(GTK_LIST_STORE(projects_ending_soon_list_store), &tree_iter, ID_COLUMN, id_str.c_str(),
-                                                                                            NAME_COLUMN, row->get_name().c_str(),
-                                                                                            END_DATE_COLUMN, row->get_end_date().c_str(),
-                                                                                            -1);
-
-            delete row;
-        }
-    }
+    // fill_projects_ending_soon();
 
     projects_ending_soon_tree_view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(projects_ending_soon_list_store));
 
@@ -182,4 +166,26 @@ void DashboardView::fill_projects_ending_soon() {
     gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(projects_ending_soon_list_store), SORT_END_DATE_COLUMN, GTK_SORT_ASCENDING);
 
     g_signal_connect(projects_ending_soon_tree_view, "changed", G_CALLBACK(projects_ending_soon_row_activated), this);
+}
+
+void DashboardView::fill_projects_ending_soon() {
+    GtkTreeIter tree_iter;
+    ProjectsModel projects;
+
+    projects.get_projects_ending_soon();
+    const tableVector &contents = projects.get_full_table();
+
+    for (auto const &row_map : contents) {
+        ProjectsModel *row       = new ProjectsModel(row_map);
+        const std::string id_str = std::to_string(row->get_id());
+
+        gtk_list_store_append(GTK_LIST_STORE(projects_ending_soon_list_store), &tree_iter);
+
+        gtk_list_store_set(GTK_LIST_STORE(projects_ending_soon_list_store), &tree_iter, ID_COLUMN, id_str.c_str(),
+                                                                                        NAME_COLUMN, row->get_name().c_str(),
+                                                                                        END_DATE_COLUMN, row->get_end_date().c_str(),
+                                                                                        -1);
+
+        delete row;
+    }
 }

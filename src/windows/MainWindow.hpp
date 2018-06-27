@@ -14,7 +14,6 @@ private:
     DashboardView *dashboard_view;
     ProjectsView *projects_view;
 
-
     void setup_grid();
     void setup_stack();
 

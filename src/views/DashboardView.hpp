@@ -11,8 +11,10 @@ private:
     GtkWidget *projects_ending_soon_scrolled_window;
     GtkListStore *projects_ending_soon_list_store;
 
+    friend void project_ending_soon_update(GtkWidget *widget, DashboardView *dv);
     friend void projects_ending_soon_row_activated(GtkTreeView *treeview, GtkTreePath *path, GtkTreeViewColumn *col, DashboardView *dv);
 
+    void setup_projects_ending_soon();
     void fill_projects_ending_soon();
 
 public:
