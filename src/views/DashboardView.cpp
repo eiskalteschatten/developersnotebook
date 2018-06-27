@@ -165,7 +165,7 @@ void DashboardView::setup_projects_ending_soon() {
 
     gtk_tree_sortable_set_sort_column_id(GTK_TREE_SORTABLE(projects_ending_soon_list_store), SORT_END_DATE_COLUMN, GTK_SORT_ASCENDING);
 
-    g_signal_connect(projects_ending_soon_tree_view, "changed", G_CALLBACK(projects_ending_soon_row_activated), this);
+    g_signal_connect(projects_ending_soon_tree_view, "row-activated", G_CALLBACK(projects_ending_soon_row_activated), this);
 }
 
 void DashboardView::fill_projects_ending_soon() {
