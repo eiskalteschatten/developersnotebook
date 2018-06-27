@@ -20,10 +20,6 @@ enum {
 
 // Friends
 
-void project_ending_soon_update(GtkWidget *widget, DashboardView *dv) {
-    dv->fill_projects_ending_soon();
-}
-
 void projects_ending_soon_row_activated(GtkTreeView *treeview, GtkTreePath *path, GtkTreeViewColumn *col, DashboardView *dv) {
     g_print ("A row has been double-clicked!\n");
 }
@@ -117,8 +113,6 @@ DashboardView::DashboardView() {
 
         gtk_grid_attach(GTK_GRID(main_widget), projects_ending_soon_grid, 0, 1, 1, 1);
     }
-
-    g_signal_connect(main_widget, "show", G_CALLBACK(project_ending_soon_update), this);
 }
 
 void DashboardView::setup_projects_ending_soon() {
@@ -126,8 +120,6 @@ void DashboardView::setup_projects_ending_soon() {
                                                          G_TYPE_STRING,
                                                          G_TYPE_STRING,
                                                          G_TYPE_STRING);
-
-    // fill_projects_ending_soon();
 
     projects_ending_soon_tree_view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(projects_ending_soon_list_store));
 
@@ -188,4 +180,8 @@ void DashboardView::fill_projects_ending_soon() {
 
         delete row;
     }
+}
+
+void DashboardView::refresh_all_sub_views() {
+    fill_projects_ending_soon();
 }

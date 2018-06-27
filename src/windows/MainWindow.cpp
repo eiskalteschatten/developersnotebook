@@ -9,6 +9,19 @@
 #include "../models/PreferencesModel.hpp"
 
 
+// Friends
+
+void refresh_all_sub_views(GtkWidget *stack, MainWindow *mw) {
+    const gchar *stack_child_name = gtk_stack_get_visible_child_name(GTK_STACK(stack));
+
+    if (strcmp(stack_child_name, "dashboard") == 0) {
+        mw->get_dashboard_view()->refresh_all_sub_views();
+    }
+}
+
+
+// Class
+
 MainWindow::MainWindow() {
 
 }
@@ -93,6 +106,8 @@ void MainWindow::setup_stack() {
 
     gtk_grid_attach(GTK_GRID(grid), sidebar, 0, 1, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), stack, 1, 1, 1, 1);
+
+    g_signal_connect(stack, "notify::visible-child", G_CALLBACK(refresh_all_sub_views), this);
 }
 
 void MainWindow::save_and_close_window(GtkWidget *window) {
