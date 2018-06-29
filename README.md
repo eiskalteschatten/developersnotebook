@@ -89,6 +89,9 @@ After building, the binaries can be found in the `build` directory. They can eit
 
 - ...
 
+## License
+
+[MIT](https://github.com/eiskalteschatten/developersnotebook/blob/master/LICENSE)
 
 ---
 

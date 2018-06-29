@@ -22,6 +22,7 @@ void AboutDialog::activate(GtkWidget *menu_item, GtkWidget *main_window) {
     gtk_about_dialog_set_copyright(GTK_ABOUT_DIALOG(dialog), copyright);
     gtk_about_dialog_set_comments(GTK_ABOUT_DIALOG(dialog), Constants::application_slogan.c_str());
     gtk_about_dialog_set_website(GTK_ABOUT_DIALOG(dialog), Constants::application_website.c_str());
+    gtk_about_dialog_set_license_type(GTK_ABOUT_DIALOG(dialog), GTK_LICENSE_MIT_X11);
 
     gtk_about_dialog_set_logo_icon_name(GTK_ABOUT_DIALOG(dialog), NULL);
     gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(dialog), logo_buf);
