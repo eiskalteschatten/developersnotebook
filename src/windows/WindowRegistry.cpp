@@ -16,8 +16,17 @@ WindowRegistry& WindowRegistry::get_instance() {
     return instance;
 }
 
-void WindowRegistry::add_window(MainWindow* window) {
+void WindowRegistry::add_window(MainWindow *window) {
     windows.push_back(window);
+}
+
+void WindowRegistry::remove_window(MainWindow *instance) {
+    int i = get_instance_index(instance);
+    remove_window(i);
+}
+
+void WindowRegistry::remove_window(int i) {
+    windows.erase(windows.begin() + i);
 }
 
 MainWindow *WindowRegistry::get_window(int i) {

@@ -27,10 +27,14 @@ void refresh_all_sub_views(GtkWidget *stack, int *instance_index) {
 // Class
 
 MainWindow::MainWindow() {
-
+    WindowRegistry &win_registry = WindowRegistry::get_instance();
+    win_registry.add_window(this);
 }
 
 MainWindow::~MainWindow() {
+    WindowRegistry &win_registry = WindowRegistry::get_instance();
+    win_registry.remove_window(this);
+
     g_free(window);
     g_free(grid);
 }

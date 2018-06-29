@@ -17,7 +17,9 @@ private:
 public:
     static WindowRegistry& get_instance();
 
-    void add_window(MainWindow* window);
+    void add_window(MainWindow *window);
+    void remove_window(int i);
+    void remove_window(MainWindow *instance);
     std::vector<MainWindow*> const& get_windows() const { return windows; }
     MainWindow *get_window(int i);
     int get_instance_index(MainWindow *instance);
