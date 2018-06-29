@@ -14,9 +14,6 @@
 void refresh_all_sub_views(GtkWidget *stack, GdkEvent *event, MainWindow *mw) {
     const gchar *stack_child_name = gtk_stack_get_visible_child_name(GTK_STACK(stack));
 
-    // WindowRegistry &win_registry = WindowRegistry::get_instance();
-    // MainWindow *mw = win_registry.get_window(0);
-
     if (strcmp(stack_child_name, "dashboard") == 0) {
         mw->get_dashboard_view()->refresh_all_sub_views();
     }
@@ -84,18 +81,18 @@ void MainWindow::setup_grid() {
 }
 
 void MainWindow::setup_stack() {
-    // Views for the stack
-    dashboard_view                   = new DashboardView();
-    GtkWidget *dashboard_view_widget = dashboard_view->get_widget();
-
-    projects_view                   = new ProjectsView(window);
-    GtkWidget *projects_view_widget = projects_view->get_widget();
-
     // Stack
     stack = gtk_stack_new();
     gtk_stack_set_homogeneous(GTK_STACK(stack), TRUE);
     gtk_widget_set_hexpand(stack, TRUE);
     gtk_widget_set_vexpand(stack, TRUE);
+
+    // Views for the stack
+    dashboard_view                   = new DashboardView(stack);
+    GtkWidget *dashboard_view_widget = dashboard_view->get_widget();
+
+    projects_view                   = new ProjectsView(window);
+    GtkWidget *projects_view_widget = projects_view->get_widget();
 
     // Sidebar
     GtkWidget *sidebar = gtk_stack_sidebar_new();

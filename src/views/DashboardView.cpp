@@ -20,15 +20,28 @@ enum {
 
 // Friends
 
-void projects_ending_soon_row_activated(GtkTreeView *treeview, GtkTreePath *path, GtkTreeViewColumn *col, DashboardView *dv) {
-    g_print ("A row has been double-clicked!\n");
+void projects_ending_soon_row_activated(GtkTreeView *tree_view, GtkTreePath *path, GtkTreeViewColumn *col, DashboardView *dv) {
+    GtkTreeModel *model = gtk_tree_view_get_model(tree_view);
+    GtkTreeIter tree_iter;
+
+    if (gtk_tree_model_get_iter(model, &tree_iter, path)) {
+        gchar *id;
+        gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id, -1);
+
+        GtkWidget *stack_child_widget = gtk_stack_get_child_by_name(GTK_STACK(dv->main_stack), "projects");
+        gtk_stack_set_visible_child(GTK_STACK(dv->main_stack), stack_child_widget);
+
+        g_free(id);
+    }
 }
 
 
 // Class
 
 
-DashboardView::DashboardView() {
+DashboardView::DashboardView(GtkWidget *stack) {
+    main_stack = stack;
+
     const int grid_spacing = 20;
 
     main_widget = gtk_grid_new();
