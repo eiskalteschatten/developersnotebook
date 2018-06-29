@@ -164,6 +164,8 @@ void DashboardView::fill_projects_ending_soon() {
     GtkTreeIter tree_iter;
     ProjectsModel projects;
 
+    gtk_list_store_clear(projects_ending_soon_list_store);
+
     projects.get_projects_ending_soon();
     const tableVector &contents = projects.get_full_table();
 
