@@ -3,7 +3,6 @@
 
 #include "MainWindow.hpp"
 #include "MenuBar.hpp"
-#include "WindowRegistry.hpp"
 #include "../constants.hpp"
 #include "../views/DashboardView.hpp"
 #include "../views/ProjectsView.hpp"
@@ -12,11 +11,11 @@
 
 // Friends
 
-void refresh_all_sub_views(GtkWidget *stack, int *instance_index) {
+void refresh_all_sub_views(GtkWidget *stack, GdkEvent *event, MainWindow *mw) {
     const gchar *stack_child_name = gtk_stack_get_visible_child_name(GTK_STACK(stack));
 
-    WindowRegistry &win_registry = WindowRegistry::get_instance();
-    MainWindow *mw = win_registry.get_window(0);
+    // WindowRegistry &win_registry = WindowRegistry::get_instance();
+    // MainWindow *mw = win_registry.get_window(0);
 
     if (strcmp(stack_child_name, "dashboard") == 0) {
         mw->get_dashboard_view()->refresh_all_sub_views();
@@ -27,14 +26,10 @@ void refresh_all_sub_views(GtkWidget *stack, int *instance_index) {
 // Class
 
 MainWindow::MainWindow() {
-    WindowRegistry &win_registry = WindowRegistry::get_instance();
-    win_registry.add_window(this);
+
 }
 
 MainWindow::~MainWindow() {
-    WindowRegistry &win_registry = WindowRegistry::get_instance();
-    win_registry.remove_window(this);
-
     g_free(window);
     g_free(grid);
 }
@@ -115,10 +110,7 @@ void MainWindow::setup_stack() {
     gtk_grid_attach(GTK_GRID(grid), sidebar, 0, 1, 1, 1);
     gtk_grid_attach(GTK_GRID(grid), stack, 1, 1, 1, 1);
 
-    WindowRegistry &win_registry = WindowRegistry::get_instance();
-    int instance_index           = win_registry.get_instance_index(this);
-
-    g_signal_connect(stack, "notify::visible-child", G_CALLBACK(refresh_all_sub_views), &instance_index);
+    g_signal_connect(stack, "notify::visible-child", G_CALLBACK(refresh_all_sub_views), this);
 }
 
 void MainWindow::save_and_close_window(GtkWidget *window) {
