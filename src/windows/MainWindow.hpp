@@ -14,7 +14,7 @@ private:
     DashboardView *dashboard_view;
     ProjectsView *projects_view;
 
-    friend void refresh_all_sub_views(GtkWidget *stack, MainWindow *mw);
+    friend void refresh_all_sub_views(GtkWidget *stack, int *instance_index);
 
     void setup_grid();
     void setup_stack();

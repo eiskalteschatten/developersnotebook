@@ -19,3 +19,18 @@ WindowRegistry& WindowRegistry::get_instance() {
 void WindowRegistry::add_window(MainWindow* window) {
     windows.push_back(window);
 }
+
+MainWindow *WindowRegistry::get_window(int i) {
+    return windows.at(i);
+}
+
+int WindowRegistry::get_instance_index(MainWindow *instance) {
+    int i;
+    for (i = 0; i < windows.size(); i++) {
+        if (windows.at(i) == instance) {
+            break;
+        }
+    }
+
+    return i;
+}
