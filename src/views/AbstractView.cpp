@@ -86,7 +86,7 @@ std::string AbstractView::format_date(const guint *year, const guint *month, con
     date_tm.tm_mon  = *month;
     date_tm.tm_mday = *day;
 
-    std::time_t time_temp = std::mktime(&date_tm);
+    std::time_t time_temp   = std::mktime(&date_tm);
     const std::tm *time_out = std::localtime(&time_temp);
 
     return format_date(time_out);
