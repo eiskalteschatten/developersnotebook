@@ -64,14 +64,15 @@ After building, the binaries can be found in the `build` directory. They can eit
 
 - Tools (color picker/converter, image and file compression, etc)
 - Bookmarks
+- Notes
 - Updated dashboard
 
 
 ### 0.5
 
 - Journal
-- Notes
 - Code cache
+- Archive
 - Updated dashboard
 
 
