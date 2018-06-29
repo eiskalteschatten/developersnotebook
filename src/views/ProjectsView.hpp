@@ -56,6 +56,7 @@ public:
     ~ProjectsView();
 
     void create_new_project();
+    void select_row_in_list_view(const gchar *id);
 
     GtkWidget *get_list_view() {return list_view;}
     GtkWidget *get_form_grid() {return form_grid;}

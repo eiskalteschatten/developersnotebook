@@ -81,18 +81,18 @@ void MainWindow::setup_grid() {
 }
 
 void MainWindow::setup_stack() {
+    // Views for the stack
+    dashboard_view                   = new DashboardView(this);
+    GtkWidget *dashboard_view_widget = dashboard_view->get_widget();
+
+    projects_view                   = new ProjectsView(window);
+    GtkWidget *projects_view_widget = projects_view->get_widget();
+
     // Stack
     stack = gtk_stack_new();
     gtk_stack_set_homogeneous(GTK_STACK(stack), TRUE);
     gtk_widget_set_hexpand(stack, TRUE);
     gtk_widget_set_vexpand(stack, TRUE);
-
-    // Views for the stack
-    dashboard_view                   = new DashboardView(stack);
-    GtkWidget *dashboard_view_widget = dashboard_view->get_widget();
-
-    projects_view                   = new ProjectsView(window);
-    GtkWidget *projects_view_widget = projects_view->get_widget();
 
     // Sidebar
     GtkWidget *sidebar = gtk_stack_sidebar_new();

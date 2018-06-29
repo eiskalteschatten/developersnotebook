@@ -3,6 +3,7 @@
 #include "DashboardView.hpp"
 #include "../util/Image.hpp"
 #include "../models/ProjectsModel.hpp"
+#include "../windows/MainWindow.hpp"
 #include "../constants.hpp"
 
 enum {
@@ -23,13 +24,17 @@ enum {
 void projects_ending_soon_row_activated(GtkTreeView *tree_view, GtkTreePath *path, GtkTreeViewColumn *col, DashboardView *dv) {
     GtkTreeModel *model = gtk_tree_view_get_model(tree_view);
     GtkTreeIter tree_iter;
+    MainWindow *mw = static_cast<MainWindow*>(dv->main_window_obj);
 
     if (gtk_tree_model_get_iter(model, &tree_iter, path)) {
+        GtkWidget *stack = mw->get_stack();
         gchar *id;
         gtk_tree_model_get(model, &tree_iter, ID_COLUMN, &id, -1);
 
-        GtkWidget *stack_child_widget = gtk_stack_get_child_by_name(GTK_STACK(dv->main_stack), "projects");
-        gtk_stack_set_visible_child(GTK_STACK(dv->main_stack), stack_child_widget);
+        GtkWidget *stack_child_widget = gtk_stack_get_child_by_name(GTK_STACK(stack), "projects");
+        gtk_stack_set_visible_child(GTK_STACK(stack), stack_child_widget);
+
+        mw->get_projects_view()->select_row_in_list_view(id);
 
         g_free(id);
     }
@@ -39,8 +44,8 @@ void projects_ending_soon_row_activated(GtkTreeView *tree_view, GtkTreePath *pat
 // Class
 
 
-DashboardView::DashboardView(GtkWidget *stack) {
-    main_stack = stack;
+DashboardView::DashboardView(void *window_obj) {
+    main_window_obj = window_obj;
 
     const int grid_spacing = 20;
 

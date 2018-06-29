@@ -382,6 +382,28 @@ void ProjectsView::set_list_store(const ProjectsModel *row, GtkTreeIter *tree_it
                                                               -1);
 }
 
+void ProjectsView::select_row_in_list_view(const gchar *id) {
+    GtkTreeIter tree_iter;
+    gboolean has_next = gtk_tree_model_get_iter_first(GTK_TREE_MODEL(list_store), &tree_iter);
+
+    while (has_next) {
+        gchar *id_col;
+
+        gtk_tree_model_get(GTK_TREE_MODEL(list_store), &tree_iter,
+                           ID_COLUMN, &id_col,
+                           -1);
+
+        if (strcmp(id_col, id) == 0) {
+            select_row_in_list_view(&tree_iter);
+            break;
+        }
+
+        g_free(id_col);
+
+        has_next = gtk_tree_model_iter_next(GTK_TREE_MODEL(list_store), &tree_iter);
+    }
+}
+
 void ProjectsView::select_row_in_list_view(GtkTreeIter *tree_iter) {
     GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(list_view));
     gtk_tree_selection_select_iter(selection, tree_iter);

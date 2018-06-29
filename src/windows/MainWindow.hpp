@@ -31,6 +31,7 @@ public:
 
     DashboardView *get_dashboard_view() { return dashboard_view; }
     ProjectsView *get_projects_view() { return projects_view; }
+    GtkWidget *get_stack() { return stack; }
 };
 
 #endif /* MainWindow_hpp */
