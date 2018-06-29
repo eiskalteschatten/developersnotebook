@@ -12,7 +12,8 @@
                 "${workspaceFolder}",
                 "/usr/local/include",
                 "/usr/local/Cellar/gtk+3/3.22.29_1/include/gtk-3.0",
-                "/usr/local/Cellar/gtk-mac-integration/2.0.8_2/include/gtkmacintegration"
+                "/usr/local/Cellar/gtk-mac-integration/2.0.8_2/include/gtkmacintegration",
+                "/usr/local/Cellar/glib/2.56.1/include/glib-2.0"
             ],
             "defines": [],
             "macFrameworkPath": [
