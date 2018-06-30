@@ -1,6 +1,5 @@
 #!/bin/bash -e
 
-BUILD_DIR=build
 BIN_DIR=bin
 TARGET=developersnotebook
 MAC_BUNDLE=Developer\'s\ Notebook.app

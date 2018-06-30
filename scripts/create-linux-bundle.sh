@@ -1,6 +1,5 @@
 #!/bin/bash -e
 
-BUILD_DIR=build
 BIN_DIR=bin
 TARGET_DIR_NAME=developers-notebook
 TARGET_DIR=./${BIN_DIR}/${TARGET_DIR_NAME}
