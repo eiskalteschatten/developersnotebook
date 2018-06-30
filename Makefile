@@ -1,7 +1,7 @@
 .PHONY: all test clean build bin
 
 CXX=g++
-CXXFLAGS=-Wall -g
+CXXFLAGS=-Wall -g -no-pie -std=c++11
 BUILD_DIR=build
 BIN_DIR=bin
 SRC_DIR=src
@@ -47,7 +47,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p ${@D};
 	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/ && \
 	$(CXX) \
-		$(CXXFLAGS) -std=c++11 \
+		$(CXXFLAGS) \
 		`$(PKG_CONFIG_LOC) --cflags gtk+-3.0` \
 		$(CXXINCLUDES) -I ./$(SRC_DIR)/ \
 		-o $@ \
@@ -58,9 +58,11 @@ $(BIN_DIR)/$(TARGET): $(OBJECTS)
 	@mkdir -p $(BIN_DIR);
 	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/ && \
 	$(CXX) \
+		$(CXXFLAGS) \
 		$(CXXLINKED) -lsqlite3 -lboost_system -lboost_filesystem \
 		`$(PKG_CONFIG_LOC) --libs gtk+-3.0` \
-		-o $@ $+
+		$+ \
+		-o $@
 
 all: $(BIN_DIR)/$(TARGET)
 	chmod u+x ./$(BIN_DIR)/$(TARGET)
