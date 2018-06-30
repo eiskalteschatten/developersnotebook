@@ -2,7 +2,8 @@
 
 BUILD_DIR=build
 BIN_DIR=bin
-TARGET_DIR=./${BIN_DIR}/linux
+TARGET_DIR_NAME=devnotebook
+TARGET_DIR=./${BIN_DIR}/${TARGET_DIR_NAME}
 TARGET=developersnotebook
 BINARY="./bin/developersnotebook"
 
@@ -21,4 +22,6 @@ rm -rf ${TARGET_DIR}/resources/macos
 
 chmod u+x ${TARGET_DIR}/${TARGET}
 
-tar cfvz ./${BIN_DIR}/linux.tar.gz ${TARGET_DIR}
+cd ./${BIN_DIR}
+
+tar -zcvf linux.tar.gz ${TARGET_DIR_NAME}
