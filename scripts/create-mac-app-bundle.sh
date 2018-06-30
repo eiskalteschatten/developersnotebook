@@ -40,7 +40,7 @@ do
     echo "Handling Lib: $LIB"
     LIB_NAME=$(basename "$LIB")
     echo "    Adding ${LIB_NAME}"
-    cp -Rf "${LIBSNDFILE_DIR}/src/.libs/${LIB_NAME}" "${FRAMEW_FOLDER}"
+    cp -Rf "${LIB}" "${FRAMEW_FOLDER}"
 
     DoInstallNameTool "$LIB" "$LIB_NAME" "$BINARY"
 done
