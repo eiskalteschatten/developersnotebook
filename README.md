@@ -29,6 +29,10 @@ Developer's Notebook relies on the g++ compiler to build. Currently only macOS a
 
 All required libraries are automatically bundled in the macOS application bundle.
 
+### Linux-specific commands
+
+- Compile and create a gziped bundle: `make create-linux-bundle`
+
 
 ## Running
 

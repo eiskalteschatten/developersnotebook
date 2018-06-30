@@ -91,3 +91,8 @@ install-libs-mac:
 # Mac Application Bundles
 create-mac-bundle: all
 	bash ./scripts/create-mac-app-bundle.sh
+
+
+# Linux Bundle
+create-linux-bundle: all
+	bash ./scripts/create-linux-bundle.sh

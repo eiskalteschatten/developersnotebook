@@ -2,7 +2,6 @@
 
 BUILD_DIR=build
 BIN_DIR=bin
-SRC_DIR=src
 TARGET=developersnotebook
 MAC_BUNDLE=Developer\'s\ Notebook.app
 BINARY="./bin/developersnotebook"
