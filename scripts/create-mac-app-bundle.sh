@@ -22,6 +22,7 @@ echo " "
 
 mkdir -p "./${BIN_DIR}/${MAC_BUNDLE}/Contents/Resources"
 mkdir -p "./${BIN_DIR}/${MAC_BUNDLE}/Contents/MacOS"
+mkdir -p "./${BIN_DIR}/${MAC_BUNDLE}/Contents/Frameworks"
 
 echo APPLnone > "./${BIN_DIR}/${MAC_BUNDLE}/Contents/PkgInfo"
 
@@ -34,7 +35,7 @@ cp ./resources/release-notes.html "./${BIN_DIR}/${MAC_BUNDLE}/Contents/Resources
 
 # Copy shared libraries into the bundle
 
-for LIB in $(otool -L "${BINARY}"|grep libsndfile|cut -d '(' -f -1)
+for LIB in $(otool -L "${BINARY}"|grep lib|cut -d '(' -f -1)
 do
     echo "Handling Lib: $LIB"
     LIB_NAME=$(basename "$LIB")
