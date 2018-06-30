@@ -27,7 +27,7 @@ Developer's Notebook relies on the g++ compiler to build. Currently only macOS a
 - Compile and create an application bundle: `make create-mac-bundle`
 - Compile, create and run the application bundle: `make build-run-mac`
 
-**Note:** The libraries are not bundled within the macOS application bundle yet and are thus still required to be installed separately to run it. This will change when Developer's Notebook gets closer to completion.
+All required libraries are automatically bundled in the macOS application bundle.
 
 
 ## Running
