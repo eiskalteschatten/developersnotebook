@@ -1,7 +1,7 @@
 .PHONY: all test clean build bin
 
 CXX=g++
-CXXFLAGS=-Wall -g -no-pie -std=c++11
+CXXFLAGS_ALL=-Wall -g -std=c++11
 BUILD_DIR=build
 BIN_DIR=bin
 SRC_DIR=src
@@ -13,6 +13,7 @@ MAC_BUNDLE=Developer\'s\ Notebook.app
 
 ifeq ($(OS_TYPE), Darwin)
 
+CXXFLAGS=$(CXXFLAGS_ALL)
 CXXINCLUDES=-I/usr/local/Cellar/gtk-mac-integration/2.0.8_2/include/gtkmacintegration/
 CXXLINKED=-framework Foundation -framework Cocoa -lgtkmacintegration-gtk3.2
 PKG_CONFIG_LOC=pkg-config
@@ -23,6 +24,7 @@ OBJECTS:=$(patsubst $(SRC_DIR)/%,$(BUILD_DIR)/%,$(OBJCSOURCES:.mm=.mm.o) $(CPPOB
 
 else ifeq ($(OS_TYPE), Linux)
 
+CXXFLAGS=$(CXXFLAGS_ALL) -no-pie
 CXXINCLUDES=
 CXXLINKED=
 PKG_CONFIG_LOC=pkg-config
