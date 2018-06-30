@@ -23,4 +23,4 @@ chmod +x ${TARGET_DIR}/${TARGET}
 
 cd ./${BIN_DIR}
 
-tar -zcvf linux.tar.gz ${TARGET_DIR_NAME}
+tar -zcvf developers-notebook.tar.gz ${TARGET_DIR_NAME}
