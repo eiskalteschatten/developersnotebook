@@ -32,6 +32,7 @@ All required libraries are automatically bundled in the macOS application bundle
 ### Linux-specific commands
 
 - Compile and create a gziped bundle: `make create-linux-bundle`
+- Compile and create a .deb package: `make package-deb`
 
 
 ## Running

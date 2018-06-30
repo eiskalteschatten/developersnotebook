@@ -97,6 +97,9 @@ create-mac-bundle: all
 	bash ./scripts/create-mac-app-bundle.sh
 
 
-# Linux Bundle
+# Linux
 create-linux-bundle: all
 	bash ./scripts/create-linux-bundle.sh
+
+package-deb: all
+	bash ./scripts/package-deb.sh

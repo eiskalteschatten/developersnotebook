@@ -1,0 +1,9 @@
+Package: developersnotebook
+Version: 0.1
+Section: base
+Priority: optional
+Architecture: all
+Depends: libgtk-3-0 (>= 3.22.11), liboost (>= 1.62.0), libsqlite3-0 (>= 3.16.2)
+Maintainer: Alex Seifert <alex@alexseifert.com>
+Description: A digital notebook for developers
+Homepage: https://www.alexseifert.com
