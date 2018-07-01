@@ -62,9 +62,9 @@ std::string ReleaseNotesWindow::get_release_notes_path() {
     if (!fs::is_directory(path_to_exec)) {
         path_to_exec.remove_leaf();
         path_to_exec.remove_leaf();
+        path_to_exec /= Constants::path_to_resources;
     }
 
-    path_to_exec /= Constants::path_to_resources;
     path_to_exec /= release_notes_file_name + "." + release_notes_extension;
 
     return path_to_exec.string();

@@ -38,9 +38,9 @@ std::string Image::get_icon_path() {
     if (!fs::is_directory(path_to_exec)) {
         path_to_exec.remove_leaf();
         path_to_exec.remove_leaf();
+        path_to_exec /= Constants::path_to_resources;
     }
 
-    path_to_exec /= Constants::path_to_resources;
     path_to_exec /= "images";
     path_to_exec /= name + "." + extension;
 
