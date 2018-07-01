@@ -1,9 +1,10 @@
 Package: developersnotebook
 Version: 0.1
-Section: base
+Section: devel
 Priority: optional
-Architecture: all
-Depends: libgtk-3-0 (>= 3.22.11), liboost (>= 1.62.0), libsqlite3-0 (>= 3.16.2)
+Architecture: amd64
+Depends: libgtk-3-0 (>= 3.22.11), libboost-system1.62.0 (>= 1.62.0), libsqlite3-0 (>= 3.16.2)
 Maintainer: Alex Seifert <alex@alexseifert.com>
-Description: A digital notebook for developers
 Homepage: https://www.alexseifert.com
+Description: A digital notebook for developers
+ Developer's Notebook is a digital notebook for developers that helps them organize their projects and tasks, helps them keep track of useful code snippets, provides a few basic tools and more all in one place.

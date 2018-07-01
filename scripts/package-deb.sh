@@ -24,3 +24,4 @@ chmod +x ${DEVNOTEBOOK_DIR}/${TARGET}
 
 cd ./${BIN_DIR}
 
+dpkg-deb --build ${TARGET_DIR_NAME}
