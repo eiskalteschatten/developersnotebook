@@ -3,6 +3,7 @@
 
 #include "MainWindow.hpp"
 #include "MenuBar.hpp"
+#include "../util/Image.hpp"
 #include "../constants.hpp"
 #include "../views/DashboardView.hpp"
 #include "../views/ProjectsView.hpp"
@@ -43,10 +44,9 @@ void MainWindow::activate(GtkApplication *app, MainWindow *mw) {
     gtk_window_set_default_size(GTK_WINDOW(mw->window), window_width, window_height);
 
     #ifndef __APPLE__
-        char cwd[1024];
-        getcwd(cwd, sizeof(cwd));
-        const char *icon_path = std::strcat(cwd, Constants::application_icon_path.c_str());
-        gtk_window_set_icon_from_file(GTK_WINDOW(mw->window), icon_path, NULL);
+        Image logo("icon", "svg");
+        std::string path = logo.get_image_path();
+        gtk_window_set_icon_from_file(GTK_WINDOW(mw->window), path.c_str(), NULL);
     #endif
 
     if (window_maximized) {

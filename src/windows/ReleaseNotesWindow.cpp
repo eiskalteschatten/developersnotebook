@@ -9,6 +9,7 @@
 
 #include "ReleaseNotesWindow.hpp"
 #include "MenuBar.hpp"
+#include "../util/Image.hpp"
 #include "../constants.hpp"
 
 
@@ -20,10 +21,9 @@ void ReleaseNotesWindow::activate(GtkWidget *menu_item, MenuBar *main_menu_bar) 
     gtk_window_set_title(GTK_WINDOW(release_notes_window), "Release Notes");
 
     #ifndef __APPLE__
-        char cwd[1024];
-        getcwd(cwd, sizeof(cwd));
-        const char *icon_path = std::strcat(cwd, Constants::application_icon_path.c_str());
-        gtk_window_set_icon_from_file(GTK_WINDOW(release_notes_window), icon_path, NULL);
+        Image logo("icon", "svg");
+        std::string path = logo.get_image_path();
+        gtk_window_set_icon_from_file(GTK_WINDOW(release_notes_window), path.c_str(), NULL);
     #endif
 
     GtkWidget *release_notes_text_view = gtk_text_view_new();
