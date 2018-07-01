@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Name=Developer's Notebook
+Comment=A digital notebook for developers
+GenericName=Text Editor
+Exec=/usr/share/developersnotebook/developersnotebook
+Icon=/usr/share/developersnotebook/resources/images/icon.png
+Type=Application
+StartupNotify=true
+Categories=Utility;Development;
+MimeType=text/plain;
+Keywords=developersnotebook;

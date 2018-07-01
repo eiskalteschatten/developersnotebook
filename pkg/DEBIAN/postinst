@@ -1,0 +1,6 @@
+#!/bin/bash -e
+
+# Install the desktop entry
+if hash desktop-file-install 2>/dev/null; then
+	desktop-file-install /usr/share/developersnotebook/developersnotebook.desktop
+fi
