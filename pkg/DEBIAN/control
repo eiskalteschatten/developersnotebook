@@ -3,7 +3,7 @@ Version: 0.1
 Section: devel
 Priority: optional
 Architecture: amd64
-Depends: libgtk-3-0 (>= 3.22.11), libboost-system1.62.0 (>= 1.62.0), libsqlite3-0 (>= 3.16.2)
+Depends: libgtk-3-0 (>= 3.22.11), libboost-system1.62.0 (>= 1.62.0), libboost-filesystem1.62.0 (>= 1.62.0), libsqlite3-0 (>= 3.16.2)
 Maintainer: Alex Seifert <alex@alexseifert.com>
 Homepage: https://www.alexseifert.com
 Description: A digital notebook for developers
