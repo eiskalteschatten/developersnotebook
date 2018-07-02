@@ -14,9 +14,10 @@
 namespace fs = boost::filesystem;
 
 
-Image::Image(const std::string new_name, const std::string new_extension) {
-    name      = new_name;
-    extension = new_extension;
+Image::Image(const std::string new_name, const std::string new_extension, const std::string path) {
+    name             = new_name;
+    extension        = new_extension;
+    path_to_exec_str = path;
 
     #ifdef __APPLE__
         image_path = get_icon_path_mac();
@@ -30,10 +31,7 @@ Image::~Image() {
 }
 
 std::string Image::get_icon_path() {
-    char cwd[1024];
-    readlink("/proc/self/exe", &cwd[0], sizeof(cwd));
-
-    fs::path path_to_exec = std::string(cwd);
+    fs::path path_to_exec = path_to_exec_str;
     path_to_exec.remove_filename();
     path_to_exec /= Constants::path_to_resources;
 

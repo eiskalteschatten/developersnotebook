@@ -6,12 +6,13 @@
 
 class Image {
 private:
+    std::string path_to_exec_str;
     std::string name;
     std::string extension;
     std::string image_path;
 
 public:
-    Image(const std::string new_name, const std::string new_extension);
+    Image(const std::string new_name, const std::string new_extension, const std::string path);
     ~Image();
 
     std::string get_icon_path();

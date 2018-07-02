@@ -19,7 +19,7 @@ public:
     ReleaseNotesWindow();
     ~ReleaseNotesWindow();
 
-    static void activate(GtkWidget *menu_item, MenuBar *main_menu_bar);
+    static void activate(GtkWidget *menu_item, void *main_window_obj);
 };
 
 #endif /* ReleaseNotesWindow_hpp */

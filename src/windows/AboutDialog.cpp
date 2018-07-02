@@ -2,19 +2,21 @@
 #include <gtk/gtk.h>
 
 #include "AboutDialog.hpp"
+#include "MainWindow.hpp"
 #include "../util/Image.hpp"
 #include "../constants.hpp"
 
 
-void AboutDialog::activate(GtkWidget *menu_item, GtkWidget *main_window) {
+void AboutDialog::activate(GtkWidget *menu_item, void *main_window_obj) {
+    MainWindow *mw = (MainWindow*)main_window_obj;
     const gchar *copyright = "(c) Alex Seifert 2018";
 
-    Image logo("icon128x128", "svg");
+    Image logo("icon128x128", "svg", mw->get_path_to_exec());
     GdkPixbuf *logo_buf = logo.get_pixbuf();
 
     GtkWidget *dialog = gtk_about_dialog_new();
 
-    gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(main_window));
+    gtk_window_set_transient_for(GTK_WINDOW(dialog), GTK_WINDOW(mw->get_window()));
     gtk_window_set_position(GTK_WINDOW(dialog), GTK_WIN_POS_CENTER);
 
     gtk_about_dialog_set_program_name(GTK_ABOUT_DIALOG(dialog), Constants::application_name.c_str());

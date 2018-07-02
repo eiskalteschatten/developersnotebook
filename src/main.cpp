@@ -15,7 +15,7 @@ void initialize();
 
 int main(int argc, char **argv) {
     GtkApplication *app     = gtk_application_new("com.alexseifert.developersnotebook", G_APPLICATION_FLAGS_NONE);
-    MainWindow *main_window = new MainWindow();
+    MainWindow *main_window = new MainWindow(argv[0]);
 
     g_signal_connect(app, "startup", G_CALLBACK(initialize), NULL);
     g_signal_connect(app, "activate", G_CALLBACK(main_window->activate), main_window);

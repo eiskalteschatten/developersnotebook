@@ -46,6 +46,7 @@ void projects_ending_soon_row_activated(GtkTreeView *tree_view, GtkTreePath *pat
 
 DashboardView::DashboardView(void *window_obj) {
     main_window_obj = window_obj;
+    MainWindow *mw  = (MainWindow*)main_window_obj;
 
     const int grid_spacing = 20;
 
@@ -70,7 +71,7 @@ DashboardView::DashboardView(void *window_obj) {
         gtk_grid_insert_column(GTK_GRID(title_grid), 1);
 
         // -- Logo
-        Image logo_image("icon128x128", "svg");
+        Image logo_image("icon128x128", "svg", mw->get_path_to_exec());
         GdkPixbuf *logo_buf = logo_image.get_pixbuf();
         GtkWidget *logo     = gtk_image_new_from_pixbuf(logo_buf);
         g_object_unref(logo_buf);

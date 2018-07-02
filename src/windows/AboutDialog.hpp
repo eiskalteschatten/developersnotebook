@@ -8,7 +8,7 @@ private:
     AboutDialog();
 
 public:
-    static void activate(GtkWidget *menu_item, GtkWidget *main_window);
+    static void activate(GtkWidget *menu_item, void *main_window_obj);
 };
 
 #endif /* AboutDialog_hpp */

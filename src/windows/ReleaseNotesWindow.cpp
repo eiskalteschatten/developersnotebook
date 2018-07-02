@@ -8,12 +8,12 @@
 #endif
 
 #include "ReleaseNotesWindow.hpp"
-#include "MenuBar.hpp"
+#include "MainWindow.hpp"
 #include "../util/Image.hpp"
 #include "../constants.hpp"
 
 
-void ReleaseNotesWindow::activate(GtkWidget *menu_item, MenuBar *main_menu_bar) {
+void ReleaseNotesWindow::activate(GtkWidget *menu_item, void *main_window_obj) {
     GtkWidget *release_notes_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
     gtk_window_set_position(GTK_WINDOW(release_notes_window), GTK_WIN_POS_CENTER);
@@ -21,7 +21,8 @@ void ReleaseNotesWindow::activate(GtkWidget *menu_item, MenuBar *main_menu_bar) 
     gtk_window_set_title(GTK_WINDOW(release_notes_window), "Release Notes");
 
     #ifndef __APPLE__
-        Image logo("icon", "svg");
+        MainWindow *mw = (MainWindow*)main_window_obj;
+        Image logo("icon", "svg", mw->get_path_to_exec());
         std::string path = logo.get_image_path();
         gtk_window_set_icon_from_file(GTK_WINDOW(release_notes_window), path.c_str(), NULL);
     #endif

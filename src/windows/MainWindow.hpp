@@ -7,6 +7,8 @@
 
 class MainWindow {
 private:
+    std::string path_to_exec;
+
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *stack;
@@ -20,12 +22,14 @@ private:
     void setup_stack();
 
 public:
-    MainWindow();
+    MainWindow(std::string path);
     ~MainWindow();
 
     static void activate(GtkApplication *app, MainWindow *mw);
     static void save_and_close_window(GtkWidget *window);
     void switch_stack(const gchar *child_name);
+
+    std::string const& get_path_to_exec() const { return path_to_exec; }
 
     GtkWidget *get_window() { return window; }
 
