@@ -1,5 +1,6 @@
 .PHONY: all test clean build bin
 
+PWD=$(shell pwd)
 CXX=g++
 CXXFLAGS_ALL=-Wall -g -std=c++11
 BUILD_DIR=build
@@ -86,7 +87,7 @@ run:
 
 # Install Libraries
 install-libs-debian:
-	sudo apt install gtk+-3.0 libsqlite3-dev libboost-all-dev
+	apt-get install -y gtk+-3.0 libsqlite3-dev libboost-all-dev
 
 install-libs-mac:
 	brew install gtk+3 gtk-mac-integration boost gdb adwaita-icon-theme
@@ -103,3 +104,9 @@ create-linux-bundle: all
 
 package-deb: all
 	bash ./scripts/package-deb.sh
+
+
+# Linux building and packaging with Docker
+package-deb-docker:
+	docker build -t devnotebook/deb -f ./docker/Dockerfile-deb . && \
+	docker run -v $(PWD)/bin-deb:/workspace/devnotebook/bin devnotebook/deb

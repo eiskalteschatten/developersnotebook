@@ -1,0 +1,8 @@
+.vscode
+*.code-workspace
+*.sublime*
+
+build
+bin
+bin-deb
+bin-rpm

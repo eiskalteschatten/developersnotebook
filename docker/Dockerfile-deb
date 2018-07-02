@@ -1,0 +1,16 @@
+FROM debian:9
+
+RUN mkdir -p /workspace/devnotebook/bin && \
+    mkdir -p /workspace/devnotebook/build && \
+    apt-get update && \
+    apt-get install -y build-essential
+
+WORKDIR /workspace/devnotebook
+
+COPY Makefile .
+
+RUN make install-libs-debian
+
+COPY . .
+
+CMD ["bash", "docker/cmd-deb.sh"]

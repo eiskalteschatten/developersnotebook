@@ -12,7 +12,7 @@ Developer's Notebook relies on a few libraries. To see which are required for yo
 ### Install using Makefile targets
 
 - Mac: `make install-libs-mac` (requires Homebrew)
-- Ubuntu/Debian: `make install-libs-debian`
+- Ubuntu/Debian: `make install-libs-debian` *(Note: You will need sudo privileges. The command automatically installs the packages withour further prompting.)*
 
 
 ## Building
@@ -33,6 +33,12 @@ All required libraries are automatically bundled in the macOS application bundle
 
 - Compile and create a gziped bundle: `make create-linux-bundle`
 - Compile and create a .deb package: `make package-deb`
+
+## Building with Docker
+
+Another way to build and package Developer's Notebook for Linux is with Docker.
+
+- Compile and create a .deb package within a Debian Docker Container: `make package-deb-docker`
 
 
 ## Running

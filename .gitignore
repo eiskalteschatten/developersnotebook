@@ -46,3 +46,6 @@ build/*
 bin/*
 
 !.gitkeep
+
+bin-deb
+bin-rpm
