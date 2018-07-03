@@ -18,6 +18,7 @@ CXXFLAGS=$(CXXFLAGS_ALL)
 CXXINCLUDES=-I/usr/local/Cellar/gtk-mac-integration/2.0.8_2/include/gtkmacintegration/
 CXXLINKED=-framework Foundation -framework Cocoa -lgtkmacintegration-gtk3.2
 PKG_CONFIG_LOC=pkg-config
+PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/
 BUILD_RUN_TARGET=all
 BUILD_RUN_OPEN=./$(BIN_DIR)/$(TARGET)
 OBJCSOURCES:=$(shell find $(SRC_DIR) -type f -name *.mm)
@@ -29,6 +30,19 @@ CXXFLAGS=$(CXXFLAGS_ALL) -no-pie
 CXXINCLUDES=
 CXXLINKED=
 PKG_CONFIG_LOC=pkg-config
+PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/
+BUILD_RUN_TARGET=all
+BUILD_RUN_OPEN=./$(BIN_DIR)/$(TARGET)
+OBJECTS:=$(CPPOBJECTS)
+
+else
+# Some sort of Windows env
+CXXFLAGS=$(CXXFLAGS_ALL) -no-pie
+CXXINCLUDES=
+CXXLINKED=
+PKG_CONFIG_LOC=pkg-config
+PKG_CONFIG_PATH=/usr/lib/pkgconfig/
+TARGET+=.exe
 BUILD_RUN_TARGET=all
 BUILD_RUN_OPEN=./$(BIN_DIR)/$(TARGET)
 OBJECTS:=$(CPPOBJECTS)
@@ -48,7 +62,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@echo "Compiling $@...";
 	@mkdir -p $(BUILD_DIR);
 	@mkdir -p ${@D};
-	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/ && \
+	export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) && \
 	$(CXX) \
 		$(CXXFLAGS) \
 		`$(PKG_CONFIG_LOC) --cflags gtk+-3.0` \
@@ -59,7 +73,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 $(BIN_DIR)/$(TARGET): $(OBJECTS)
 	@echo "Linking $@...";
 	@mkdir -p $(BIN_DIR);
-	export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/ && \
+	export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) && \
 	$(CXX) \
 		$(CXXFLAGS) \
 		$(CXXLINKED) -lsqlite3 -lboost_system -lboost_filesystem \
