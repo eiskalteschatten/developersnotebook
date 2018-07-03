@@ -75,11 +75,11 @@ $(BIN_DIR)/$(TARGET): $(OBJECTS)
 	@mkdir -p $(BIN_DIR);
 	export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) && \
 	$(CXX) \
+		$+ \
+		-o $@ \
 		$(CXXFLAGS) \
 		$(CXXLINKED) -lsqlite3 -lboost_system -lboost_filesystem \
-		`$(PKG_CONFIG_LOC) --libs gtk+-3.0` \
-		$+ \
-		-o $@
+		`$(PKG_CONFIG_LOC) --libs gtk+-3.0`
 
 all: $(BIN_DIR)/$(TARGET)
 	chmod u+x ./$(BIN_DIR)/$(TARGET)
