@@ -16,7 +16,7 @@ ifeq ($(OS_TYPE), Darwin)
 
 CXXFLAGS=$(CXXFLAGS_ALL)
 CXXINCLUDES=-I/usr/local/Cellar/gtk-mac-integration/2.0.8_2/include/gtkmacintegration/
-CXXLINKED=-framework Foundation -framework Cocoa -lgtkmacintegration-gtk3.2
+CXXLINKED=-framework Foundation -framework Cocoa -lgtkmacintegration-gtk3.2 -lsqlite3 -lboost_system -lboost_filesystem
 PKG_CONFIG_LOC=pkg-config
 PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/
 BUILD_RUN_TARGET=all
@@ -28,7 +28,7 @@ else ifeq ($(OS_TYPE), Linux)
 
 CXXFLAGS=$(CXXFLAGS_ALL) -no-pie
 CXXINCLUDES=
-CXXLINKED=
+CXXLINKED=-lsqlite3 -lboost_system -lboost_filesystem
 PKG_CONFIG_LOC=pkg-config
 PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/
 BUILD_RUN_TARGET=all
@@ -38,11 +38,11 @@ OBJECTS:=$(CPPOBJECTS)
 else
 # Some sort of Windows env
 CXXFLAGS=$(CXXFLAGS_ALL) -no-pie
-CXXINCLUDES=
-CXXLINKED=
+CXXINCLUDES=-L/c/Windows/System32
+CXXLINKED=-lsqlite3 -lboost_system-mt -lboost_filesystem-mt
 PKG_CONFIG_LOC=pkg-config
 PKG_CONFIG_PATH=/usr/lib/pkgconfig/
-TARGET+=.exe
+TARGET=developersnotebook.exe
 BUILD_RUN_TARGET=all
 BUILD_RUN_OPEN=./$(BIN_DIR)/$(TARGET)
 OBJECTS:=$(CPPOBJECTS)
@@ -75,11 +75,11 @@ $(BIN_DIR)/$(TARGET): $(OBJECTS)
 	@mkdir -p $(BIN_DIR);
 	export PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) && \
 	$(CXX) \
-		$+ \
-		-o $@ \
 		$(CXXFLAGS) \
-		$(CXXLINKED) -lsqlite3 -lboost_system -lboost_filesystem \
-		`$(PKG_CONFIG_LOC) --libs gtk+-3.0`
+		-o $@ \
+		$(CXXLINKED) \
+		`$(PKG_CONFIG_LOC) --libs gtk+-3.0` \
+		$+
 
 all: $(BIN_DIR)/$(TARGET)
 	chmod u+x ./$(BIN_DIR)/$(TARGET)

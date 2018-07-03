@@ -1,14 +1,22 @@
 # Building on Windows
 
-## Setup CYGWIN
+## Setup MinGW and MSYS2
 
-1. Download the 64-bit version from https://www.cygwin.com/
-2. Install the following packages:
-    - libgtk3-devel
-    - libboost-devel
-    - libboost_filesystem1.66
-    - libboost_system1.66
-    - libsqlite-devel
-    - make
-    - g++
-3. Run `make` or `make build-run` in the directory where the project is cloned.
+1. Download MinGW from http://www.mingw.org and install it.
+2. Download the 64-bit version of MSYS2 from http://www.msys2.org and install it.
+
+3. Open MSYS2 and add MinGW's "bin" directory to the PATH variable:
+    ```
+    export PATH=/c/MinGW/bin:$PATH
+    ```
+
+4. Update pacman: `pacman -Syu`
+
+5. Install the following packages in MSYS2 using `pacmac -S`:
+    - mingw-w64-x86_64-gcc-libs
+    - mingw-w64-x86_64-gtk3
+    - mingw-w64-x86_64-pkg-config
+    - mingw-w64-x86_64-sqlite3
+    - mingw-w64-x86_64-boost
+
+6. Run `mingw32-make.exe` in the directory where the project is cloned.
