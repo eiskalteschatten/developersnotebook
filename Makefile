@@ -38,8 +38,8 @@ OBJECTS:=$(CPPOBJECTS)
 else
 # Some sort of Windows env
 CXXFLAGS=$(CXXFLAGS_ALL) -no-pie
-CXXINCLUDES=-L/c/Windows/System32
-CXXLINKED=-lsqlite3 -lboost_system-mt -lboost_filesystem-mt
+CXXINCLUDES=
+CXXLINKED=-L/c/Windows/System32 -lsqlite3 -lboost_system-mt -lboost_filesystem-mt
 PKG_CONFIG_LOC=pkg-config
 PKG_CONFIG_PATH=/usr/lib/pkgconfig/
 TARGET=developersnotebook.exe
