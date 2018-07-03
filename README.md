@@ -17,7 +17,7 @@ Developer's Notebook relies on a few libraries. To see which are required for yo
 
 ## Building
 
-Developer's Notebook relies on the g++ compiler to build. Currently only macOS and Linux are supported, but support for Windows will come at some point in the future.
+Developer's Notebook relies on the g++ compiler to build.
 
 - Compile: `make`
 - Compile and run: `make build-run`
@@ -33,6 +33,11 @@ All required libraries are automatically bundled in the macOS application bundle
 
 - Compile and create a gziped bundle: `make create-linux-bundle`
 - Compile and create a .deb package: `make package-deb`
+
+### Windows
+
+See [Windows.md](https://github.com/eiskalteschatten/developersnotebook/blob/master/Windows.md) for more information about the setup.
+
 
 ## Building with Docker
 
