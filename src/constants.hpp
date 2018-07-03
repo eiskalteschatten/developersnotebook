@@ -8,7 +8,7 @@ namespace Constants {
     #if defined(__APPLE__) || defined(__linux__)
         const std::string path_to_config = std::string(getenv("HOME")) + "/.devnotebook/";
     #else
-        const std::string path_to_config = "C:\\";
+        const std::string path_to_config = std::string(getenv("APPDATA")) + "/.devnotebook/";
     #endif
 
     const std::string path_to_resources         = "/resources";
