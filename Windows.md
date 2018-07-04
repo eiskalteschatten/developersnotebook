@@ -12,11 +12,9 @@
 
 4. Update pacman: `pacman -Syu`
 
-5. Install the following packages in MSYS2 using `pacmac -S`:
-    - mingw-w64-x86_64-gcc-libs
-    - mingw-w64-x86_64-gtk3
-    - mingw-w64-x86_64-pkg-config
-    - mingw-w64-x86_64-sqlite3
-    - mingw-w64-x86_64-boost
+5. Install the following packages in MSYS2 using the following command:
+    ```
+     pacman -S base-devel mingw-w64-toolchain mingw-w64-x86_64-gcc-libs mingw-w64-x86_64-gtk3 mingw-w64-x86_64-pkg-config mingw-w64-x86_64-sqlite3 mingw-w64-x86_64-boost
+    ```
 
 6. Run `mingw32-make.exe` in the directory where the project is cloned.
