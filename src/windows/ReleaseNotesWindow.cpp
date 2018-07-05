@@ -28,7 +28,7 @@ void ReleaseNotesWindow::activate(GtkWidget *menu_item, void *main_window_obj) {
 
     #ifndef __APPLE__
         Image logo("icon", "svg", path_to_exec_str, 32, 32);
-        std::string path = logo.get_image_path();
+        std::string path = logo.get_path();
         gtk_window_set_icon_from_file(GTK_WINDOW(release_notes_window), path.c_str(), NULL);
     #endif
 

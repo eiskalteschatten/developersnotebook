@@ -45,7 +45,7 @@ void MainWindow::activate(GtkApplication *app, MainWindow *mw) {
 
     #ifndef __APPLE__
         Image logo("icon", "svg", mw->get_path_to_exec(), 32, 32);
-        std::string path = logo.get_image_path();
+        std::string path = logo.get_path();
         gtk_window_set_icon_from_file(GTK_WINDOW(mw->window), path.c_str(), NULL);
     #endif
 
