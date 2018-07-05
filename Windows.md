@@ -17,4 +17,4 @@
      pacman -S base-devel mingw-w64-x86_64-gcc-libs mingw-w64-x86_64-gtk3 mingw-w64-x86_64-pkg-config mingw-w64-x86_64-sqlite3 mingw-w64-x86_64-boost
     ```
 
-6. Run `mingw32-make.exe` in the directory where the project is cloned.
+6. Run `make` in the directory where the project is cloned.
