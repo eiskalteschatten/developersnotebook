@@ -8,35 +8,29 @@
     #include <CoreFoundation/CoreFoundation.h>
 #endif
 
-#include "Image.hpp"
+#include "Resource.hpp"
 #include "../constants.hpp"
 
 namespace fs = boost::filesystem;
 
 
-Image::Image(const std::string new_name, const std::string new_extension, const std::string path) : Image(new_name, new_extension, path, -1, -1) {
-
-}
-
-Image::Image(const std::string new_name, const std::string new_extension, const std::string path, const int dest_height, const int dest_width) {
+Resource::Resource(const std::string new_name, const std::string new_extension, const std::string new_path_to_exec) {
     name             = new_name;
     extension        = new_extension;
-    path_to_exec_str = path;
-    height           = dest_height;
-    width            = dest_width;
+    path_to_exec_str = new_path_to_exec;
 
     #ifdef __APPLE__
-        image_path = get_icon_path_mac();
+        path = get_resource_path_mac();
     #else
-        image_path = get_icon_path();
+        path = get_resource_path();
     #endif
 }
 
-Image::~Image() {
+Resource::~Resource() {
 
 }
 
-std::string Image::get_icon_path() {
+std::string Resource::get_resource_path() {
     fs::path path_to_exec = path_to_exec_str;
     path_to_exec.remove_filename();
     path_to_exec /= Constants::path_to_resources;
@@ -53,14 +47,14 @@ std::string Image::get_icon_path() {
     return path_to_exec.string();
 }
 
-std::string Image::get_icon_path_mac() {
+std::string Resource::get_resource_path_mac() {
     #ifdef __APPLE__
         CFStringRef apple_name      = CFStringCreateWithCString(NULL, name.c_str(), kCFStringEncodingUTF8);
         CFStringRef apple_extension = CFStringCreateWithCString(NULL, extension.c_str(), kCFStringEncodingUTF8);
         CFURLRef file_url_ref       = CFBundleCopyResourceURL(CFBundleGetMainBundle(), apple_name, apple_extension, NULL);
 
         if (file_url_ref == NULL) {
-            return get_icon_path();
+            return get_resource_path();
         }
 
         CFStringRef path                 = CFURLCopyFileSystemPath(file_url_ref, kCFURLPOSIXPathStyle);
@@ -69,24 +63,6 @@ std::string Image::get_icon_path_mac() {
 
         return std::string(CFStringGetCStringPtr(path, encoding_method));
     #else
-        return get_icon_path();
+        return get_resource_path();
     #endif
-}
-
-std::string Image::get_svg_content() {
-    std::ifstream ifs(image_path.c_str());
-    std::string svg_content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
-    return svg_content;
-}
-
-GdkPixbuf* Image::get_pixbuf() {
-    std::string svg_content = get_svg_content();
-    GInputStream *stream    = g_memory_input_stream_new_from_data(svg_content.c_str(), -1, g_free);
-    GdkPixbuf *pixbuf       = gdk_pixbuf_new_from_stream(stream, NULL, NULL);
-
-    if (height == -1 || width == -1) {
-        return pixbuf;
-    }
-
-    return gdk_pixbuf_scale_simple(pixbuf, width, height, GDK_INTERP_BILINEAR);
 }

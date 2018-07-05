@@ -10,7 +10,7 @@
 
 #include "ReleaseNotesWindow.hpp"
 #include "MainWindow.hpp"
-#include "../util/Image.hpp"
+#include "../resources/Image.hpp"
 #include "../constants.hpp"
 
 namespace fs = boost::filesystem;

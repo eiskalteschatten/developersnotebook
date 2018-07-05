@@ -1,7 +1,7 @@
 #include <gtk/gtk.h>
 
 #include "DashboardView.hpp"
-#include "../util/Image.hpp"
+#include "../resources/Image.hpp"
 #include "../models/ProjectsModel.hpp"
 #include "../windows/MainWindow.hpp"
 #include "../constants.hpp"

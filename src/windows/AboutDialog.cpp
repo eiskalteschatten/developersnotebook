@@ -3,7 +3,7 @@
 
 #include "AboutDialog.hpp"
 #include "MainWindow.hpp"
-#include "../util/Image.hpp"
+#include "../resources/Image.hpp"
 #include "../constants.hpp"
 
 

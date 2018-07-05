@@ -3,7 +3,7 @@
 
 #include "MainWindow.hpp"
 #include "MenuBar.hpp"
-#include "../util/Image.hpp"
+#include "../resources/Image.hpp"
 #include "../constants.hpp"
 #include "../views/DashboardView.hpp"
 #include "../views/ProjectsView.hpp"
