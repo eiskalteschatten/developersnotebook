@@ -70,8 +70,10 @@ DashboardView::DashboardView(void *window_obj) {
         gtk_grid_insert_column(GTK_GRID(title_grid), 0);
         gtk_grid_insert_column(GTK_GRID(title_grid), 1);
 
+        gtk_grid_set_column_spacing(GTK_GRID(title_grid), 10);
+
         // -- Logo
-        Image logo_image("icon", "svg", mw->get_path_to_exec(), 128, 128);
+        Image logo_image("icon", "svg", mw->get_path_to_exec(), 100, 100);
         GdkPixbuf *logo_buf = logo_image.get_pixbuf();
         GtkWidget *logo     = gtk_image_new_from_pixbuf(logo_buf);
         g_object_unref(logo_buf);
