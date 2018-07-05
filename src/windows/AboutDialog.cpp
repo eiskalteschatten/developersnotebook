@@ -11,7 +11,7 @@ void AboutDialog::activate(GtkWidget *menu_item, void *main_window_obj) {
     MainWindow *mw = (MainWindow*)main_window_obj;
     const gchar *copyright = "(c) Alex Seifert 2018";
 
-    Image logo("icon128x128", "svg", mw->get_path_to_exec());
+    Image logo("icon", "svg", mw->get_path_to_exec(), 128, 128);
     GdkPixbuf *logo_buf = logo.get_pixbuf();
 
     GtkWidget *dialog = gtk_about_dialog_new();

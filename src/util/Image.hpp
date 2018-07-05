@@ -10,9 +10,12 @@ private:
     std::string name;
     std::string extension;
     std::string image_path;
+    int height;
+    int width;
 
 public:
     Image(const std::string new_name, const std::string new_extension, const std::string path);
+    Image(const std::string new_name, const std::string new_extension, const std::string path, const int dest_height, const int dest_width);
     ~Image();
 
     std::string get_icon_path();
