@@ -7,7 +7,7 @@
 
 #include "ProjectsView.hpp"
 #include "../models/ProjectsModel.hpp"
-#include "../util/Modal.hpp"
+#include "../components/Modal.hpp"
 
 enum {
     ID_COLUMN,
