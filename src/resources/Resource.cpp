@@ -14,7 +14,11 @@
 namespace fs = boost::filesystem;
 
 
-Resource::Resource(const std::string new_name, const std::string new_extension, const std::string new_path_to_exec, std::string new_sub_folders) {
+Resource::Resource(const std::string new_name, const std::string new_extension, const std::string new_path_to_exec) : Resource(new_name, new_extension, new_path_to_exec, ""){
+
+}
+
+Resource::Resource(const std::string new_name, const std::string new_extension, const std::string new_path_to_exec, const std::string new_sub_folders) {
     name             = new_name;
     extension        = new_extension;
     path_to_exec_str = new_path_to_exec;

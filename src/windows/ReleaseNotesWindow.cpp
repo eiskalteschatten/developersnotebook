@@ -10,6 +10,7 @@
 
 #include "ReleaseNotesWindow.hpp"
 #include "MainWindow.hpp"
+#include "../resources/Resource.hpp"
 #include "../resources/Image.hpp"
 #include "../constants.hpp"
 
@@ -54,50 +55,9 @@ ReleaseNotesWindow::ReleaseNotesWindow(std::string path) {
 
 ReleaseNotesWindow::~ReleaseNotesWindow() {}
 
-std::string ReleaseNotesWindow::get_release_notes_path() {
-    fs::path path_to_exec = path_to_exec_str;
-    path_to_exec.remove_filename();
-    path_to_exec /= Constants::path_to_resources;
-
-    if (!fs::is_directory(path_to_exec)) {
-        path_to_exec.remove_leaf();
-        path_to_exec.remove_leaf();
-        path_to_exec /= Constants::path_to_resources;
-    }
-
-    path_to_exec /= release_notes_file_name + "." + release_notes_extension;
-
-    return path_to_exec.string();
-}
-
-std::string ReleaseNotesWindow::get_release_notes_path_mac() {
-    #ifdef __APPLE__
-        CFStringRef apple_name      = CFStringCreateWithCString(NULL, release_notes_file_name.c_str(), kCFStringEncodingUTF8);
-        CFStringRef apple_extension = CFStringCreateWithCString(NULL, release_notes_extension.c_str(), kCFStringEncodingUTF8);
-        CFURLRef file_url_ref       = CFBundleCopyResourceURL(CFBundleGetMainBundle(), apple_name, apple_extension, NULL);
-
-        if (file_url_ref == NULL) {
-            return get_release_notes_path();
-        }
-
-        CFStringRef path                 = CFURLCopyFileSystemPath(file_url_ref, kCFURLPOSIXPathStyle);
-        CFStringEncoding encoding_method = CFStringGetSystemEncoding();
-        CFRelease(file_url_ref);
-
-        return std::string(CFStringGetCStringPtr(path, encoding_method));
-    #else
-        return get_release_notes_path();
-    #endif
-}
-
 void ReleaseNotesWindow::fill_release_notes(GtkTextBuffer *buffer) {
-    std::string path_to_release_notes;
-
-    #ifdef __APPLE__
-        path_to_release_notes = get_release_notes_path_mac();
-    #else
-        path_to_release_notes = get_release_notes_path();
-    #endif
+    Resource release_notes_resource("release-notes", "html", path_to_exec_str);
+    std::string path_to_release_notes = release_notes_resource.get_path();
 
     std::ifstream ifs(path_to_release_notes.c_str());
     std::string release_notes_str((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));

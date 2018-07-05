@@ -9,11 +9,7 @@
 class ReleaseNotesWindow {
 private:
     std::string path_to_exec_str;
-    std::string release_notes_file_name = "release-notes";
-    std::string release_notes_extension = "html";
 
-    std::string get_release_notes_path();
-    std::string get_release_notes_path_mac();
     void fill_release_notes(GtkTextBuffer *buffer);
 
 public:
