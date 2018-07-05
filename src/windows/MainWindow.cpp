@@ -44,7 +44,7 @@ void MainWindow::activate(GtkApplication *app, MainWindow *mw) {
     gtk_window_set_default_size(GTK_WINDOW(mw->window), window_width, window_height);
 
     #ifndef __APPLE__
-        Image logo("icon", "svg", mw->get_path_to_exec());
+        Image logo("icon", "svg", mw->get_path_to_exec(), 32, 32);
         std::string path = logo.get_image_path();
         gtk_window_set_icon_from_file(GTK_WINDOW(mw->window), path.c_str(), NULL);
     #endif
