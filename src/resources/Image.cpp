@@ -18,7 +18,7 @@ Image::Image(const std::string new_name, const std::string new_extension, const 
 
 }
 
-Image::Image(const std::string new_name, const std::string new_extension, const std::string path, const int dest_height, const int dest_width) : Resource(new_name, new_extension, path) {
+Image::Image(const std::string new_name, const std::string new_extension, const std::string path, const int dest_height, const int dest_width) : Resource(new_name, new_extension, path, "images") {
     height = dest_height;
     width  = dest_width;
 }

@@ -14,10 +14,11 @@
 namespace fs = boost::filesystem;
 
 
-Resource::Resource(const std::string new_name, const std::string new_extension, const std::string new_path_to_exec) {
+Resource::Resource(const std::string new_name, const std::string new_extension, const std::string new_path_to_exec, std::string new_sub_folders) {
     name             = new_name;
     extension        = new_extension;
     path_to_exec_str = new_path_to_exec;
+    sub_folders      = new_sub_folders;
 
     #ifdef __APPLE__
         path = get_resource_path_mac();
@@ -41,7 +42,7 @@ std::string Resource::get_resource_path() {
         path_to_exec /= Constants::path_to_resources;
     }
 
-    path_to_exec /= "images";
+    path_to_exec /= sub_folders;
     path_to_exec /= name + "." + extension;
 
     return path_to_exec.string();

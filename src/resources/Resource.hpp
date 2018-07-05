@@ -11,9 +11,10 @@ protected:
     std::string name;
     std::string extension;
     std::string path;
+    std::string sub_folders;
 
 public:
-    Resource(const std::string new_name, const std::string new_extension, const std::string new_path_to_exec);
+    Resource(const std::string new_name, const std::string new_extension, const std::string new_path_to_exec, std::string new_sub_folders);
     ~Resource();
 
     std::string get_resource_path();
