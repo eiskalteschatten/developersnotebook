@@ -1,7 +1,5 @@
 #include <boost/filesystem.hpp>
-#include <unistd.h>
-#include <fstream>
-#include <cstring>
+#include <string>
 #include <gtk/gtk.h>
 
 #ifdef __APPLE__
