@@ -34,9 +34,16 @@ std::string Image::get_svg_content() {
 }
 
 GdkPixbuf* Image::get_pixbuf() {
-    std::string svg_content = get_svg_content();
-    GInputStream *stream    = g_memory_input_stream_new_from_data(svg_content.c_str(), -1, g_free);
-    GdkPixbuf *pixbuf       = gdk_pixbuf_new_from_stream(stream, NULL, NULL);
+    GdkPixbuf *pixbuf;
+
+    if (extension == "svg") {
+        std::string svg_content = get_svg_content();
+        GInputStream *stream    = g_memory_input_stream_new_from_data(svg_content.c_str(), -1, g_free);
+        pixbuf                  = gdk_pixbuf_new_from_stream(stream, NULL, NULL);
+    }
+    else {
+        pixbuf = gdk_pixbuf_new_from_file(path.c_str(), NULL);
+    }
 
     if (height == -1 || width == -1) {
         return pixbuf;
