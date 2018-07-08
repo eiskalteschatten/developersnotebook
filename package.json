@@ -1,0 +1,22 @@
+{
+  "name": "developersnotebookcpp",
+  "version": "0.2.0",
+  "description": "Developer's Notebook is intended to be a cross-platform, open-source application that provides developers a series of organizational tools.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eiskalteschatten/developersnotebook.git"
+  },
+  "author": "Alex Seifert",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eiskalteschatten/developersnotebook/issues"
+  },
+  "homepage": "https://github.com/eiskalteschatten/developersnotebook#readme",
+  "devDependencies": {
+    "compile-sass": "0.0.5"
+  }
+}

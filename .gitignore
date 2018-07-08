@@ -49,3 +49,5 @@ bin/*
 
 bin-deb
 bin-rpm
+
+node_modules
