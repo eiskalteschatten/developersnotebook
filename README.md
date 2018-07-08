@@ -36,7 +36,7 @@ All required libraries are automatically bundled in the macOS application bundle
 
 ### Windows
 
-See [Windows.md](https://github.com/eiskalteschatten/developersnotebook/blob/master/Windows.md) for more information about the setup.
+See [Windows.md](https://github.com/eiskalteschatten/developersnotebook/blob/master/Windows.md) for more information about the setup. **Note: Windows is not supported yet, but support is on its way.**
 
 
 ## Building with Docker
@@ -56,6 +56,8 @@ After building, the binaries can be found in the `build` directory. They can eit
 ## Roadmap
 
 ### 0.1
+
+[Released](https://github.com/eiskalteschatten/developersnotebook/releases) on 8 July 2018.
 
 - Dashboard
 - Projects

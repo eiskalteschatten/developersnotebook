@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 BIN_DIR=bin
-TARGET_DIR_NAME=developersnotebook-0.1
+TARGET_DIR_NAME=developersnotebook-0.2
 TARGET_DIR=./${BIN_DIR}/${TARGET_DIR_NAME}
 DEVNOTEBOOK_DIR=${TARGET_DIR}/usr/share/developersnotebook
 TARGET=developersnotebook

@@ -19,7 +19,7 @@ namespace Constants {
 
     const std::string application_name     = "Developer's Notebook";
     const std::string application_exec     = "developersnotebook";
-    const std::string application_version  = "0.1";
+    const std::string application_version  = "0.2";
     const std::string application_slogan   = "A digital notebook for developers";
     const std::string application_website  = "https://www.alexseifert.com";
 
