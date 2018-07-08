@@ -30,8 +30,6 @@ void AboutDialog::activate(GtkWidget *menu_item, void *main_window_obj) {
     gtk_about_dialog_set_logo(GTK_ABOUT_DIALOG(dialog), logo_buf);
     g_object_unref(logo_buf);
 
-    // If focused, set active window in menubar
-
     gtk_dialog_run(GTK_DIALOG(dialog));
     gtk_widget_destroy(dialog);
 }

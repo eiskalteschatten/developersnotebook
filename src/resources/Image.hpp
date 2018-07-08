@@ -19,6 +19,7 @@ public:
 
     std::string get_svg_content();
     GdkPixbuf* get_pixbuf();
+    GtkWidget* get_image();
 };
 
 #endif /* Image_hpp */

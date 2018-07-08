@@ -51,3 +51,7 @@ GdkPixbuf* Image::get_pixbuf() {
 
     return gdk_pixbuf_scale_simple(pixbuf, width, height, GDK_INTERP_BILINEAR);
 }
+
+GtkWidget* Image::get_image() {
+    return gtk_image_new_from_pixbuf(get_pixbuf());
+}

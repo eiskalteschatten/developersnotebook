@@ -74,9 +74,7 @@ DashboardView::DashboardView(void *window_obj) {
 
         // -- Logo
         Image logo_image("icon", "svg", mw->get_path_to_exec(), 100, 100);
-        GdkPixbuf *logo_buf = logo_image.get_pixbuf();
-        GtkWidget *logo     = gtk_image_new_from_pixbuf(logo_buf);
-        g_object_unref(logo_buf);
+        GtkWidget *logo = logo_image.get_image();
         gtk_grid_attach(GTK_GRID(title_grid), logo, 0, 0, 1, 2);
 
         gchar *markup = nullptr;
