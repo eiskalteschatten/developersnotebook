@@ -1,3 +1,7 @@
+* {
+    border: none;
+}
+
 GtkButton {
     background-color: $button_bgcolor;
 
@@ -24,6 +28,7 @@ GtkButton {
         button {
             background-color: $secondary_bgcolor;
             border-color: $border_color;
+            box-shadow: 0 2px 2px $box_shadow_color;
             color: $secondary_fgcolor;
         }
     }

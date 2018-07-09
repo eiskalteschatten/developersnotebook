@@ -110,7 +110,7 @@ void MainWindow::setup_stack() {
     // Sidebar
     GtkWidget *sidebar = gtk_stack_sidebar_new();
     gtk_stack_sidebar_set_stack(GTK_STACK_SIDEBAR(sidebar), GTK_STACK(stack));
-    gtk_widget_set_size_request(sidebar, 128, -1);
+    gtk_widget_set_size_request(sidebar, 75, -1);
     gtk_widget_set_vexpand(sidebar, TRUE);
     gtk_widget_set_name(sidebar, "main-sidebar");
 

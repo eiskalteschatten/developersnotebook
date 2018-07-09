@@ -5,9 +5,21 @@
 
 #main-sidebar {
     background-color: $secondary_bgcolor;
-    border-color: transparent;
 
-    &.sidebar-item {
+    row {
+        color: $fgcolor;
 
+        &:hover {
+            color: $hover_fgcolor;
+        }
+
+        &:selected {
+            background-color: transparent;
+            color: $selected_fgcolor;
+        }
+
+        &.needs-attention {
+            color: $needs_attention_fgcolor;
+        }
     }
 }

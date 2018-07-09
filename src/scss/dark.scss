@@ -1,15 +1,20 @@
-$bgcolor:           #333333;
-$secondary_bgcolor: #555555;
-$tertiary_bgcolor:  #444444;
+$bgcolor:           #222222;
+$secondary_bgcolor: #444444;
+$tertiary_bgcolor:  #333333;
 
 $fgcolor:           #cccccc;
 $secondary_fgcolor: #dddddd;
 
-$highlight_bgcolor: #777777;
+$highlight_bgcolor: #666666;
 $selected_fgcolor:  #ffffff;
-$hover_bgcolor:     #555555;
+$hover_bgcolor:     #363636;
+$hover_fgcolor:     #ffffff;
+
+$needs_attention_fgcolor: #e21038;
 
 $button_bgcolor: #555555;
+
+$box_shadow_color: rgba(0, 0, 0, 0.3);
 
 $border_color: darken($secondary_bgcolor, 10%);
 
