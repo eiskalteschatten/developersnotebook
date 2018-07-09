@@ -4,6 +4,7 @@
 #include "MainWindow.hpp"
 #include "MenuBar.hpp"
 #include "../resources/Image.hpp"
+#include "../resources/Css.hpp"
 #include "../constants.hpp"
 #include "../views/DashboardView.hpp"
 #include "../views/ProjectsView.hpp"
@@ -52,6 +53,11 @@ void MainWindow::activate(GtkApplication *app, MainWindow *mw) {
     if (window_maximized) {
         gtk_window_maximize(GTK_WINDOW(mw->window));
     }
+
+    Css css("dark", mw->get_path_to_exec());
+    GtkCssProvider *css_provider = gtk_css_provider_new();
+    gtk_css_provider_load_from_path(css_provider, css.get_path().c_str(), NULL);
+    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(css_provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
 
     mw->setup_grid();
     mw->setup_stack();
