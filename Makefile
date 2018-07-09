@@ -6,6 +6,7 @@ CXXFLAGS_ALL=-Wall -g -std=c++11
 BUILD_DIR=build
 BIN_DIR=bin
 SRC_DIR=src
+RESOURCES_DIR=resources
 CPPSOURCES:=$(shell find $(SRC_DIR) -type f -name *.cpp)
 CPPOBJECTS:=$(patsubst $(SRC_DIR)/%,$(BUILD_DIR)/%,$(CPPSOURCES:.cpp=.o))
 TARGET=developersnotebook
@@ -81,13 +82,15 @@ $(BIN_DIR)/$(TARGET): $(OBJECTS)
 		`$(PKG_CONFIG_LOC) --libs gtk+-3.0` \
 		$+
 
-all: $(BIN_DIR)/$(TARGET)
-	chmod u+x ./$(BIN_DIR)/$(TARGET)
+all: $(BIN_DIR)/$(TARGET);
+	chmod u+x ./$(BIN_DIR)/$(TARGET);
+	npm run build
 
 clean:
 	@echo "Cleaning...";
-	rm -rf ./$(BUILD_DIR)/* 2> /dev/null
-	rm -rf ./$(BIN_DIR)/* 2> /dev/null
+	rm -rf ./$(BUILD_DIR)/* 2> /dev/null;
+	rm -rf ./$(BIN_DIR)/* 2> /dev/null;
+	rm -rf ./$(RESOURCES_DIR)/css/* 2> /dev/null
 
 build-run-mac: create-mac-bundle
 	open ./$(BIN_DIR)/$(MAC_BUNDLE)

@@ -1,0 +1,6 @@
+{
+    "sassFilesToCompile": [
+        "dark.scss",
+        "light.scss"
+    ]
+}

@@ -28,6 +28,9 @@
 *.out
 *.app
 
+# Compiled CSS
+*.css
+
 # Eclipse
 .cproject
 .settings
@@ -42,12 +45,15 @@
 # Visual Studio Code
 *.code-workspace
 
+# Everything that has to do with building
 build/*
 bin/*
 
-!.gitkeep
-
+# Linux package directories
 bin-deb
 bin-rpm
 
+# Node
 node_modules
+
+!.gitkeep
