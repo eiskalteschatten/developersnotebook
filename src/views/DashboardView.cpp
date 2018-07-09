@@ -141,6 +141,7 @@ void DashboardView::setup_projects_ending_soon() {
                                                          G_TYPE_STRING);
 
     projects_ending_soon_tree_view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(projects_ending_soon_list_store));
+    gtk_widget_set_name(projects_ending_soon_tree_view, "dashboard_projects-ending-soon");
 
     projects_ending_soon_scrolled_window = gtk_scrolled_window_new(NULL, NULL);
     g_object_set(projects_ending_soon_scrolled_window, "hexpand", TRUE, NULL);

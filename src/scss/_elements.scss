@@ -2,6 +2,29 @@ GtkButton {
     background-color: $button_bgcolor;
 
     &:hover {
-        background-color: $button_bgcolor_hover;
+        background-color: $hover_bgcolor;
+    }
+}
+
+.tree-view {
+    background-color: $tertiary_bgcolor;
+    color: $fgcolor;
+    padding: 2px;
+
+    &:hover {
+        background-color: $hover_bgcolor;
+    }
+
+    &:selected {
+        background-color: $highlight_bgcolor;
+        color: $selected_fgcolor;
+    }
+
+    header {
+        button {
+            background-color: $secondary_bgcolor;
+            border-color: $border_color;
+            color: $secondary_fgcolor;
+        }
     }
 }

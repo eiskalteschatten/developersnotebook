@@ -1,10 +1,20 @@
 $bgcolor:           #333333;
-$fgcolor:           #cccccc;
-$secondary_bgcolor: #444444;
+$secondary_bgcolor: #555555;
+$tertiary_bgcolor:  #444444;
 
-$button_bgcolor:       #666666;
-$button_bgcolor_hover: #777777;
+$fgcolor:           #cccccc;
+$secondary_fgcolor: #dddddd;
+
+$highlight_bgcolor: #777777;
+$selected_fgcolor:  #ffffff;
+$hover_bgcolor:     #555555;
+
+$button_bgcolor: #555555;
+
+$border_color: darken($secondary_bgcolor, 10%);
+
 
 @import "elements";
 @import "mainWindow";
 @import "dashboardView";
+@import "projectsView";
