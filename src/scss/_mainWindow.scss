@@ -1,0 +1,13 @@
+#main-grid {
+    background-color: $bgcolor;
+    color: $fgcolor;
+}
+
+#main-sidebar {
+    background-color: $secondary_bgcolor;
+    border-color: transparent;
+
+    &.sidebar-item {
+
+    }
+}

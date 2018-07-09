@@ -56,7 +56,6 @@ DashboardView::DashboardView(void *window_obj) {
     gtk_grid_set_column_spacing(GTK_GRID(main_widget), grid_spacing);
     gtk_grid_set_row_spacing(GTK_GRID(main_widget), grid_spacing);
     gtk_container_set_border_width(GTK_CONTAINER(main_widget), grid_spacing);
-    gtk_widget_set_name(main_widget, "dashboard-view");
 
     gtk_grid_insert_row(GTK_GRID(main_widget), 0);
     gtk_grid_insert_row(GTK_GRID(main_widget), 1);

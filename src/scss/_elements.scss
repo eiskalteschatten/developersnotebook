@@ -1,0 +1,7 @@
+GtkButton {
+    background-color: $button_bgcolor;
+
+    &:hover {
+        background-color: $button_bgcolor_hover;
+    }
+}

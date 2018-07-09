@@ -1,4 +1,10 @@
-$bgcolor: #333333;
-$fgcolor: #c0c0c0;
+$bgcolor:           #333333;
+$fgcolor:           #cccccc;
+$secondary_bgcolor: #444444;
 
+$button_bgcolor:       #666666;
+$button_bgcolor_hover: #777777;
+
+@import "elements";
+@import "mainWindow";
 @import "dashboardView";

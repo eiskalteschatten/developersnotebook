@@ -88,6 +88,8 @@ void MainWindow::setup_grid() {
 
     gtk_widget_set_valign(grid, GTK_ALIGN_FILL);
 
+    gtk_widget_set_name(grid, "main-grid");
+
     gtk_container_add(GTK_CONTAINER(window), grid);
 }
 
@@ -110,6 +112,7 @@ void MainWindow::setup_stack() {
     gtk_stack_sidebar_set_stack(GTK_STACK_SIDEBAR(sidebar), GTK_STACK(stack));
     gtk_widget_set_size_request(sidebar, 128, -1);
     gtk_widget_set_vexpand(sidebar, TRUE);
+    gtk_widget_set_name(sidebar, "main-sidebar");
 
     // Add the elements to the stack
     gtk_stack_add_titled(GTK_STACK(stack), dashboard_view_widget, "dashboard", "Dashboard");
