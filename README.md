@@ -17,10 +17,11 @@ Developer's Notebook relies on a few libraries. To see which are required for yo
 
 ## Building
 
-Developer's Notebook relies on the g++ compiler to build.
+Developer's Notebook relies on g++ and Node.js to build. Both are required.
 
 - Compile: `make`
 - Compile and run: `make build-run`
+- Compile SCSS: `make compile-scss` or `npm run build`
 
 ### macOS-specific commands
 

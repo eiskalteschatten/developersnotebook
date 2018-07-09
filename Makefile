@@ -101,6 +101,9 @@ build-run: $(BUILD_RUN_TARGET)
 run:
 	$(BUILD_RUN_OPEN)
 
+compile-scss:
+	npm run build
+
 
 # Install Libraries
 install-libs-debian:
