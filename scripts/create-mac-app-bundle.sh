@@ -27,6 +27,7 @@ echo APPLnone > "./${BIN_DIR}/${MAC_BUNDLE}/Contents/PkgInfo"
 cp ./${BIN_DIR}/${TARGET} "./${BIN_DIR}/${MAC_BUNDLE}/Contents/MacOS/."
 cp ./pkg/macos/Info.plist "./${BIN_DIR}/${MAC_BUNDLE}/Contents/."
 cp ./pkg/macos/icon.icns "./${BIN_DIR}/${MAC_BUNDLE}/Contents/Resources/."
+cp ./resources/css/* "./${BIN_DIR}/${MAC_BUNDLE}/Contents/Resources/."
 cp ./resources/images/* "./${BIN_DIR}/${MAC_BUNDLE}/Contents/Resources/."
 cp ./resources/release-notes.html "./${BIN_DIR}/${MAC_BUNDLE}/Contents/Resources/."
 

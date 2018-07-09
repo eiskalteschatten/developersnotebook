@@ -19,9 +19,9 @@ private:
 
     friend void refresh_all_sub_views(GtkWidget *stack, GdkEvent *event, MainWindow *mw);
 
+    void setup_css();
     void setup_grid();
     void setup_stack();
-    void setup_css();
 
 public:
     MainWindow(std::string path);

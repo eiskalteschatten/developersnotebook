@@ -69,6 +69,15 @@ void MainWindow::activate(GtkApplication *app, MainWindow *mw) {
     g_signal_connect(mw->window, "delete_event", G_CALLBACK(mw->save_and_close_window), NULL);
 }
 
+void MainWindow::setup_css() {
+    Css css("dark", path_to_exec);
+
+    css_provider = gtk_css_provider_new();
+
+    gtk_css_provider_load_from_path(css_provider, css.get_path().c_str(), NULL);
+    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(css_provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+}
+
 void MainWindow::setup_grid() {
     grid = gtk_grid_new();
 
@@ -110,15 +119,6 @@ void MainWindow::setup_stack() {
     gtk_grid_attach(GTK_GRID(grid), stack, 1, 1, 1, 1);
 
     g_signal_connect(stack, "notify::visible-child", G_CALLBACK(refresh_all_sub_views), this);
-}
-
-void MainWindow::setup_css() {
-    Css css("dark", path_to_exec);
-
-    css_provider = gtk_css_provider_new();
-
-    gtk_css_provider_load_from_path(css_provider, css.get_path().c_str(), NULL);
-    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(), GTK_STYLE_PROVIDER(css_provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
 }
 
 void MainWindow::save_and_close_window(GtkWidget *window) {
