@@ -12,6 +12,7 @@ private:
     GtkWidget *window;
     GtkWidget *grid;
     GtkWidget *stack;
+    GtkCssProvider *css_provider;
 
     DashboardView *dashboard_view;
     ProjectsView *projects_view;
@@ -20,6 +21,7 @@ private:
 
     void setup_grid();
     void setup_stack();
+    void setup_css();
 
 public:
     MainWindow(std::string path);
