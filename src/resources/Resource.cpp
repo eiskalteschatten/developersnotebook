@@ -52,10 +52,10 @@ std::string Resource::get_resource_path() {
 
 std::string Resource::get_resource_path_mac() {
     #ifdef __APPLE__
-        CFStringRef apple_name       = CFStringCreateWithCString(NULL, name.c_str(), kCFStringEncodingUTF8);
-        CFStringRef apple_extension  = CFStringCreateWithCString(NULL, extension.c_str(), kCFStringEncodingUTF8);
-        CFStringRef apple_sub_folder = CFStringCreateWithCString(NULL, sub_folders.c_str(), kCFStringEncodingUTF8);
-        CFURLRef file_url_ref        = CFBundleCopyResourceURL(CFBundleGetMainBundle(), apple_name, apple_extension, apple_sub_folder);
+        CFStringRef apple_name        = CFStringCreateWithCString(NULL, name.c_str(), kCFStringEncodingUTF8);
+        CFStringRef apple_extension   = CFStringCreateWithCString(NULL, extension.c_str(), kCFStringEncodingUTF8);
+        CFStringRef apple_sub_folders = CFStringCreateWithCString(NULL, sub_folders.c_str(), kCFStringEncodingUTF8);
+        CFURLRef file_url_ref         = CFBundleCopyResourceURL(CFBundleGetMainBundle(), apple_name, apple_extension, apple_sub_folders);
 
         if (file_url_ref == NULL) {
             return get_resource_path();
