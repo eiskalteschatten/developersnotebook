@@ -242,7 +242,6 @@ void ProjectsView::setup_list_view() {
     setup_list_store();
 
     list_view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(list_store));
-    gtk_widget_set_name(list_view, "projects_tree-view");
 
     list_scrolled_window = gtk_scrolled_window_new(NULL, NULL);
     g_object_set(list_scrolled_window, "hexpand", TRUE, NULL);

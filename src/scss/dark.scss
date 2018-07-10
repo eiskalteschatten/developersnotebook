@@ -12,7 +12,11 @@ $hover_fgcolor:     #ffffff;
 
 $needs_attention_fgcolor: #e21038;
 
-$button_bgcolor: #555555;
+$button_bgcolor:        #555555;
+$button_fgcolor:          $fgcolor;
+$form_bgcolor:          #111111;
+$form_bgcolor_selected: #000000;
+$form_fgcolor:            $fgcolor;
 
 $box_shadow_color: rgba(0, 0, 0, 0.3);
 

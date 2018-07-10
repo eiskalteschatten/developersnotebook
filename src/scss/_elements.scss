@@ -2,15 +2,63 @@
     border: none;
 }
 
-GtkButton {
+window, dialog {
+    background-color: $bgcolor;
+    color: $fgcolor;
+}
+
+menuitem {
+    // color: default;
+}
+
+button {
     background-color: $button_bgcolor;
 
     &:hover {
         background-color: $hover_bgcolor;
     }
+
+    &:disabled {
+        opacity: 0.5;
+    }
+
+    label {
+        color: $button_fgcolor;
+    }
 }
 
-.tree-view {
+entry {
+    background-color: $form_bgcolor;
+    color: $form_fgcolor;
+
+    &:hover {
+        background-color: $hover_bgcolor;
+    }
+
+    &:focus {
+        background-color: $form_bgcolor_selected;
+    }
+}
+
+textview {
+    background-color: $form_bgcolor;
+    padding: 8px;
+
+    text {
+        background-color: $form_bgcolor;
+        color: $form_fgcolor;
+
+        &:focus {
+            background-color: $form_bgcolor_selected;
+        }
+    }
+
+    &:focus {
+        background-color: $form_bgcolor_selected;
+    }
+}
+
+treeview {
     background-color: $tertiary_bgcolor;
     color: $fgcolor;
     padding: 2px;
