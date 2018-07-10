@@ -11,6 +11,12 @@ menuitem {
     // color: default;
 }
 
+scrollbar {
+    slider {
+        background-color: $scrollbar_bgcolor;
+    }
+}
+
 button {
     background-color: $button_bgcolor;
     background-image: none;
