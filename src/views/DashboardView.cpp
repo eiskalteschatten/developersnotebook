@@ -73,8 +73,9 @@ DashboardView::DashboardView(void *window_obj) {
         gtk_grid_set_column_spacing(GTK_GRID(title_grid), 10);
 
         // -- Logo
-        Image logo_image("icon", "svg", mw->get_path_to_exec(), 100, 100);
-        GtkWidget *logo = logo_image.get_image();
+        GtkWidget *logo = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+        gtk_widget_set_size_request(logo, 100, 100);
+        gtk_widget_set_name(logo, "dashboard-logo");
         gtk_grid_attach(GTK_GRID(title_grid), logo, 0, 0, 1, 2);
 
         gchar *markup = nullptr;
