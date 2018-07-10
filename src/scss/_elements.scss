@@ -88,3 +88,13 @@ treeview {
         }
     }
 }
+
+calendar {
+    background-color: $form_bgcolor;
+    color: $form_fgcolor;
+
+    &:selected {
+        background-color: $form_inverse_bgcolor;
+        color: $form_inverse_fgcolor;
+    }
+}

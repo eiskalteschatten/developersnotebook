@@ -14,10 +14,12 @@ $needs_attention_fgcolor: #e21038;
 
 $button_bgcolor:        #555555;
 $button_bgcolor_active: #000000;
-$button_fgcolor:          $fgcolor;
+$button_fgcolor:         $fgcolor;
 $form_bgcolor:          #111111;
 $form_bgcolor_focus:    #000000;
-$form_fgcolor:            $fgcolor;
+$form_fgcolor:           $fgcolor;
+$form_inverse_bgcolor:   $form_fgcolor;
+$form_inverse_fgcolor:   $form_bgcolor;
 
 $box_shadow_color: rgba(0, 0, 0, 0.3);
 
