@@ -8,16 +8,16 @@
     }
 
     row {
-        background-position: center;
+        background-position: center top;
         background-repeat: no-repeat;
-        background-size: auto 100%;
+        background-size: 35px;
         color: $fgcolor;
         margin: 10px 0;
         opacity: 0.5;
         outline: none;
 
         label {
-            opacity: 0;
+            margin-top: 35px;
         }
 
         &:hover {
