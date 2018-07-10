@@ -27,8 +27,8 @@ echo APPLnone > "./${BIN_DIR}/${MAC_BUNDLE}/Contents/PkgInfo"
 cp ./${BIN_DIR}/${TARGET} "./${BIN_DIR}/${MAC_BUNDLE}/Contents/MacOS/."
 cp ./pkg/macos/Info.plist "./${BIN_DIR}/${MAC_BUNDLE}/Contents/."
 cp ./pkg/macos/icon.icns "./${BIN_DIR}/${MAC_BUNDLE}/Contents/Resources/."
-cp ./resources/css/* "./${BIN_DIR}/${MAC_BUNDLE}/Contents/Resources/."
-cp ./resources/images/* "./${BIN_DIR}/${MAC_BUNDLE}/Contents/Resources/."
+cp -R ./resources/css "./${BIN_DIR}/${MAC_BUNDLE}/Contents/Resources/."
+cp -R ./resources/images "./${BIN_DIR}/${MAC_BUNDLE}/Contents/Resources/."
 cp ./resources/release-notes.html "./${BIN_DIR}/${MAC_BUNDLE}/Contents/Resources/."
 
 
@@ -37,7 +37,7 @@ cp ./resources/release-notes.html "./${BIN_DIR}/${MAC_BUNDLE}/Contents/Resources
 for LIB in $(otool -L "${BINARY}"|grep lib|cut -d '(' -f -1)
 do
     echo "Handling Lib: $LIB"
-    LIB_NAME=$(basename "$LIB")
+    LIB_NAME=$(basename "$LIB")\
     echo "    Adding ${LIB_NAME}"
     cp -Rf "${LIB}" "${FRAMEW_FOLDER}"
 
