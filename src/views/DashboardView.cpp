@@ -46,7 +46,6 @@ void projects_ending_soon_row_activated(GtkTreeView *tree_view, GtkTreePath *pat
 
 DashboardView::DashboardView(void *window_obj) {
     main_window_obj = window_obj;
-    MainWindow *mw  = (MainWindow*)main_window_obj;
 
     const int grid_spacing = 20;
 
