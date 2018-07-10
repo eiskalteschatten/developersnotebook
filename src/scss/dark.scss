@@ -1,6 +1,6 @@
 $bgcolor:           #222222;
-$secondary_bgcolor: #333333;
-$tertiary_bgcolor:  #2b2b2b;
+$secondary_bgcolor: #2b2b2b;
+$tertiary_bgcolor:  #333333;
 
 $fgcolor:           #cccccc;
 $secondary_fgcolor: #dddddd;
@@ -18,7 +18,7 @@ $button_bgcolor:        #444444;
 $button_bgcolor_active: #313131;
 $button_fgcolor:         $fgcolor;
 $form_bgcolor:          #111111;
-$form_bgcolor_focus:    #313131;
+$form_bgcolor_focus:    #000000;
 $form_fgcolor:           $fgcolor;
 $form_inverse_bgcolor:   $form_fgcolor;
 $form_inverse_fgcolor:   $form_bgcolor;
