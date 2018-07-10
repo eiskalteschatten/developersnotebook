@@ -332,6 +332,7 @@ void ProjectsView::setup_list_view_toolbar() {
     gtk_grid_attach(GTK_GRID(list_view_grid), list_scrolled_window, 0, 0, 1, 1);
 
     toolbar_box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 1);
+    gtk_widget_set_name(toolbar_box, "projects-view_toolbar");
 
     // New button
     {

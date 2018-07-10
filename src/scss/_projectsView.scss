@@ -1,0 +1,14 @@
+#projects-view_toolbar {
+    button {
+        background-color: transparent;
+        opacity: 0.8;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+        }
+    }
+}
