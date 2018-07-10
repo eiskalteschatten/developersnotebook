@@ -8,7 +8,6 @@
     }
 
     row {
-        background-image: url('../images/dashboard-icon.png');
         background-position: center;
         background-repeat: no-repeat;
         background-size: auto 100%;
@@ -34,6 +33,16 @@
 
         &.needs-attention {
             color: $needs_attention_fgcolor;
+        }
+
+        // Dashboard
+        &:first-child {
+            background-image: url('../images/dashboard-icon.png');
+        }
+
+        // Projects
+        &:nth-child(2) {
+            background-image: url('../images/dashboard-icon.png');
         }
     }
 }
