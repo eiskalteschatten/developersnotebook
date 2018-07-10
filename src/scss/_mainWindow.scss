@@ -4,7 +4,9 @@
 }
 
 #main-sidebar {
-    background-color: $secondary_bgcolor;
+    viewport {
+        background-color: $secondary_bgcolor;
+    }
 
     row {
         color: $fgcolor;
