@@ -13,9 +13,15 @@ menuitem {
 
 button {
     background-color: $button_bgcolor;
+    background-image: none;
+    box-shadow: none;
 
     &:hover {
         background-color: $hover_bgcolor;
+    }
+
+    &:active {
+        background-color: $button_bgcolor_active;
     }
 
     &:disabled {
@@ -24,6 +30,7 @@ button {
 
     label {
         color: $button_fgcolor;
+        text-shadow: none;
     }
 }
 
@@ -36,7 +43,7 @@ entry {
     }
 
     &:focus {
-        background-color: $form_bgcolor_selected;
+        background-color: $form_bgcolor_focus;
     }
 }
 
@@ -49,12 +56,12 @@ textview {
         color: $form_fgcolor;
 
         &:focus {
-            background-color: $form_bgcolor_selected;
+            background-color: $form_bgcolor_focus;
         }
     }
 
     &:focus {
-        background-color: $form_bgcolor_selected;
+        background-color: $form_bgcolor_focus;
     }
 }
 
