@@ -3,8 +3,13 @@
         background-color: $secondary_bgcolor;
     }
 
+    separator {
+        opacity: 0;
+    }
+
     row {
         color: $fgcolor;
+        outline: none;
 
         &:hover {
             color: $hover_fgcolor;
