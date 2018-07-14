@@ -38,11 +38,13 @@ OBJECTS:=$(CPPOBJECTS)
 
 else
 # Some sort of Windows env
-CXXFLAGS=$(CXXFLAGS_ALL) -no-pie
+CXXFLAGS=$(CXXFLAGS_ALL) -no-pie -m32
 CXXINCLUDES=
-CXXLINKED=-L/c/Windows/System32 -lsqlite3 -lboost_system-mt -lboost_filesystem-mt
+CXXLINKED=-lsqlite3 -lboost_system-mt -lboost_filesystem-mt -L"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17134.0\um\x86"
+#-L/mingw32/lib -LC:/building/msys64/mingw32/lib/../lib -L/mingw32/lib -L"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17134.0\um\x86" -lgtk-3 -lgdk-3 -lgdi32 -limm32 -lshell32 -lole32 -Wl,-luuid -lwinmm -ldwmapi -lsetupapi -lcfgmgr32 -lz -lepoxy -lopengl32 -lgdi32 -lpangocairo-1.0 -lpangoft2-1.0 -lpangowin32-1.0 -lusp10 -lgdi32 -lpango-1.0 -lm -lfribidi -latk-1.0 -lcairo-gobject -lcairo -lz -lpixman-1 -lfontconfig -liconv -lexpat -lfreetype -lbz2 -lharfbuzz -lm -lgraphite2 -lpng16 -lz -lgdk_pixbuf-2.0 -lm -lpng16 -lz -lgio-2.0 -lz -lgmodule-2.0 -pthread -lgobject-2.0 -lffi -lglib-2.0 -lintl -pthread -lws2_32 -lole32 -lwinmm -lshlwapi -lpcre -lintl -lpcre -lsqlite3 -lboost_system-mt -lboost_filesystem-mt
+#-lsqlite3 -lboost_system-mt -lboost_filesystem-mt -L"C:\Program Files (x86)\Windows Kits\10\Lib\10.0.17134.0\um\x86"
 PKG_CONFIG_LOC=pkg-config
-EXPORT=export PKG_CONFIG_PATH=/usr/lib/pkgconfig/
+EXPORT=export PKG_CONFIG_PATH="C:\msys64\mingw32\lib\pkgconfig"
 TARGET=developersnotebook.exe
 BUILD_RUN_TARGET=all
 BUILD_RUN_OPEN=./$(BIN_DIR)/$(TARGET)

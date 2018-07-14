@@ -15,7 +15,7 @@
 
 6. Install the following packages in MSYS2 using the following command:
     ```
-     pacman -S base-devel mingw-w64-x86_64-gcc-libs mingw-w64-x86_64-gtk3 mingw-w64-x86_64-pkg-config mingw-w64-x86_64-sqlite3 mingw-w64-x86_64-boost
+     pacman -S base-devel mingw-w64-x86_64-gcc-libs mingw-w64-i686-gtk3 mingw-w64-x86_64-pkg-config mingw-w64-i686-sqlite3 mingw-w64-i686-boost
     ```
 
 7. Navigate to Developer's Notebook root folder and run `npm install`.
