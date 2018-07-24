@@ -57,6 +57,7 @@ $(BUILD_DIR)/%.mm.o: $(SRC_DIR)/%.mm
 	@echo "Compiling $@...";
 	@mkdir -p $(BUILD_DIR);
 	@mkdir -p ${@D};
+	$(EXPORT) && \
 	$(CXX) \
 		-o $@ \
 		-c $<
