@@ -17,6 +17,10 @@ scrollbar {
     }
 }
 
+separator {
+    background-image: none;
+}
+
 button {
     background-color: $button_bgcolor;
     background-image: none;
