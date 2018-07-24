@@ -18,6 +18,7 @@ private:
     ProjectsView *projects_view;
 
     friend void refresh_all_sub_views(GtkWidget *stack, GdkEvent *event, MainWindow *mw);
+    friend void style_sidebar_children(GtkWidget *child);
 
     void setup_css();
     void setup_grid();

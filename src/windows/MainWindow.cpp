@@ -21,6 +21,10 @@ void refresh_all_sub_views(GtkWidget *stack, GdkEvent *event, MainWindow *mw) {
     }
 }
 
+void style_sidebar_children(GtkWidget *child) {
+    gtk_widget_set_halign(child, GTK_ALIGN_END);
+}
+
 
 // Class
 
@@ -112,6 +116,7 @@ void MainWindow::setup_stack() {
     gtk_stack_sidebar_set_stack(GTK_STACK_SIDEBAR(sidebar), GTK_STACK(stack));
     gtk_widget_set_vexpand(sidebar, TRUE);
     gtk_widget_set_name(sidebar, "main-sidebar");
+    gtk_container_foreach(GTK_CONTAINER(sidebar), (GtkCallback)style_sidebar_children, NULL);
 
     // Add the elements to the stack
     gtk_stack_add_titled(GTK_STACK(stack), dashboard_view_widget, "dashboard", "Dashboard");
