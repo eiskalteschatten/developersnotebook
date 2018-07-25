@@ -11,6 +11,14 @@
 #include "../models/PreferencesModel.hpp"
 
 
+// Static
+
+static void style_sidebar_children(GtkWidget *child) {
+    gtk_widget_set_halign(child, GTK_ALIGN_CENTER);
+    gtk_container_foreach(GTK_CONTAINER(child), (GtkCallback)style_sidebar_children, NULL);
+}
+
+
 // Friends
 
 void refresh_all_sub_views(GtkWidget *stack, GdkEvent *event, MainWindow *mw) {
@@ -19,10 +27,6 @@ void refresh_all_sub_views(GtkWidget *stack, GdkEvent *event, MainWindow *mw) {
     if (strcmp(stack_child_name, "dashboard") == 0) {
         mw->get_dashboard_view()->refresh_all_sub_views();
     }
-}
-
-void style_sidebar_children(GtkWidget *child) {
-    gtk_widget_set_halign(child, GTK_ALIGN_END);
 }
 
 
