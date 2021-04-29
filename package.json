@@ -17,6 +17,6 @@
     },
     "homepage": "https://github.com/eiskalteschatten/developersnotebook#readme",
     "devDependencies": {
-        "compile-sass": "0.0.5"
+        "compile-sass": "1.0.5"
     }
 }
